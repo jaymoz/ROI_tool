@@ -1,0 +1,35 @@
+.csv-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.csv-table th,
+.csv-table td {
+  border: 1px solid #222222;
+  padding: 8px;
+  text-align: left;
+  font-size: 12px; 
+}
+
+.csv-table th {
+  background-color: #e6f7ff; 
+  color: #222222; 
+}
+
+.Select-control {
+  background-color: transparent;
+  color: #222222;
+  text-align: left;
+}
+
+.Select-menu-outer {
+  background-color: #fff; 
+  color: #000;
+  text-align: left;
+}
+
+.Select-menu-outer, .Select-option {
+  color: #000000 !important; 
+  text-align: left;
+}
+

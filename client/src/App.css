@@ -1,0 +1,148 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 300vh;
+  margin: 0;
+}
+
+.App-header {
+  background-color: #f1f1f1;
+  height: 0vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  margin-top: 0;
+}
+
+.App-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  padding-top: 40px;
+  margin-left: 200px; /* Add margin-left to shift content right */
+  width: calc(100% - 200px); /* Adjust width to account for the left shift */
+}
+
+
+.navigation-buttons {
+  display: flex;
+  justify-content: space-between; /* Use space-between to distribute buttons evenly */
+  width: 100%;
+  padding: 20px;
+}
+
+.prev-button{
+  background-color: #28a9e2;
+  position: fixed;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  position: fixed;
+  bottom: 20px; 
+  left: 220px;
+  width: 100px;
+  height: 50px;
+  padding: 10px 20px;
+}
+.next-button {
+  background-color: #28a9e2;
+  position: fixed;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+
+
+.prev-button:hover {
+  background-color: #0056b3;
+}
+
+
+.prev-button:first-child {
+  margin-left: 0;
+}
+
+.theme-switch {
+  position: fixed;
+  top: 10px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 50px;
+  height: 20px;
+  border-radius: 20px;
+  background-color: #ccc;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.theme-switch:before {
+  content: '';
+  display: block;
+  width: 50%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #fff;
+  transition: transform 0.3s ease;
+}
+
+.theme-switch.dark:before {
+  transform: translateX(100%);
+  background-color: #000;
+}
+
+.theme-switch-label {
+  font-size: 8px;
+  color: #222;
+  font-weight: bold;
+  padding: 0 8px;
+}
+
+
+.App.day {
+  background-color: white;
+  color: black;
+}
+
+.App.night {
+  background-color: #212121;
+  color: white;
+}
+
+/* Additional styles for night theme */
+.App.night .App-header {
+  background-color: #333;
+}
+
+.App.night .prev-button,
+.App.night .next-button {
+  background-color: #28a9e2;
+  color: white;
+}
+
+.App.night .prev-button:hover,
+.App.night .next-button:hover {
+  background-color: #0056b3;
+}
+
+.App.night .theme-button {
+  background-color: #28a9e2;
+  color: white;
+}
+
+.App.night .theme-button:hover {
+  background-color: #0056b3;
+}

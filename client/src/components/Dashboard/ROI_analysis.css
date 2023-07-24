@@ -1,0 +1,72 @@
+.roi-container {
+    color: #28a9e2;
+    margin-top: 20px;
+    font-size: 16px;
+  }
+
+  .slidercontainer {
+    display: flex;
+    width: 100%;
+    justify-content: center; 
+    align-items: center; 
+    color: #28a9e2;
+    margin-top: 70px;
+    font-size: 16px;
+    margin-left: 165px;
+
+ 
+  }
+  
+.slider-wrapper-left {
+  margin-right: 100px;
+  margin-left: 100px;
+  width: 40%;
+}
+.slider-wrapper-right {
+  margin-right: 10px;
+  width: 40%;
+}
+
+.chart-wrapper {
+  flex: 1;
+}
+  
+  
+  .row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+  
+  .slider-value {
+    margin-right: 20px;
+  }
+  
+  .slider {
+    flex: 1;
+  }
+  .rc-slider {
+    width: 60%;
+  }
+  
+  
+  .button {
+    position: relative;
+    width: 100px;
+    height: 50px;
+    padding: 10px 20px;
+    margin-left: 580px;
+    color: #fff;
+    background-color: #28a9e2;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    align-items: center;
+    align-content: center;
+  }
+  
+  .button:hover {
+    background-color: #0056b3;
+  }
+  

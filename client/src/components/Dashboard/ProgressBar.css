@@ -1,0 +1,135 @@
+.progress-bar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  margin-left: 40px;
+}
+
+.progress-bar {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100px;
+  width: 700px;
+  padding: 5px;
+  margin-left: 90px;
+}
+
+.circular-progress-bar {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin-left: 20px; /* Adjusted */
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70px;
+  width: 70px; /* Update width to match height */
+  border-right: 2px solid lightgray;
+  border-left: 2px solid lightgray;
+  border-top: 2px solid lightgray;
+  border-bottom: 2px solid lightgray;
+  color: black;
+  background-color: lightgray;
+  border-radius: 50%;
+  margin-left: 60px;
+}
+
+.App.night .step {
+  background-color: white;
+  color: black;
+}
+
+
+.step.active {
+  background-color: transparent; /* Remove background color */
+  border-width: 4px; /* Increase border width */
+  border-color: #28a9e2; /* Set border color */
+}
+
+
+.next-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 100px;
+  height: 50px;
+  padding: 10px 20px;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.next-button:hover {
+  background-color: #0056b3;
+}
+
+.step-label {
+  font-size: 9px;
+  text-align: center;
+}
+
+.circular-progress-bar {
+  position: absolute;
+  right: 90px; /* Adjust the value as needed */
+  top: 15px; /* Adjust the value as needed */
+  width: 200px;
+  height: 200px;
+  margin-left: 20px;
+}
+
+.progressbar__svg {
+  width: 80%;
+  height: 80%;
+}
+
+.progressbar__svg-circle {
+  stroke-width: 10px;
+  fill: none;
+  stroke: #ccc;
+}
+
+.progressbar__svg-circle-progress {
+  stroke-width: 10;
+  fill: none;
+  stroke: #28a9e2;
+  stroke-dasharray: 0 440;
+  transition: stroke-dasharray 0.3s ease;
+  stroke-dasharray: 0, 628;
+}
+
+.progressbar__text {
+  position: absolute;
+  align-items: center;
+  top: 40%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
+  color: #28a9e2;
+  font-weight: bold;
+}
+
+.App.night .progressbar__text {
+  color: white; /* Set text color to white in night theme */
+}
+
+.completion-status {
+  color: #28a9e2;
+  font-weight: bold;
+  margin-top: 0px;
+  font-size: 16px;
+}
+
+.horizontal-line {
+  border-bottom: 2px solid lightblue;
+  width: 100%;
+  margin-top: 30px; 
+}

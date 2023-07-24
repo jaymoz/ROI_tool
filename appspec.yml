@@ -1,0 +1,26 @@
+
+version: 0.0
+os: linux
+# Application specification for the ReactJS client
+applications:
+  - name: ReactJSClient
+    hooks:
+      BeforeInstall:
+        - location: scripts/npm-install.sh
+          timeout: 300
+      ApplicationStart:
+        - location: scripts/start-client.sh
+          timeout: 300
+
+# Application specification for the Flask backend
+  - name: FlaskBackend
+    hooks:
+      BeforeInstall:
+        - location: scripts/venv-activate.sh
+          timeout: 300
+      AfterInstall:
+        - location: scripts/install-backend.sh
+          timeout: 300
+      ApplicationStart:
+        - location: scripts/start-backend.sh
+          timeout: 300

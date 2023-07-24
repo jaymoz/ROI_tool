@@ -1,0 +1,23 @@
+.griddropdown {
+    display: grid;
+    grid-template-columns: repeat(2, 100px);
+    grid-gap: 50px;
+    align-items: center;
+    margin-left: 400px;
+  }
+  
+  .grid-option {
+    padding: 20px;
+    background-color: lightgray;
+    cursor: pointer;
+    text-align: center;
+    color: 'black';
+    width: 120px;
+    height: 80px;
+  }
+  
+  .grid-option.selected {
+    background-color: lightblue;
+    color: 'black';
+  }
+  
