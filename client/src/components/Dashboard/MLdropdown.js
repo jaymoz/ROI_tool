@@ -65,7 +65,7 @@ const MLdropdown = ({ onModelSelect, onLearningSelect, trainData, testData }) =>
 
     if (selectedValue === 'logistic_regression') {
       try {
-        const response = await axios.post('http://44.201.124.234:5000/logistic-regression');
+        const response = await axios.post('http://127.0.0.1:5000/logistic-regression');
         console.log(response.data);
         if (response.data.success) {
           setReport(response.data.report);
@@ -83,7 +83,7 @@ const MLdropdown = ({ onModelSelect, onLearningSelect, trainData, testData }) =>
       }
     } else if (selectedValue === 'naive_bayes') {
       try {
-        const response = await axios.post('http://44.201.124.234:5000/naive-bayes');
+        const response = await axios.post('http://127.0.0.1:5000/naive-bayes');
         console.log(response.data);
         if (response.data.success) {
           setReport(response.data.report);
@@ -101,7 +101,7 @@ const MLdropdown = ({ onModelSelect, onLearningSelect, trainData, testData }) =>
       }
     } else if (selectedValue === 'random_forest') {
       try {
-        const response = await axios.post('http://44.201.124.234:5000/random-forest');
+        const response = await axios.post('http://127.0.0.1:5000/random-forest');
         console.log(response.data);
         if (response.data.success) {
           setReport(response.data.report);
@@ -119,7 +119,7 @@ const MLdropdown = ({ onModelSelect, onLearningSelect, trainData, testData }) =>
       }
     } else if (selectedValue === 'support_vector_machine') {
       try {
-        const response = await axios.post('http://44.201.124.234:5000/support-vector-machine');
+        const response = await axios.post('http://127.0.0.1:5000/support-vector-machine');
         console.log(response.data);
         if (response.data.success) {
           setReport(response.data.report);
@@ -137,7 +137,7 @@ const MLdropdown = ({ onModelSelect, onLearningSelect, trainData, testData }) =>
       }
     } else if (selectedValue === 'decision_tree') {
       try {
-        const response = await axios.post('http://44.201.124.234:5000/decision-tree');
+        const response = await axios.post('http://127.0.0.1:5000/decision-tree');
         console.log(response.data);
         if (response.data.success) {
           setReport(response.data.report);

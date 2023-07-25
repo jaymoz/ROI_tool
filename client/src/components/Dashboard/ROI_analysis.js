@@ -29,7 +29,7 @@ const ROI = () => {
     formData.append('preprocessing_cost', preprocessingCost);
     formData.append('product_value', productValue);
 
-    axios.post('http://44.201.124.234:5000/roi-parameters', formData)
+    axios.post('http://127.0.0.1:5000/roi-parameters', formData)
       .then(response => {
         console.log(response.data);
         setShowGraphs(true);
