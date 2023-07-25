@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Dropdown from './GridDropdown';
 import LearningDropdown from './Learning';
+import ActiveLearning from './ActiveLearning';
 import axios from 'axios';
 import './MLdropdown.css'
 
@@ -34,25 +35,27 @@ const MLdropdown = ({ onModelSelect, onLearningSelect, trainData, testData }) =>
     onLearningSelect(selectedValue);
 
     if (selectedValue === 'weeklySupervised') {
-      try {
-        const response = await axios.post('http://44.201.124.234:5000/weekly-supervised');
-        console.log(response.data);
-        if (response.data.success) {
-          setLearning(response.data.testCheck);
-        }
-      } catch (error) {
-        console.error(error);
-      }
+      setLearning(selectedValue)
+      // try {
+      //   const response = await axios.post('http://127.0.0.1:5000/weekly-supervised');
+      //   console.log(response.data);
+      //   if (response.data.success) {
+      //     setLearning(response.data.testCheck);
+      //   }
+      // } catch (error) {
+      //   console.error(error);
+      // }
     } else if (selectedValue === 'activeLearning') {
-      try {
-        const response = await axios.post('http://44.201.124.234:5000/active-learning');
-        console.log(response.data);
-        if (response.data.success) {
-          setLearning(response.data.testCheck);
-        }
-      } catch (error) {
-        console.error(error);
-      }
+          setLearning(selectedValue)
+      //try {
+      //   const response = await axios.post('http://127.0.0.1:5000/active-learning');
+      //   console.log(response.data);
+      //   if (response.data.success) {
+      //     setLearning(response.data.testCheck);
+      //   }
+      // } catch (error) {
+      //   console.error(error);
+      // }
     }
   };
 
@@ -164,45 +167,40 @@ const MLdropdown = ({ onModelSelect, onLearningSelect, trainData, testData }) =>
 
         {/* learning */}
         <LearningDropdown options={learningAlgo} onSelect={handleLearningSelect} />
+        {/* Conditionally render Supervised Models */}
+        {learning === 'weeklySupervised' && (
+          <>
+            <h3 style={{color:"black"}}>Supervised Models</h3>
+            <Dropdown options={options} onSelect={handleOptionSelect} />
 
-        {/* supervised models */}
-        <br />
-        <div className="text">Supervised Models</div>
-        <br />
-        <br />
-        <Dropdown options={options} onSelect={handleOptionSelect} />
+            {report && (
+              <div className="classification-report">
+                <div className="report-content">
+                  <pre><u><b>Training Accuracy</b></u>: {accuracy}</pre>
+                  <pre><u><b>Execution Time</b></u>: {stopTime} seconds</pre>
+                  <pre><u><b>F1 Score</b></u>: {f1_score} </pre>
+                  <pre><u><b>Classification Report</b></u><br></br><br></br>{report}</pre>
+                  <img src={graph}/>
+                  <img src={confusionMatrix}/>
+                </div>
+              </div>
+            )}
+          </>
+        )}
+
+        {/* Conditionally render Semi-Supervised Models */}
+        {learning === 'activeLearning' && (
+          <>
+            <h3 style={{color:"black"}}>Semi - Supervised Models</h3>
+            <ActiveLearning />
+          </>
+        )}
       </div>
-      {report && (
-        <div className="classification-report">
-          <div className="report-content">
-            <div className="report-tile">
-              <div className="report-tile-title">Accuracy</div>
-              <div className="report-tile-value">{accuracy}</div>
-            </div>
-            <div className="report-tile">
-              <div className="report-tile-title">F1 Score</div>
-              <div className="report-tile-value">{f1_score}</div>
-            </div>
-            <div className="report-tile">
-              <div className="report-tile-title">Execution Time</div>
-              <div className="report-tile-value">{stopTime} seconds</div>
-            </div>
-            <pre>
-              <u>
-                <b>Classification Report</b>
-              </u>
-              <br />
-              <br />
-              {report}
-            </pre>
-
-            <img src={graph} />
-            <img src={confusionMatrix} />
-          </div>
-        </div>
-      )}
     </div>
-  );
+);
+
+  
+  
 };
 
 export default MLdropdown;
