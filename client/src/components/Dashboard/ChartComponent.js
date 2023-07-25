@@ -2,7 +2,7 @@
         Pass In: train data & test data (.csv)
         Pass Out: interactive graphs
     Endfunction */
-
+    import React from 'react';
     import Papa from 'papaparse';
     import { useEffect, useState } from 'react';
     import { Bar } from 'react-chartjs-2';
