@@ -5,7 +5,6 @@
     Endfunction */
 
     import React, { Component } from "react";
-    import ReactDOM from "react-dom";
     import { default as ReactSelect, components } from "react-select";
     import { parse } from "papaparse"; 
     import "./ColumnFilter.css";

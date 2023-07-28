@@ -3,14 +3,14 @@ import axios from 'axios';
 import './ActiveLearning.css';
 
 const ActiveLearning = () => {
-  const [threshold, setThreshold] = useState(0.75);
+  const [threshold, setThreshold] = useState(0.60);
   const [maxIterations, setMaxIterations] = useState(3);
   const [resampling, setResampling] = useState('under_sampling');
   const [classifier, setClassifier] = useState('RF');
   const [samplingType, setSamplingType] = useState('leastConfidence');
   const [testSize, setTestSize] = useState(0.2);
   const [manualAnnotationsCount, setManualAnnotationsCount] = useState(12);
-  const [comments, setComments] = useState('-RF_LC-12-12');
+  const [comments] = useState('-RF_LC-12-12');
   const [fileContent, setFileContent] = useState(''); // new state to hold file content
   const [iterationIndex, setIterationIndex] = useState(1); // start at iteration 1
   const [displayContent, setDisplayContent] = useState(''); // content to display
@@ -88,72 +88,74 @@ const ActiveLearning = () => {
           onChange={(e) => setThreshold(Number(e.target.value))}
         />
       </div>
-
       <div className="input-container">
         <label className="input-label">
-          Max Iterations:
+          Max Iterations: {maxIterations}
         </label>
         <input
-          className="input-number"
-          type="number"
+          className="input-slider"
+          type="range"
+          min="1"
+          max="10"
           value={maxIterations}
-          onChange={(e) => setMaxIterations(e.target.value)}
+          onChange={(e) => setMaxIterations(Number(e.target.value))}
         />
+      </div>
+      <div className="input-container">
+        <label className="input-label">
+          Test Size: {testSize}
+        </label>
+        <input
+          className="input-slider"
+          type="range"
+          min="0"
+          max="1"
+          step="0.1"
+          value={testSize}
+          onChange={(e) => setTestSize(Number(e.target.value))}
+        />
+      </div>
+      <div className="input-container">
+        <label className="input-label">Sampling Type:</label>
+        <select
+          value={samplingType}
+          onChange={(e) => setSamplingType(e.target.value)}
+        >
+          <option value="leastConfidence">Least Confidence</option>
+          <option value="minMargin">Min Margin</option>
+          <option value="entropy">Entropy</option>
+        </select>
+      </div>
+      <div className="input-container">
+        <label className="input-label">Classifier Type:</label>
+        <select
+          value={classifier}
+          onChange={(e) => setClassifier(e.target.value)}>
+          <option value="RF">Random Forest</option>
+          <option value="NB">Naive Bayes</option>
+          <option value="SVM">Support Vector Machine</option>
+          <option value="ensemble">Ensemble</option>
+        </select>
       </div>
       <div className="input-container">
         <label className="input-label">Resampling:</label>
-        <input
-          type="text"
-          value={resampling}
-          onChange={(e) => setResampling(e.target.value)}
-        />
+        <select
+        value={resampling}
+        onChange={(e) => setResampling(e.target.value)}>
+          <option value="over_sampling">Over Sampling</option>
+          <option value="under_sampling">Under Sampling</option>
+        </select>
       </div>
 
       <div className="input-container">
-        <label className="input-label">Classifier:</label>
+        <label className="input-label">Manual Annotations Count:{manualAnnotationsCount}</label>
         <input
-          type="text"
-          value={classifier}
-          onChange={(e) => setClassifier(e.target.value)}
-        />
-      </div>
-
-      <div className="input-container">
-        <label className="input-label">Sampling Type:</label>
-        <input
-          type="text"
-          value={samplingType}
-          onChange={(e) => setSamplingType(e.target.value)}
-        />
-      </div>
-
-      <div className="input-container">
-        <label className="input-label">Test Size:</label>
-        <input
-          type="number"
-          step="0.1"
-          min="0"
-          max="1"
-          value={testSize}
-          onChange={(e) => setTestSize(e.target.value)}
-        />
-      </div>
-
-      <div className="input-container">
-        <label className="input-label">Manual Annotations Count:</label>
-        <input
-          type="number"
+          className="input-slider"
+          type="range"
+          min="1"
+          max="100"
           value={manualAnnotationsCount}
-          onChange={(e) => setManualAnnotationsCount(e.target.value)}
-        />
-      </div>
-
-      <div className="input-container">
-        <label className="input-label">Comments:</label>
-        <input
-          type="text"
-          value={comments}
-          onChange={(e) => setComments(e.target.value)}
+          onChange={(e) => setManualAnnotationsCount(Number(e.target.value))}
         />
       </div>
 

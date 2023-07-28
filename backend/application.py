@@ -15,6 +15,7 @@ import threading
 from sklearn.feature_extraction.text import CountVectorizer,TfidfTransformer
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
+from sklearn.metrics.cluster import entropy
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.metrics import accuracy_score, f1_score, classification_report, confusion_matrix, recall_score, precision_score
 from sklearn.model_selection import train_test_split, cross_val_score
@@ -1072,7 +1073,6 @@ def learnTargetLabel(args):
     
     #Create a dataframe to track the results
     df_resultTracker = pd.DataFrame()
-    #global??
     iteration = 0
     df_rqmts=df_rqmts.sample(frac=1) #shuffulles
     df_rqmts[label] = df_rqmts[label].astype('int')
@@ -1089,7 +1089,6 @@ def learnTargetLabel(args):
         writeLog("\n"+100*"-")
         writeLog("\n\nIteration : "+str(iteration)+"\n")
         #####run it multiple times say 10 and accumulate average results
-        #global???
         V_f1=[]
         V_prec = []
         V_rcl=[]
@@ -1283,7 +1282,13 @@ def learnTargetLabel(args):
             sampleCount = int(stats[key])
             print(type(sampleCount), sampleCount)
             #df_temp = df_LM_testing[df_LM_testing["Label"]==key].sample(sampleCount)
-            df_temp= df_LM_testing[df_LM_testing[label]==key].sample(sampleCount)
+            #df_temp= df_LM_testing[df_LM_testing[label]==key].sample(sampleCount)
+            df_temp = df_LM_testing[df_LM_testing[label]==key]
+            if df_temp.shape[0] >= sampleCount:
+                df_temp = df_temp.sample(sampleCount)
+            else:
+                df_temp = df_temp.sample(df_temp.shape[0])  # or df_temp.sample(df_temp.shape[0], replace=True)
+
             df_temp[annStatus] == 'M'
             df_LM_training = pd.concat([df_LM_training,df_temp],axis=0,ignore_index=True)
             #print(sampleCount, len(df_temp), len(df_LM_testing), len(df_LM_training))
@@ -1487,6 +1492,7 @@ def analyzePredictions(args,df_predictions):
         iteration = 0
         writeLog("\n\nIteration for field: "+str(field))
         #input("hit enter to proceed")
+        print (queryType)
         while iteration<int(args.loc[0,'manual_annotations_count']):  #while iteration is less than number of annotations that need to be done.
             if (len(df_predictions[df_predictions[label]==field ])>0):
                 writeLog("\n\nIteration  : "+str(iteration+1))
