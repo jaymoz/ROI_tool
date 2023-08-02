@@ -1,30 +1,23 @@
 .ml-dropdown-container {
-  display: flex;
-  flex-direction: row;
   margin-left: 30px;
 }
 
 .classification-report {
-  display: flex;
-  flex-direction: column;
-
   padding: 1px;
-
   color: #222222;
-  margin-top: 300px; 
   margin-bottom: 20px; 
+  margin-left: 90px;
+  margin-top: 50px;
   width: 1000px;
-
-  
 }
 .ml-models{
-  color: #28a9e2;
   margin-right: 0px;
 }
 .text{
-  color: #28a9e2;
   font-size: 25px;
   font-weight: bold;
+  margin-left:160px;
+  margin-top: 10px;
 }
 .App.night .text {
   color: white; 
@@ -39,7 +32,6 @@
 .classification-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
 }
 
 .classification-table th,
@@ -59,7 +51,7 @@
   content: "";
   position: absolute;
   top: 0;
-  right: -1px;
+  right: -10px;
   bottom: 0;
   width: 1px;
   background-color: #ccc;

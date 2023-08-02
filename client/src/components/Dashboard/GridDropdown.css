@@ -1,7 +1,7 @@
 .grid-dropdown {
   display: grid;
-  grid-template-columns: repeat(1, 300px);
-  grid-gap: 5px;
+  grid-template-columns: repeat(5, 20px);
+  grid-gap: 200px;
 }
 
 .grid-option {
@@ -10,7 +10,7 @@
   cursor: pointer;
   text-align: center;
   color: 'black';
-  width: 120px;
+  width: 1200px;
   height: 80px;
 }
 

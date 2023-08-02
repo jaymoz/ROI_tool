@@ -24,6 +24,8 @@ from sklearn.model_selection import StratifiedKFold, train_test_split
 from imblearn.over_sampling import SMOTE 
 from collections import Counter
 from sklearn.metrics import precision_recall_fscore_support as score
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import RepeatedStratifiedKFold
 from imblearn.pipeline import make_pipeline
 from sklearn.model_selection import GridSearchCV, cross_val_predict
@@ -137,7 +139,7 @@ req2 = 'summary2'
 req1Id = 'id1'
 req2Id = 'id2'
 annStatus = 'AnnotationStatus'
-
+classifierx = ''
 projectName = "Solr"
 
 '''Preprocessing functions'''
@@ -969,6 +971,8 @@ def set_roi_graphs():
 
 @application.route('/activeLearning', methods=['POST'])
 def active_learning1():
+    global classifierx
+    
     #Ignore Future warnings if any occur. 
     warnings.simplefilter(action='ignore', category=FutureWarning) 
     pd.set_option('display.max_columns', 500)   #To make sure all the columns are visible in the 
@@ -1004,7 +1008,8 @@ def active_learning1():
     # Convert the dictionary to a pandas DataFrame
     args = pd.DataFrame(args_dict)
 
-
+    
+    classifierx = args.loc[0,'classifier']
     #Creates Logs folder structure
     logFilePath,OFilePath = createLogs(currentFileDir+"/Logs",args)   
     df_rqmtComb,df_Analysis = learnTargetLabel(args)
@@ -1085,6 +1090,31 @@ def learnTargetLabel(args):
     df_LM_testing = df_testing
 
     while True:
+        f1_score_nb.clear()
+        f1_score_rf.clear()
+        f1_score_svc.clear()
+
+        recall_score_nb.clear()
+        recall_score_rf.clear()
+        recall_score_svc.clear()
+
+        precision_score_nb.clear()
+        precision_score_rf.clear()
+        precision_score_svc.clear()
+
+        tp_nb_list.clear()
+        fn_nb_list.clear()
+        fp_nb_list.clear()
+
+        tp_rf_list.clear()
+        fn_rf_list.clear()
+        fp_rf_list.clear()
+
+        tp_svc_list.clear()
+        fn_svc_list.clear()
+        fp_svc_list.clear()
+        
+
         iteration+=1
         writeLog("\n"+100*"-")
         writeLog("\n\nIteration : "+str(iteration)+"\n")
@@ -1600,7 +1630,7 @@ def createClassifier(clf,df_trainSet,resampling_type):
         
     #Naive Bayes Classifier Creation
     elif clf == "NB":
-        clf_model = nb_model.fit(X_train_tfidf,np.array(y_train).astype('int'))
+        clf_model = nb_model.fit(X_train_tfidf, np.array(y_train).astype('int'))
 
     #Support Vector Machine Classifier Creation.
     elif clf == "SVM":
@@ -1680,6 +1710,31 @@ def validateClassifier(cv,tfidf,clf_model,df_validationSet):
     clf_val_score/f1/precision/recall (float) : Accuracy Value on Validation Data / F1 score / Precision / Recall
     '''
     
+    global fp_rf_list 
+    global fn_rf_list 
+    global tp_rf_list 
+
+    global fp_svc_list 
+    global fn_svc_list 
+    global tp_svc_list 
+
+    global fp_nb_list 
+    global fn_nb_list 
+    global tp_nb_list 
+
+
+    global f1_score_nb
+    global f1_score_rf
+    global f1_score_svc
+
+    global recall_score_nb
+    global recall_score_rf
+    global recall_score_svc
+
+    global precision_score_nb
+    global precision_score_rf
+    global precision_score_svc
+    
     predictData = np.array(df_validationSet.loc[:,[req1,req2]])
     actualLabels = np.array(df_validationSet.loc[:,label]).astype('int')
     predict_counts = cv.transform(predictData)
@@ -1692,10 +1747,37 @@ def validateClassifier(cv,tfidf,clf_model,df_validationSet):
     f1 = round(f1_score(actualLabels, predict_labels,average='macro'),2)
     precision = round(precision_score(actualLabels, predict_labels,average='macro'),2)
     recall = round(recall_score(actualLabels, predict_labels,average='macro'),2)
-    
     labelClasses = list(set(actualLabels))   #np.array(y_train).astype('int')
     writeLog ("\n\nClassification Report On Validation Set: \n\n"+str(classification_report(actualLabels,predict_labels)))
-    cm = confusion_matrix(actualLabels,predict_labels,labels=labelClasses)    
+    cm = confusion_matrix(actualLabels,predict_labels,labels=[0,1])
+    if(classifierx == "RF"):
+        precision_score_rf.append(precision)
+        recall_score_rf.append(recall)
+        f1_score_rf.append(f1)
+        tn, fp_rf, fn_rf, tp_rf = cm.ravel()
+        fp_rf_list.append(int(fp_rf))
+        fn_rf_list.append(int(fn_rf))
+        tp_rf_list.append(int(tp_rf))
+
+    elif(classifierx == "SVM"):
+        precision_score_svc.append(precision)
+        recall_score_svc.append(recall)
+        f1_score_svc.append(f1)
+        tn, fp_svc, fn_svc, tp_svc = cm.ravel()
+        fp_svc_list.append(int(fp_svc))
+        fn_svc_list.append(int(fn_svc))
+        tp_svc_list.append(int(tp_svc))
+
+    elif(classifierx == "NB"):
+        precision_score_nb.append(precision)
+        recall_score_nb.append(recall)
+        f1_score_nb.append(f1)
+        tn, fp_nb, fn_nb, tp_nb = cm.ravel()
+        fp_nb_list.append(int(fp_nb))
+        fn_nb_list.append(int(fn_nb))
+        tp_nb_list.append(int(tp_nb))
+    
+    #writeLog(str(tp_rf_list[0]) + str(fp_rf_list[0]) + str(fn_rf_list[0]) + "hello" + str(f1_score_rf))
     writeLog ("\n\nConfusion Matrix : \n"+str(cm)+"\n")
     
     return clf_val_score,f1,precision,recall, precisionArr,recallArr,fscoreArr,supportArr, cm

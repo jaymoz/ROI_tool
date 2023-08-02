@@ -14,6 +14,9 @@ const ActiveLearning = () => {
   const [fileContent, setFileContent] = useState(''); // new state to hold file content
   const [iterationIndex, setIterationIndex] = useState(1); // start at iteration 1
   const [displayContent, setDisplayContent] = useState(''); // content to display
+  const [manuallyAnnotatedData, setManuallyAnnotatedData] = useState(''); // new state to hold manually annotated data
+  const [moreContentVisible, setMoreContentVisible] = useState(false); // state to control visibility of "more" content
+
   const handleSendToServer = async () => {
     const response = await axios.post('http://127.0.0.1:5000/activeLearning', {
       threshold: threshold,
@@ -34,6 +37,29 @@ const ActiveLearning = () => {
     setDisplayContent(iterationContent);
     setIterationIndex(1);
 
+  };
+
+  const extractManuallyAnnotatedData = (fileContent, iteration) => {
+    const lines = fileContent.split('\n');
+    let count = 0;
+    let indexStart = -1;
+    let indexEnd = -1;
+
+    for (let i = 0; i < lines.length; i++) {
+      if (lines[i].includes('Manually Annotated Combinations')) {
+        count += 1;
+        if (count === iteration) {
+          indexStart = i;
+        }
+      }
+      if (lines[i].includes('Merging Newly Labelled Data Samples')) {
+        if (count === iteration) {
+          indexEnd = i;
+          break;
+        }
+      }
+    }
+    return lines.slice(indexStart , indexEnd).join('\n');
   };
 
   const extractIteration = (fileContent, iteration) => {
@@ -71,9 +97,21 @@ const ActiveLearning = () => {
     const newIterationContent = extractIteration(fileContent, newIndex);
     setDisplayContent(newIterationContent);
     setIterationIndex(newIndex);
+    setMoreContentVisible(false);
   };
+  const handleMoreButtonClick = () => {
+    // Extract the manually annotated data for the current iteration
+    const newData = extractManuallyAnnotatedData(fileContent, iterationIndex);
+    // Update the state with the new data
+    setManuallyAnnotatedData(newData);
+    // Toggle visibility of "more" content
+    setMoreContentVisible(!moreContentVisible);
+  };
+
   return (
+    <div className="active-learning-container">
     <form className="active-learning">
+      <section className="form-inputs">
       <div className="input-container">
         <label className="input-label">
           Threshold: {threshold}
@@ -158,17 +196,29 @@ const ActiveLearning = () => {
           onChange={(e) => setManualAnnotationsCount(Number(e.target.value))}
         />
       </div>
+      </section>
 
-      <button type="button" onClick={handleSendToServer}>Submit</button>
+
       <div className="input-container">
-        <label className="input-label">Current Iteration: {iterationIndex}</label>
-        </div>
-      <button type="button" onClick={() => handleIterationChange('prev')}>Previous Iteration</button>
-      <button type="button" onClick={() => handleIterationChange('next')}>Next Iteration</button>
-      <div className="file-content">
-        <pre>{displayContent}</pre>
+        <label className="input-label-iteration">Current Iteration: {iterationIndex}</label>
       </div>
-    </form>
+
+      <section className="iteration-navigation">
+        <button type="button" onClick={() => handleIterationChange('prev')}>Previous Iteration</button>
+        <button type="button" onClick={() => handleIterationChange('next')}>Next Iteration</button>
+      </section>
+
+        <div className="file-content">
+          <pre>{displayContent}</pre>
+        </div>
+        <button type="button" onClick={handleSendToServer}>Submit</button>
+        <button type="button" onClick={handleMoreButtonClick}>More</button>
+
+      </form>
+      <div className={`annotated-content ${moreContentVisible ? 'active' : ''}`}>
+        <pre>{manuallyAnnotatedData}</pre>
+      </div>
+    </div>
   );
 };
 

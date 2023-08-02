@@ -1,28 +1,29 @@
 .chartcontainer {
-    width: 600px;
-    height: 800px;
-  }
+  width: 600px;
+  height: 700px;
+  text-align: center;
+}
 
 
 .chartwrapper {
-    margin-left: 250px;
-    color:#28a9e2;
-    font-size: 20px;
-    width: 500px;
-    height: 280px;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+  margin-left: 350px;
+  color:#28a9e2;
+  font-size: 20px;
+  width: 500px;
+  height: 280px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
-.text{
-    color: #28a9e2;
-    align-items: center;
-    font-size: 40px;
-    text-align: center;
+.textheading{
+  color: #28a9e2;
+  align-items: center;
+  font-size: 40px;
+  margin-left: 550px;
+
 }
 .App.night .text {
-    color: white; 
-  }
-  
-  
+  color: white; 
+}
+

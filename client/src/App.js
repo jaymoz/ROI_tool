@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Home from './components/Navbar/Home';
+import Contact from './components/Navbar/Contact/Contact';
 import ImportCSV from './components/Dashboard/ImportCSV';
 import MLdropdown from './components/Dashboard/MLdropdown';
 import Results from './components/Dashboard/Results';
@@ -11,10 +12,11 @@ import './App.css';
 
 function App() {
   const [showOtherPage, setShowOtherPage] = useState(false);
+  const [showContactPage, setShowContactPage] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [theme, setTheme] = useState('day'); // 'day' or 'night' theme
-  const steps = ['Import CSV', 'Select Model', 'View Results', 'Graphs', 'ROI Analysis'];
-  const pages = [ImportCSV, MLdropdown, Results, DependencyGraphs, ROI];
+  const steps = ['Import CSV', 'Select Model', 'View Results',  'ROI Analysis', 'Graphs'];
+  const pages = [ImportCSV, MLdropdown, Results, ROI, DependencyGraphs];
 
   const handleNextStep = () => {
     if (currentStep < steps.length - 1) {
@@ -30,19 +32,19 @@ function App() {
 
   const handleDashboardClick = () => {
     setShowOtherPage(true);
+    setShowContactPage(false);
     console.log('Dashboard clicked');
   };
 
   const handleHomeClick = () => {
     setShowOtherPage(false);
+    setShowContactPage(false);
   };
 
-  const handleAboutClick = () => {
-    setShowOtherPage(false);
-  };
 
   const handleContactClick = () => {
     setShowOtherPage(false);
+    setShowContactPage(true);
   };
 
   const CurrentPage = pages[currentStep];
@@ -65,12 +67,12 @@ function App() {
         <Navbar
           onDashboardClick={handleDashboardClick}
           onHomeClick={handleHomeClick}
-          onAboutClick={handleAboutClick}
           onContactClick={handleContactClick}
         />
       </header>
       <div className="App-content">
-        {!showOtherPage && <Home />}
+        {!showOtherPage && showContactPage && <Contact/>}
+        {!showOtherPage && !showContactPage && <Home />}
         {showOtherPage && (
           <>
             <ProgressBar steps={steps} currentStep={currentStep} />

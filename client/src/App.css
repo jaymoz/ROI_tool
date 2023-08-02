@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: column;
   min-height: 300vh;
-  margin: 0;
+  margin-top: 80px;
+  top: 100px;
 }
 
 .App-header {
@@ -14,6 +15,7 @@
   font-size: calc(10px + 2vmin);
   color: white;
   margin-top: 0;
+  
 }
 
 .App-content {
@@ -24,14 +26,16 @@
   font-size: calc(10px + 2vmin);
   color: white;
   padding-top: 40px;
-  margin-left: 200px; /* Add margin-left to shift content right */
-  width: calc(100% - 200px); /* Adjust width to account for the left shift */
+  margin-left: 100px; 
+  margin-right: 100px; 
+  width: calc(100% - 200px); 
+  
 }
 
 
 .navigation-buttons {
   display: flex;
-  justify-content: space-between; /* Use space-between to distribute buttons evenly */
+  justify-content: space-between; 
   width: 100%;
   padding: 20px;
 }
@@ -47,7 +51,7 @@
   cursor: pointer;
   position: fixed;
   bottom: 20px; 
-  left: 220px;
+  left: 20px;
   width: 100px;
   height: 50px;
   padding: 10px 20px;
@@ -87,6 +91,7 @@
   background-color: #ccc;
   padding: 4px;
   cursor: pointer;
+  z-index: 999;
 }
 
 .theme-switch:before {
@@ -122,7 +127,6 @@
   color: white;
 }
 
-/* Additional styles for night theme */
 .App.night .App-header {
   background-color: #333;
 }

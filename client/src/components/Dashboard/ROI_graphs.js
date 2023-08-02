@@ -49,16 +49,16 @@ const ROI_graphs = () => {
         {
           label: f1_score,
           data: graphData1,
-          backgroundColor: '#DAF0F7',
-          borderColor: '#DAF0F7',
+          backgroundColor: '#ff7f78',
+          borderColor: '#ff7f78',
           borderWidth: 1,
           pointRadius: 0,
         },
         {
           label: roi,
           data: graphData2,
-          backgroundColor: '#C8D9F0',
-          borderColor: '#C8D9F0',
+          backgroundColor: '#AFD88D',
+          borderColor: '#AFD88D',
           borderWidth: 1,
           pointRadius: 0,
         },
@@ -118,6 +118,8 @@ const ROI_graphs = () => {
           <br />
           F1 score vs ROI vs Relative Training Size - Logistic Regression
         </div>
+        </div>
+        <div className="chart-row">
         <div className="chart-wrapper">
           {renderGraph(graph1, graph6, 'F1 score', 'ROI', sizeArray)}
           <br />
@@ -130,6 +132,8 @@ const ROI_graphs = () => {
           <br />
           F1 score vs ROI vs Relative Training Size - Random Forest
         </div>
+        </div>
+        <div className="chart-row">
         <div className="chart-wrapper">
           {renderGraph(graph3, graph8, 'F1 score', 'ROI', sizeArray)}
           <br />
@@ -146,4 +150,5 @@ const ROI_graphs = () => {
     </div>
   );
 };
+
 export default ROI_graphs;

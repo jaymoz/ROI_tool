@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import './Navbar.css';
 
-const Navbar = ({ onDashboardClick, onHomeClick, onAboutClick, onContactClick }) => {
+const Navbar = ({ onDashboardClick, onHomeClick, onContactClick }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [authenticated, setAuthenticated] = useState(false);
+  const usernameFromEnv = process.env.REACT_APP_USERNAME;
+  const passwordFromEnv = process.env.REACT_APP_PASSWORD;
 
   const handleDashboardClick = (event) => {
     event.preventDefault();
@@ -49,19 +51,23 @@ const Navbar = ({ onDashboardClick, onHomeClick, onAboutClick, onContactClick })
   return (
     <nav className="navbar">
       <ul>
-        <img src="./user.png" style={{ width: '100px' }} alt="User" />
-        <br />
-        <br />
         <li>
           <a href="#" onClick={handleHomeClick}>
             Home
           </a>
         </li>
         <li>
-          <a href="#" onClick={handleContactClick}>
+          <a href="#contact" onClick={handleContactClick}>
             Contact
           </a>
         </li>
+        {authenticated && (
+          <li>
+            <a href="#" onClick={handleDashboardClick}>
+              Dashboard
+            </a>
+          </li>
+        )}
       </ul>
       {!authenticated && (
         <div className="login-box">
@@ -84,15 +90,6 @@ const Navbar = ({ onDashboardClick, onHomeClick, onAboutClick, onContactClick })
             <button type="submit">Login</button>
           </form>
         </div>
-      )}
-      {authenticated && (
-        <ul>
-          <li>
-            <a href="#" onClick={handleDashboardClick}>
-              Dashboard
-            </a>
-          </li>
-        </ul>
       )}
     </nav>
   );

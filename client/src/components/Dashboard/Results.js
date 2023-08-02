@@ -48,8 +48,7 @@ const Results = () => {
       setGraph12(data.precision_score_rf);
       setGraph13(data.precision_score_svc);
       setGraph14(data.precision_score_dt);
-
-
+      console.log(data.f1_score_lg);
     } catch (error) {
       console.error('Error fetching graph data:', error);
     }

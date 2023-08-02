@@ -5,7 +5,7 @@
   justify-content: center;
   margin-top: 10px;
   margin-bottom: 20px;
-  margin-left: 40px;
+  margin-left: 20px;
 }
 
 .progress-bar {
@@ -16,14 +16,15 @@
   height: 100px;
   width: 700px;
   padding: 5px;
-  margin-left: 90px;
+  margin-left: 10px;
 }
 
 .circular-progress-bar {
   position: relative;
   width: 200px;
   height: 200px;
-  margin-left: 20px; /* Adjusted */
+  margin-left: 20px; 
+  margin-top: 80px;
 }
 
 .step {
@@ -32,28 +33,20 @@
   justify-content: center;
   height: 70px;
   width: 70px; /* Update width to match height */
-  border-right: 2px solid lightgray;
-  border-left: 2px solid lightgray;
-  border-top: 2px solid lightgray;
-  border-bottom: 2px solid lightgray;
+  border-color: #ff7f78; /* Set border color */
   color: black;
-  background-color: lightgray;
+  background-color: #ff7f78;
   border-radius: 50%;
   margin-left: 60px;
 }
 
-.App.night .step {
-  background-color: white;
-  color: black;
-}
 
 
 .step.active {
-  background-color: transparent; /* Remove background color */
+  background-color: #AFD88D; /* Remove background color */
   border-width: 4px; /* Increase border width */
-  border-color: #28a9e2; /* Set border color */
+  border-color: #AFD88D; /* Set border color */
 }
-
 
 .next-button {
   position: fixed;
@@ -79,8 +72,8 @@
 
 .circular-progress-bar {
   position: absolute;
-  right: 90px; /* Adjust the value as needed */
-  top: 15px; /* Adjust the value as needed */
+  right: 90px;
+  top: 15px; 
   width: 200px;
   height: 200px;
   margin-left: 20px;
@@ -100,7 +93,7 @@
 .progressbar__svg-circle-progress {
   stroke-width: 10;
   fill: none;
-  stroke: #28a9e2;
+  stroke: #AFD88D;
   stroke-dasharray: 0 440;
   transition: stroke-dasharray 0.3s ease;
   stroke-dasharray: 0, 628;
@@ -113,7 +106,7 @@
   left: 40%;
   transform: translate(-50%, -50%);
   font-size: 14px;
-  color: #28a9e2;
+  color: #AFD88D;
   font-weight: bold;
 }
 
@@ -131,5 +124,120 @@
 .horizontal-line {
   border-bottom: 2px solid lightblue;
   width: 100%;
-  margin-top: 30px; 
+  margin-top: 30px;
+}
+
+/* Media Queries */
+
+@media (max-width: 1400px) {
+  .progress-bar {
+    width: 100%; 
+    margin-left: 5%; 
+  }
+
+  .circular-progress-bar {
+    display: none; /* Hide the circular progress bar */
+  }
+
+  .step {
+    width: 70px; 
+    height: 70px; 
+    margin-left: 30px; 
+  }
+
+  .next-button {
+    bottom: 10px; /* Adjusted position */
+    right: 10px; /* Adjusted position */
+  }
+
+  .progressbar__svg {
+    width: 70%; /* Adjusted size */
+    height: 70%; /* Adjusted size */
+  }
+
+  .progressbar__text {
+    top: 50%; /* Adjusted position */
+    left: 50%; /* Adjusted position */
+    font-size: 12px; /* Adjusted font size */
+  }
+
+  .completion-status {
+    font-size: 14px; /* Adjusted font size */
+  }
+}
+
+/* For screens with a maximum width of 768px */
+@media (max-width: 790px) {
+  .progress-bar {
+    width: 90%; /* Adjusted width */
+    margin-left: 5%; /* Adjusted margin */
+  }
+
+  .circular-progress-bar {
+    display: none; /* Hide the circular progress bar */
+  }
+
+  .step {
+    width: 50px; /* Adjusted size */
+    height: 50px; /* Adjusted size */
+    margin-left: 30px; /* Adjusted margin */
+  }
+
+  .next-button {
+    bottom: 10px; /* Adjusted position */
+    right: 10px; /* Adjusted position */
+  }
+
+  .progressbar__svg {
+    width: 70%; /* Adjusted size */
+    height: 70%; /* Adjusted size */
+  }
+
+  .progressbar__text {
+    top: 50%; /* Adjusted position */
+    left: 50%; /* Adjusted position */
+    font-size: 12px; /* Adjusted font size */
+  }
+
+  .completion-status {
+    font-size: 14px; /* Adjusted font size */
+  }
+}
+
+/* For screens with a maximum width of 480px */
+@media (max-width: 480px) {
+  .circular-progress-bar {
+    display: none; /* Hide the circular progress bar */
+  }
+  .progress-bar {
+    width: 90%; /* Adjusted width */
+    margin-left: 5%; /* Adjusted margin */
+  }
+
+
+  .step {
+    width: 40px; /* Adjusted size */
+    height: 40px; /* Adjusted size */
+    margin-left: 20px; /* Adjusted margin */
+  }
+
+  .next-button {
+    bottom: 10px; /* Adjusted position */
+    right: 10px; /* Adjusted position */
+  }
+
+  .progressbar__svg {
+    width: 60%; 
+    height: 60%; 
+  }
+
+  .progressbar__text {
+    top: 50%;
+    left: 50%; 
+    font-size: 10px; 
+  }
+
+  .completion-status {
+    font-size: 12px; 
+  }
 }

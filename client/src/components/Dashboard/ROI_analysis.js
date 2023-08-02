@@ -40,7 +40,6 @@ const ROI = () => {
   };
 
   return (
-    <>
     <div className="roi-container">
     <div className="slidercontainer">
     <div className="slider-wrapper-left">
@@ -166,7 +165,7 @@ const ROI = () => {
     
     {showGraphs && <ROI_graphs />}
     </div>
-    </>
+  
   );
 };
 

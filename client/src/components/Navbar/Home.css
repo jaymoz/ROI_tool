@@ -1,44 +1,35 @@
-@keyframes typewriter {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
-}
+
 .title{
-color: #28a9e2;
-font-size: 40px;
-font-weight: bolder;
-text-align: center;
-margin-bottom: 30px;
-align-items: center;
-justify-content: center;
+  color: #28a9e2;
+  font-size: 40px;
+  font-weight: bolder;
+  text-align: center;
+  margin-bottom: 30px;
+  align-items: center;
+  justify-content: center;
 }
 .home{
-margin-left: 30px;
-margin-right: 30px;
-margin-top: 30px;
+  margin-top: 30px;
 }
 .textData{
-font-size: 18px;
-color: black;
+  font-size: 18px;
+  color: black;
 }
 
 .App.night .textData{
-font-size: 18px;
-color: white;
+  font-size: 18px;
+  color: white;
 }
 
 .headings{
-color: #28a9e2;
-font-size: 30px;
-font-weight: bold;
-text-align: center;
-margin-top: 50px;
+  color: #28a9e2;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 0px;
 }
 
 .rounded-corner {
-border-radius: 20px;
-overflow: hidden;
+  overflow: hidden;
 }
+

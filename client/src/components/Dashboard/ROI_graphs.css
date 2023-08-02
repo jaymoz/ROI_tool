@@ -1,7 +1,8 @@
 .chart-container {
   width: 600px;
   height: auto;
-  margin-left: 270px;
+  margin-left: 190px;
+  margin-top: 20px;
 }
 
 .chart-row {
@@ -14,13 +15,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
 }
 
 .chart-wrapper {
   flex: 1;
   margin-right: 30px;
   margin-left: 30px;
-  color:#28a9e2;
+  color:#ff7f78;
   font-size: 16px;
   width: 500px;
   height: 400px;
@@ -31,9 +33,7 @@
 
 .text {
   color: #28a9e2;
-  align-items: center;
   font-size: 40px;
-  text-align: center;
 }
 
 .App.night .text {
