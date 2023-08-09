@@ -16,24 +16,24 @@ const LearningDropdown = ({ onSelect }) => {
   };
 
   return (
-    <center>
-    <div className="griddropdown">
-      
-      <button
-        className={`grid-option ${selectedOption === 'weeklySupervised' ? 'selected' : ''}`}
-        onClick={() => handleButtonClick('weeklySupervised')}
-      >
-        Weekly Supervised Models
-      </button>
-      <button
-        className={`grid-option ${selectedOption === 'activeLearning' ? 'selected' : ''}`}
-        onClick={() => handleButtonClick('activeLearning')}
-      >
-        Active Learning
-      </button>
-      
-    </div>
-    </center>
+      <center>
+        <div className="griddropdown">
+
+          <button
+              className={`grid-option ${selectedOption === 'supervised' ? 'selected' : ''}`}
+              onClick={() => handleButtonClick('supervised')}
+          >
+            Supervised Models
+          </button>
+          <button
+              className={`grid-option ${selectedOption === 'activeLearning' ? 'selected' : ''}`}
+              onClick={() => handleButtonClick('activeLearning')}
+          >
+            Active Learning
+          </button>
+
+        </div>
+      </center>
   );
 };
 

@@ -8,8 +8,8 @@
 .slidercontainer {
   display: flex;
   width: 80%;
-  justify-content: center; 
-  align-items: center; 
+  justify-content: center;
+  align-items: center;
   color: #28a9e2;
   margin-top: 70px;
   font-size: 16px;
@@ -17,17 +17,17 @@
 }
 
 .slider-wrapper-left {
-margin-right: 100px;
-margin-left: 100px;
-width: 40%;
+  margin-right: 100px;
+  margin-left: 100px;
+  width: 40%;
 }
 .slider-wrapper-right {
-margin-right: 10px;
-width: 40%;
+  margin-right: 10px;
+  width: 40%;
 }
 
 .chart-wrapper {
-flex: 1;
+  flex: 1;
 }
 
 

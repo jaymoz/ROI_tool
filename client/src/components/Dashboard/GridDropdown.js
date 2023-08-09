@@ -16,19 +16,19 @@ const Dropdown = ({ options, onSelect }) => {
   };
 
   return (
-    <div className="grid-dropdown">
-      
-      {options.map((option) => (
-        <div
-          key={option.value}
-          className={`grid-option ${selectedOption === option.value ? 'selected' : ''}`}
-          onClick={() => handleSelect(option)}
-        >
-          {option.label}
-        </div>
-      ))}
-      
-    </div>
+      <div className="grid-dropdown">
+
+        {options.map((option) => (
+            <div
+                key={option.value}
+                className={`grid-option ${selectedOption === option.value ? 'selected' : ''}`}
+                onClick={() => handleSelect(option)}
+            >
+              {option.label}
+            </div>
+        ))}
+
+      </div>
   );
 };
 

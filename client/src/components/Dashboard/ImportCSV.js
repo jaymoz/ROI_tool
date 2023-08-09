@@ -40,20 +40,20 @@ function ImportCSV() {
     formData.append('training_size', trainingSize);
 
     axios
-      .post('http://127.0.0.1:5000/upload/train_data', formData)
-      .then((response) => {
-        console.log(response.data);
-        if (response.data.success) {
-          settrain_data_RowCount(response.data.rows);
-          settrain_data_ColCount(response.data.columns);
-          setTrainData(response.data.csv_data);
-          setTrainDataUploaded(true);
-          setShowColumnSelection(true);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+        .post('http://127.0.0.1:5000/upload/train_data', formData)
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.success) {
+            settrain_data_RowCount(response.data.rows);
+            settrain_data_ColCount(response.data.columns);
+            setTrainData(response.data.csv_data);
+            setTrainDataUploaded(true);
+            setShowColumnSelection(true);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
   };
 
   const handleTestData = () => {
@@ -61,30 +61,30 @@ function ImportCSV() {
     formData.append('file', testData);
 
     axios
-      .post('http://127.0.0.1:5000/upload/test_data', formData)
-      .then((response) => {
-        console.log(response.data);
-        if (response.data.success) {
-          settest_data_RowCount(response.data.rows);
-          settest_data_ColCount(response.data.columns);
-          setTestDataUploaded(true);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+        .post('http://127.0.0.1:5000/upload/test_data', formData)
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.success) {
+            settest_data_RowCount(response.data.rows);
+            settest_data_ColCount(response.data.columns);
+            setTestDataUploaded(true);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
   };
 
   const handlePreprocessData = () => {
     axios
-      .post('http://127.0.0.1:5000/trim_data', { trainingSize })
-      .then((response) => {
-        console.log(response.data);
-        window.alert('Trimmed Data Saved at Backend!');
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+        .post('http://127.0.0.1:5000/trim_data', { trainingSize })
+        .then((response) => {
+          console.log(response.data);
+          window.alert('Trimmed Data Saved at Backend!');
+        })
+        .catch((error) => {
+          console.error(error);
+        });
   };
   const handleCredentialsChange = (event) => {
     const { name, value } = event.target;
@@ -106,65 +106,65 @@ function ImportCSV() {
 
 
   return (
-    <div className="container">
-  <div className="section">
-    <div className="box">
-      <h2 className="medium-text">Train Data</h2>
-      <div className="slider-container">
-        <p className="small-text" style={{ fontFamily: 'inherit' }}>Training Size: {trainingSize}</p>
-        <Slider min={0.1} max={1} step={0.1} value={trainingSize} onChange={handleTrainingSizeChange} />
-      </div>
-      <div className="input-section">
-        <input type="file" onChange={handleTrainDataUpload} />
-        <button className="small-button" onClick={handleGraphUpload}>Upload</button>
-      </div>
-      {trainDataUploaded && (
-        <div className="result">
-          <p className="small-text">Data Rows: {train_data_RowCount}</p>
-          <p className="small-text">Data Columns: {train_data_ColCount}</p>
+      <div className="container">
+        <div className="section">
+          <div className="box">
+            <h2 className="medium-text">Train Data</h2>
+            <div className="slider-container">
+              <p className="small-text" style={{ fontFamily: 'inherit' }}>Training Size: {trainingSize}</p>
+              <Slider min={0.1} max={1} step={0.1} value={trainingSize} onChange={handleTrainingSizeChange} />
+            </div>
+            <div className="input-section">
+              <input type="file" onChange={handleTrainDataUpload} />
+              <button className="small-button" onClick={handleGraphUpload}>Upload</button>
+            </div>
+            {trainDataUploaded && (
+                <div className="result">
+                  <p className="small-text">Data Rows: {train_data_RowCount}</p>
+                  <p className="small-text">Data Columns: {train_data_ColCount}</p>
+                </div>
+            )}
+          </div>
+          <div className="box">
+            <h2 className="medium-text">Test Data</h2>
+            <div className="input-section">
+              <input type="file" onChange={handleTestDataUpload} />
+              <button className="small-button" onClick={handleTestData}>Upload</button>
+            </div>
+            {test_data_RowCount !== null && test_data_ColCount !== null && (
+                <div className="result">
+                  <p className="small-text">Data Rows: {test_data_RowCount}</p>
+                  <p className="small-text">Data Columns: {test_data_ColCount}</p>
+                </div>
+            )}
+          </div>
         </div>
-      )}
-    </div>
-    <div className="box">
-      <h2 className="medium-text">Test Data</h2>
-      <div className="input-section">
-        <input type="file" onChange={handleTestDataUpload} />
-        <button className="small-button" onClick={handleTestData}>Upload</button>
-      </div>
-      {test_data_RowCount !== null && test_data_ColCount !== null && (
-        <div className="result">
-          <p className="small-text">Data Rows: {test_data_RowCount}</p>
-          <p className="small-text">Data Columns: {test_data_ColCount}</p>
+
+        {showColumnSelection && (
+            <div className="section">
+              <div className="box">
+                <h2 className="medium-text">Select the required columns</h2>
+                <Filter trainData={trainData} />
+                <br />
+                <br />
+                <center>
+                  <button className="button" onClick={handlePreprocessData} style={{width: '250px',height: '50px', marginLeft: '30px'}}>
+                    Trim & Preprocess Data
+                  </button>
+                </center>
+              </div>
+            </div>
+        )}
+
+        <div className="graphs-container">
+          {trainDataUploaded && (
+              <div className="graph-section">
+                <Charts />
+
+              </div>
+          )}
         </div>
-      )}
-    </div>
-  </div>
-
-  {showColumnSelection && (
-    <div className="section">
-      <div className="box">
-        <h2 className="medium-text">Select the required columns</h2>
-        <Filter trainData={trainData} />
-        <br />
-        <br />
-        <center>
-          <button className="button" onClick={handlePreprocessData} style={{width: '250px',height: '50px', marginLeft: '30px'}}>
-            Trim & Preprocess Data
-          </button>
-        </center>
       </div>
-    </div>
-  )}
-
-  <div className="graphs-container">
-    {trainDataUploaded && (
-      <div className="graph-section">
-        <Charts />
-
-      </div>
-    )}
-  </div>
-</div>
 
   );
 }

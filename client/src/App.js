@@ -10,6 +10,8 @@ import ProgressBar from './components/Dashboard/ProgressBar';
 import Navbar from './components/Navbar/Navbar';
 import './App.css';
 
+// const TRACKING_ID = "UA-280046123-1";
+// ReactGA.initialize(TRACKING_ID);
 function App() {
   const [showOtherPage, setShowOtherPage] = useState(false);
   const [showContactPage, setShowContactPage] = useState(false);
@@ -62,45 +64,45 @@ function App() {
   };
 
   return (
-    <div className={`App ${theme}`}>
-      <header className="App-header">
-        <Navbar
-          onDashboardClick={handleDashboardClick}
-          onHomeClick={handleHomeClick}
-          onContactClick={handleContactClick}
-        />
-      </header>
-      <div className="App-content">
-        {!showOtherPage && showContactPage && <Contact/>}
-        {!showOtherPage && !showContactPage && <Home />}
-        {showOtherPage && (
-          <>
-            <ProgressBar steps={steps} currentStep={currentStep} />
-            <CurrentPage
-              onModelSelect={handleModelSelect}
-              onLearningSelect={handleLearningSelect}
-            />
-            <div className="navigation-buttons">
-              {currentStep > 0 && (
-                <button className="prev-button" onClick={handlePrevStep}>
-                  Previous
-                </button>
-              )}
-              {currentStep < steps.length - 1 && (
-                <button className="next-button" onClick={handleNextStep}>
-                  Next
-                </button>
-              )}
+      <div className={`App ${theme}`}>
+        <header className="App-header">
+          <Navbar
+              onDashboardClick={handleDashboardClick}
+              onHomeClick={handleHomeClick}
+              onContactClick={handleContactClick}
+          />
+        </header>
+        <div className="App-content">
+          {!showOtherPage && showContactPage && <Contact/>}
+          {!showOtherPage && !showContactPage && <Home />}
+          {showOtherPage && (
+              <>
+                <ProgressBar steps={steps} currentStep={currentStep} />
+                <CurrentPage
+                    onModelSelect={handleModelSelect}
+                    onLearningSelect={handleLearningSelect}
+                />
+                <div className="navigation-buttons">
+                  {currentStep > 0 && (
+                      <button className="prev-button" onClick={handlePrevStep}>
+                        Previous
+                      </button>
+                  )}
+                  {currentStep < steps.length - 1 && (
+                      <button className="next-button" onClick={handleNextStep}>
+                        Next
+                      </button>
+                  )}
+                </div>
+              </>
+          )}
+          <div className="theme-switch" onClick={toggleTheme}>
+            <div className={`theme-switch-label ${theme === 'night' ? 'dark' : ''}`}>
+              {theme === 'day' ? 'Day' : 'Night'}
             </div>
-          </>
-        )}
-        <div className="theme-switch" onClick={toggleTheme}>
-          <div className={`theme-switch-label ${theme === 'night' ? 'dark' : ''}`}>
-            {theme === 'day' ? 'Day' : 'Night'}
           </div>
         </div>
       </div>
-    </div>
   );
 }
 

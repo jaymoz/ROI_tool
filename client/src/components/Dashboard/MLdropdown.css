@@ -1,33 +1,31 @@
 .ml-dropdown-container {
-  margin-left: 30px;
+  margin-left: 90px;
+  text-align: center;
 }
 
 .classification-report {
   padding: 1px;
   color: #222222;
-  margin-bottom: 20px; 
-  margin-left: 90px;
+  margin-bottom: 20px;
+  margin-left: 80px;
   margin-top: 50px;
   width: 1000px;
 }
-.ml-models{
-  margin-right: 0px;
-}
+
 .text{
   font-size: 25px;
   font-weight: bold;
-  margin-left:160px;
+
   margin-top: 10px;
 }
 .App.night .text {
-  color: white; 
+  color: white;
   font-size: 25px;
   font-weight: bold;
 }
 
 .report-content {
   max-height:700px;
-  overflow-y: scroll;
 }
 .classification-table {
   width: 100%;
@@ -86,6 +84,6 @@
 }
 
 .report-tile-value {
-  font-size: 18px;
+  font-size: 16px;
 }
 

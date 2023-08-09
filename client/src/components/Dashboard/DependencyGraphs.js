@@ -5,9 +5,9 @@ import {Chart, PointElement, LineElement} from 'chart.js';
 Chart.register(PointElement, LineElement);
 
 const DependencyGraphs = () => {
-    
+
   return (
-    <p>DependencyGrpah</p>
+      <p>Dependency Graph</p>
   );
 };
 

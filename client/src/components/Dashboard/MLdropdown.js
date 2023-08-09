@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Dropdown from './GridDropdown';
-import LearningDropdown from './Learning';
 import ActiveLearning from './ActiveLearning';
+import LearningDropdown from './Learning';
 import axios from 'axios';
 import './MLdropdown.css'
 
@@ -15,7 +15,7 @@ const MLdropdown = ({ onModelSelect, onLearningSelect, trainData, testData }) =>
   ];
 
   const learningAlgo = [
-    { label: 'Weekly Supervised Model', value: 'weeklySupervised' },
+    { label: 'Supervised Model', value: 'supervised' },
     { label: 'Active Learning', value: 'activeLearning' },
   ];
 
@@ -34,28 +34,27 @@ const MLdropdown = ({ onModelSelect, onLearningSelect, trainData, testData }) =>
     console.log('Selected option:', selectedValue);
     onLearningSelect(selectedValue);
 
-    if (selectedValue === 'weeklySupervised') {
-      setLearning(selectedValue)
-      // try {
-      //   const response = await axios.post('http://127.0.0.1:5000/weekly-supervised');
-      //   console.log(response.data);
-      //   if (response.data.success) {
-      //     setLearning(response.data.testCheck);
-      //   }
-      // } catch (error) {
-      //   console.error(error);
-      // }
+    if (selectedValue === 'supervised') {
+      try {
+        const response = await axios.post('http://127.0.0.1:5000/weekly-supervised');
+        console.log(response.data);
+
+        if (response.data.success) {
+          setLearning('supervised');
+        }
+      } catch (error) {
+        console.error(error);
+      }
     } else if (selectedValue === 'activeLearning') {
-          setLearning(selectedValue)
-      //try {
-      //   const response = await axios.post('http://127.0.0.1:5000/active-learning');
-      //   console.log(response.data);
-      //   if (response.data.success) {
-      //     setLearning(response.data.testCheck);
-      //   }
-      // } catch (error) {
-      //   console.error(error);
-      // }
+      try {
+        const response = await axios.post('http://127.0.0.1:5000/active-learning');
+        console.log(response.data);
+        if (response.data.success) {
+          setLearning('activeLearning');
+        }
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -157,50 +156,66 @@ const MLdropdown = ({ onModelSelect, onLearningSelect, trainData, testData }) =>
   };
 
   return (
-    <div className="ml-dropdown-container">
-      <div className="ml-models">
-        <br />
-        <div className="text" style={{ fontSize: '38px', textAlign: 'center' }}>
-          ML Models
+      <>
+        <div className="text" style={{ fontSize: '38px'}}>
+          ML Models<br/><br/>
         </div>
-        <br />
+        <div className="ml-dropdown-container">
+          <div className="ml-models" style={{color: '#28a9e2'}}>
+            {/* learning */}
+            <LearningDropdown options={learningAlgo} onSelect={handleLearningSelect} />
+            {learning === 'supervised' && (
+                /* supervised models and report */
+                <React.Fragment>
+                  <br/><br/>
+                  <div className="text" style={{ fontSize: '35px', textAlign: 'center', color: '#28a9e2' }}>Supervised Models</div><br/><br/>
 
-        {/* learning */}
-        <LearningDropdown options={learningAlgo} onSelect={handleLearningSelect} />
-        {/* Conditionally render Supervised Models */}
-        {learning === 'weeklySupervised' && (
-          <>
-            <h3 style={{color:"black"}}>Supervised Models</h3>
-            <Dropdown options={options} onSelect={handleOptionSelect} />
+                  <Dropdown options={options} onSelect={handleOptionSelect} />
+                  {report && (
+                      <div className="classification-report">
+                        <div className="report-content">
+                          <div className="report-tile">
+                            <div className="report-tile-title">Accuracy</div>
+                            <div className="report-tile-value">{accuracy}</div>
+                          </div>
+                          <div className="report-tile">
+                            <div className="report-tile-title">F1 Score</div>
+                            <div className="report-tile-value">{f1_score}</div>
+                          </div>
+                          <div className="report-tile">
+                            <div className="report-tile-title">Execution Time</div>
+                            <div className="report-tile-value">{stopTime} seconds</div>
+                          </div><br/><hr/>
+                          <pre>
+                <u>
+                  <b>Classification Report</b>
+                </u>
+                <br />
+                <br />
+                            {report}<br/><hr/>
+              </pre>
 
-            {report && (
-              <div className="classification-report">
-                <div className="report-content">
-                  <pre><u><b>Training Accuracy</b></u>: {accuracy}</pre>
-                  <pre><u><b>Execution Time</b></u>: {stopTime} seconds</pre>
-                  <pre><u><b>F1 Score</b></u>: {f1_score} </pre>
-                  <pre><u><b>Classification Report</b></u><br></br><br></br>{report}</pre>
-                  <img src={graph}/>
-                  <img src={confusionMatrix}/>
-                </div>
-              </div>
+                          <img src={graph} />
+                          <img src={confusionMatrix} />
+                        </div>
+                      </div>
+
+                  )}
+                </React.Fragment>
             )}
-          </>
-        )}
 
-        {/* Conditionally render Semi-Supervised Models */}
-        {learning === 'activeLearning' && (
-          <>
-            <h3 style={{color:"black"}}>Semi - Supervised Models</h3>
-            <ActiveLearning />
-          </>
-        )}
-      </div>
-    </div>
-);
+            {/* Conditionally render Semi-Supervised Models */}
+            {learning === 'activeLearning' && (
+                <>
+                  <h3 style={{color:"black"}}>Semi - Supervised Models</h3>
+                  <ActiveLearning />
+                </>
+            )}
+          </div>
 
-  
-  
+
+        </div></>
+  );
 };
 
 export default MLdropdown;

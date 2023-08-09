@@ -49,49 +49,49 @@ const Navbar = ({ onDashboardClick, onHomeClick, onContactClick }) => {
   };
 
   return (
-    <nav className="navbar">
-      <ul>
-        <li>
-          <a href="#" onClick={handleHomeClick}>
-            Home
-          </a>
-        </li>
-        <li>
-          <a href="#contact" onClick={handleContactClick}>
-            Contact
-          </a>
-        </li>
-        {authenticated && (
+      <nav className="navbar">
+        <ul>
           <li>
-            <a href="#" onClick={handleDashboardClick}>
-              Dashboard
+            <a href="#" onClick={handleHomeClick}>
+              Home
             </a>
           </li>
+          <li>
+            <a href="#contact" onClick={handleContactClick}>
+              Contact
+            </a>
+          </li>
+          {authenticated && (
+              <li>
+                <a href="#" onClick={handleDashboardClick}>
+                  Dashboard
+                </a>
+              </li>
+          )}
+        </ul>
+        {!authenticated && (
+            <div className="login-box">
+              <p style={{ color: '#28a9e2', fontSize: '14px' }}>To access the dashboard:</p>
+              <form onSubmit={handleLogin}>
+                <input
+                    type="text"
+                    placeholder="Username"
+                    value={username}
+                    onChange={handleUsernameChange}
+                    required
+                />
+                <input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={handlePasswordChange}
+                    required
+                />
+                <button type="submit">Login</button>
+              </form>
+            </div>
         )}
-      </ul>
-      {!authenticated && (
-        <div className="login-box">
-          <p style={{ color: '#28a9e2', fontSize: '14px' }}>To access the dashboard:</p>
-          <form onSubmit={handleLogin}>
-            <input
-              type="text"
-              placeholder="Username"
-              value={username}
-              onChange={handleUsernameChange}
-              required
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={handlePasswordChange}
-              required
-            />
-            <button type="submit">Login</button>
-          </form>
-        </div>
-      )}
-    </nav>
+      </nav>
   );
 };
 

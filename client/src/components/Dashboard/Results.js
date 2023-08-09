@@ -48,7 +48,8 @@ const Results = () => {
       setGraph12(data.precision_score_rf);
       setGraph13(data.precision_score_svc);
       setGraph14(data.precision_score_dt);
-      console.log(data.f1_score_lg);
+
+
     } catch (error) {
       console.error('Error fetching graph data:', error);
     }
@@ -71,7 +72,7 @@ const Results = () => {
           label: nb,
           data: graphData2,
           backgroundColor: '#C8D9F0',
-          borderColor: '#C8D9F0', 
+          borderColor: '#C8D9F0',
           borderWidth: 1,
           pointRadius: 0,
         },
@@ -79,7 +80,7 @@ const Results = () => {
           label: rf,
           data: graphData3,
           backgroundColor: '#A8B5E0',
-          borderColor: '#A8B5E0', 
+          borderColor: '#A8B5E0',
           borderWidth: 1,
           pointRadius: 0,
         },
@@ -87,7 +88,7 @@ const Results = () => {
           label: svc,
           data: graphData4,
           backgroundColor: '#A8B5E0',
-          borderColor: '#A8B5E0', 
+          borderColor: '#A8B5E0',
           borderWidth: 1,
           pointRadius: 0,
         },
@@ -95,7 +96,7 @@ const Results = () => {
           label: dt,
           data: graphData5,
           backgroundColor: '#C3EEFA',
-          borderColor: '#C3EEFA', 
+          borderColor: '#C3EEFA',
           borderWidth: 1,
           pointRadius: 0,
         },
@@ -127,27 +128,27 @@ const Results = () => {
     };
 
     return (
-      <div>
-        <Line data={chartData} options={chartOptions} />
-      </div>
+        <div>
+          <Line data={chartData} options={chartOptions} />
+        </div>
     );
   };
 
   const sizeArray = [20, 30, 40, 50, 60, 70, 80, 90];
 
   return (
-    <div className="chartcontainer">
-      <center><div className="text">Results</div><br/><br/></center>
-      <div className="chartwrapper">{renderGraphs(graph, graph3, graph6, graph7, graph8, 'Logistic Regression', 'Naive Bayes', 'Random Forest', 'SVC', 'Decision Tree', sizeArray)}</div>
-      <div className="chartwrapper" style={{height: '100px', marginTop:'0px'}}>F1 score vs Relative Training Size %</div>
-      <br/><br/>
-      <div className="chartwrapper">{renderGraphs(graph1, graph4, graph9, graph10, graph11, 'Logistic Regression', 'Naive Bayes','Random Forest', 'SVC', 'Decision Tree', sizeArray)}</div>
-      <div className="chartwrapper" style={{height: '100px', marginTop:'0px'}}>Recall score vs Relative Training Size %</div>
-      <br/><br/>
-      <div className="chartwrapper">{renderGraphs(graph2, graph5, graph12, graph13, graph14, 'Logistic Regression', 'Naive Bayes', 'Random Forest', 'SVC', 'Decision Tree', sizeArray)}</div>
-      <div className="chartwrapper">Precision score vs Relative Training Size %</div>
-      <br/><br/>
-    </div>
+      <div className="chartcontainer">
+        <center><div className="text">Results</div><br/><br/></center>
+        <div className="chartwrapper">{renderGraphs(graph, graph3, graph6, graph7, graph8, 'Logistic Regression', 'Naive Bayes', 'Random Forest', 'SVC', 'Decision Tree', sizeArray)}</div>
+        <div className="chartwrapper" style={{height: '100px', marginTop:'0px'}}>F1 score vs Relative Training Size %</div>
+        <br/><br/>
+        <div className="chartwrapper">{renderGraphs(graph1, graph4, graph9, graph10, graph11, 'Logistic Regression', 'Naive Bayes','Random Forest', 'SVC', 'Decision Tree', sizeArray)}</div>
+        <div className="chartwrapper" style={{height: '100px', marginTop:'0px'}}>Recall score vs Relative Training Size %</div>
+        <br/><br/>
+        <div className="chartwrapper">{renderGraphs(graph2, graph5, graph12, graph13, graph14, 'Logistic Regression', 'Naive Bayes', 'Random Forest', 'SVC', 'Decision Tree', sizeArray)}</div>
+        <div className="chartwrapper">Precision score vs Relative Training Size %</div>
+        <br/><br/>
+      </div>
   );
 };
 
