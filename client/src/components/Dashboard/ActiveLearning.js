@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import './ActiveLearning.css';
 
@@ -17,8 +17,9 @@ const ActiveLearning = () => {
   const [manuallyAnnotatedData, setManuallyAnnotatedData] = useState(''); // new state to hold manually annotated data
   const [moreContentVisible, setMoreContentVisible] = useState(false); // state to control visibility of "more" content
 
-  const handleSendToServer = async () => {
-    const response = await axios.post('http://127.0.0.1:5000/activeLearning', {
+
+  const handleSubmit = async () => {
+    const response = await axios.post('http://127.0.0.1:5000/activeLearning1', {
       threshold: threshold,
       max_iterations: maxIterations,
       resampling: resampling,
@@ -28,15 +29,35 @@ const ActiveLearning = () => {
       manual_annotations_count: manualAnnotationsCount,
       comments: comments
     });
-    setFileContent(response.data.fileContent); // save file content to state
-    console.log(response.data.fileContent);  // logging the file content
+    setFileContent(response.data.fileContent)
+    setIterationIndex(0);
 
-    // set displayContent to first iteration
-    const iterationContent = extractIteration(response.data.fileContent, 1);
-    console.log(iterationContent);  // logging the iterationContent
-    setDisplayContent(iterationContent);
-    setIterationIndex(1);
+  };
+  const handleIterationChange = async (direction) => {
+    let newIndex = iterationIndex;
 
+    if (direction === 'next' && iterationIndex < maxIterations) {
+      newIndex = iterationIndex + 1;
+    } else if (direction === 'prev' && iterationIndex > 1) {
+      newIndex = iterationIndex - 1;
+    }
+
+    const delimiterExists = fileContent.includes(`Iteration : ${newIndex}`);
+
+    let newFileContent = fileContent;
+
+    if (direction === 'next' && !delimiterExists) {
+      // If "Next" is pressed and delimiter for the new iteration doesn't exist, update the file content.
+      const response = await axios.post('http://127.0.0.1:5000/next');
+      newFileContent = response.data.fileContent;
+      setFileContent(newFileContent);
+    }
+    // Extract iteration content from either the existing file content or the new one fetched from the backend.
+    const newIterationContent = extractIteration(newFileContent, newIndex);
+    setDisplayContent(newIterationContent);
+
+    setIterationIndex(newIndex);
+    setMoreContentVisible(false);
   };
 
   const extractManuallyAnnotatedData = (fileContent, iteration) => {
@@ -66,7 +87,7 @@ const ActiveLearning = () => {
     const lines = fileContent.split('\n');
     let count = 0;
     let index = -1;
-  
+
     // Loop through the lines until we find the nth occurrence of 'Analysis DataFrame :'
     for (let i = 0; i < lines.length; i++) {
       if (lines[i].includes('Analysis DataFrame :')) {
@@ -77,28 +98,16 @@ const ActiveLearning = () => {
         }
       }
     }
-  
+
     console.log(index);  // logging the found index
-  
-    // Return 27 lines above 'Analysis DataFrame :' up to 2 lines above it
+
+    // Return 25 lines above 'Analysis DataFrame :' up to 2 lines above it
     // Make sure the slice start isn't less than 0
-    return lines.slice(Math.max(0, index - 27), index - 2).join('\n');
+    return lines.slice(Math.max(0, index - 23), index - 2).join('\n');
   };
 
-  const handleIterationChange = (direction) => {
-    // When "Next Iteration" or "Previous Iteration" button is clicked, update iteration index and displayContent
-    let newIndex = iterationIndex;
-    if (direction === 'next' && iterationIndex < maxIterations) {
-      newIndex = iterationIndex + 1;
-    } else if (direction === 'prev' && iterationIndex > 1) {
-      newIndex = iterationIndex - 1;
-    }
 
-    const newIterationContent = extractIteration(fileContent, newIndex);
-    setDisplayContent(newIterationContent);
-    setIterationIndex(newIndex);
-    setMoreContentVisible(false);
-  };
+
   const handleMoreButtonClick = () => {
     // Extract the manually annotated data for the current iteration
     const newData = extractManuallyAnnotatedData(fileContent, iterationIndex);
@@ -200,23 +209,25 @@ const ActiveLearning = () => {
 
 
       <div className="input-container">
-        <label className="input-label-iteration">Current Iteration: {iterationIndex}</label>
+        <label className="input-label-iteration"> {classifier} Current Iteration: {iterationIndex}</label>
       </div>
 
       <section className="iteration-navigation">
-        <button type="button" onClick={() => handleIterationChange('prev')}>Previous Iteration</button>
-        <button type="button" onClick={() => handleIterationChange('next')}>Next Iteration</button>
+        {iterationIndex > 1 && <button type="button" onClick={() => handleIterationChange('prev')}>Previous Iteration</button>}
+        {iterationIndex < maxIterations && <button type="button" onClick={() => handleIterationChange('next')}>Next Iteration</button>}
       </section>
 
-        <div className="file-content">
-          <pre>{displayContent}</pre>
-        </div>
-        <button type="button" onClick={handleSendToServer}>Submit</button>
+
+      <div className="file-content">
+        {iterationIndex > 0 && <pre>{displayContent}</pre>}
+      </div>
+
+      <button type="button" onClick={handleSubmit}>Submit</button>
         <button type="button" onClick={handleMoreButtonClick}>More</button>
 
       </form>
       <div className={`annotated-content ${moreContentVisible ? 'active' : ''}`}>
-        <pre>{manuallyAnnotatedData}</pre>
+        {iterationIndex > 0 && <pre>{manuallyAnnotatedData}</pre>}
       </div>
     </div>
   );
