@@ -1943,4 +1943,4 @@ def my_tokenizer(arr):
 
 if __name__ == '__main__':
     application.run(host='0.0.0.0', port=5000, debug=True)
-CORS(application)
+CORS(application, origins=["http://roi.shaktilab.org"])
