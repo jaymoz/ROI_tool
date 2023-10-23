@@ -47,7 +47,7 @@ import pickle
 
 
 application = Flask(__name__, static_folder='static')
-CORS(application)
+CORS(application, origins=["http://localhost:3000"])
 
 '''Global variables'''
 df_train = None
@@ -284,10 +284,17 @@ def filter_columns():
         return jsonify({'error': str(e)})
 
 
+from flask import Flask, jsonify
+import pandas as pd
+
+# application = Flask(__name__)
+
+# Assuming other required code and imports are present
+
 ''' Function - trims data as per training size
-        Pass In: dataframe
-        Pass Out: preprocessed and trimmed dataframe
-    Endfunction '''
+    Pass In: dataframe
+    Pass Out: preprocessed and trimmed dataframe
+Endfunction '''
 @application.route('/trim_data', methods=['POST'])
 def trim_data():
     global df_train
@@ -304,13 +311,21 @@ def trim_data():
 
     df_train_trimmed = df_train[:trim_rows]
     df_filtered_trimmed = df_train_trimmed[selected_columns]
+    text_columns = []
 
     for column in df_filtered_trimmed.columns:
         if df_filtered_trimmed[column].dtype == object or isinstance(df_filtered_trimmed[column].dtype, pd.StringDtype):
             text_columns.append(column)
-    return jsonify({'success': True,
-                    'df_filtered_trimmed' : df_filtered_trimmed, 'text_columns': text_columns
-                     })
+    
+        # Save df_filtered_trimmed to a CSV file
+    df_filtered_trimmed.to_csv('df_filtered_trimmed.csv', index=False)
+
+
+    return jsonify({
+        'success': True,
+        'df_filtered_trimmed': df_filtered_trimmed.to_json(orient='records'),
+        'text_columns': text_columns
+    })
 
 
 # ML models - STEP 2
@@ -323,6 +338,8 @@ def trim_data():
 
 @application.route('/logistic-regression', methods=['POST'])
 def perform_logistic_regression():
+    import traceback
+    import sys
     global df_test
     global df_filtered_trimmed
     global f1_score_lg
@@ -340,13 +357,28 @@ def perform_logistic_regression():
     tp_lg_list.clear()
     fn_lg_list.clear()
     fp_lg_list.clear()
+        # Load df_filtered_trimmed from the saved CSV file
+
     
 
     try:
+        df_filtered_trimmed = pd.read_csv('df_filtered_trimmed.csv') 
         start = time.time()
         X = df_filtered_trimmed.drop(columns=['Label'])
         y = df_filtered_trimmed['Label']
-        X_text = X[text_columns].apply(lambda x: ' '.join(x.dropna()), axis=1)
+        X_text_before = X[text_columns].apply(lambda x: ' '.join(x), axis=1)
+        X_text = X[text_columns].apply(lambda x: ' '.join(x.fillna('')), axis=1)
+        # Make sure that X_text is a pandas Series or a list of strings
+        X_text = list(X_text)
+
+# Transform the text using the vectorizer
+# X_test_vectorized = vectorizer.transform(X_text)
+
+
+
+        # X_text = X[text_columns]
+        # empty_rows = (X_text == '').sum()
+            
 
         # Load the logistic regression model from pickle file
         with open('logistic_regression.pkl', 'rb') as file:
@@ -359,9 +391,11 @@ def perform_logistic_regression():
         X_test_vectorized = vectorizer.transform(X_text)
 
         # Split the dataset into training and test sets
-        X_train, X_test, y_train, y_test = train_test_split(X_test_vectorized, y, train_size=0.8, random_state=42)
+        X_train, X_test, y_train, y_test = train_test_split(X_test_vectorized, y, train_size=0.8)
+
 
         # Predict on the test set
+
         y_pred = model.predict(X_test)
         
         stop = round(time.time() - start,4)
@@ -377,8 +411,9 @@ def perform_logistic_regression():
         for k in range(2,10):
             k = k/10
             X_train, X_test, y_train, y_test = train_test_split(X, y, train_size = k, random_state=42)
-            X_train_text = X_train[text_columns].apply(lambda x: ' '.join(x.dropna()), axis=1)
-            X_test_text = X_test[text_columns].apply(lambda x: ' '.join(x.dropna()), axis=1)
+            
+            X_train_text = X_train[text_columns]
+            X_test_text = X_test[text_columns]
             X_train_vectorized = vectorizer.fit_transform(X_train_text)
             X_test_vectorized = vectorizer.transform(X_test_text)
             model.fit(X_train_vectorized, y_train)
@@ -420,9 +455,11 @@ def perform_logistic_regression():
         return jsonify({'success': True, 'report': report, 'accuracy':accuracy,'stop':stop,'graph':'/static/lg.png','cm':'/static/lg_cm.png','f1':f1,'f1score':f1_score_lg,'recallscore':recall_score_lg,'precisionscore':precision_score_lg,'tp':tp_lg_list,'fp':fp_lg_list,'fn':fn_lg_list})
     
     except Exception as e:
-        return jsonify({'error': str(e)})
+        exc_type, exc_value, exc_traceback = sys.exc_info()
+        line_number = exc_traceback.tb_lineno
+        return jsonify({'error': str(e), 
+                        'line_number': line_number,'X_text':str(X_train_text)})
 
-    
 
 @application.route('/naive-bayes', methods=['POST'])
 def perform_naive_bayes():
@@ -546,6 +583,7 @@ def perform_random_forest():
 
     try:
         start = time.time()
+        print(df_filtered_trimmed)
         X = df_filtered_trimmed.drop(columns=['Label'])
         y = df_filtered_trimmed['Label']
         X_text = X[text_columns].apply(lambda x: ' '.join(x.dropna()), axis=1)
@@ -620,7 +658,7 @@ def perform_random_forest():
         return jsonify({'success': True, 'report': report, 'accuracy':accuracy,'stop':stop,'graph':'/static/rf.png','cm':'/static/rf_cm.png','f1':f1,'f1score':f1_score_rf,'recallscore':recall_score_rf,'precisionscore':precision_score_rf,'tp':tp_rf_list,'fp':fp_rf_list,'fn':fn_rf_list})
     
     except Exception as e:
-        return jsonify({'error': str(e)})
+        return jsonify({'error random forest': str(e)})
 
 
 
@@ -827,6 +865,10 @@ def perform_decision_tree():
 def weekly_supervised():
     global df_test
     global df_filtered_trimmed
+        # Load df_filtered_trimmed from the saved CSV file
+    df_filtered_trimmed = pd.read_csv('df_filtered_trimmed.csv')
+
+
 
     try:
         X = df_filtered_trimmed.drop(columns=['Label'])

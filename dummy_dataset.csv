@@ -1,0 +1,101 @@
+req1,req2,req1Product,req2Product,Label
+This is a sample text0,Another sample text here0,Google Cloud,Azure,0
+This is a sample text1,Another sample text here1,IBM Cloud,AWS,1
+This is a sample text2,Another sample text here2,AWS,IBM Cloud,1
+This is a sample text3,Another sample text here3,AWS,Azure,0
+This is a sample text4,Another sample text here4,AWS,Azure,0
+This is a sample text5,Another sample text here5,AWS,Azure,0
+This is a sample text6,Another sample text here6,AWS,Google Cloud,0
+This is a sample text7,Another sample text here7,Azure,Google Cloud,0
+This is a sample text8,Another sample text here8,Google Cloud,Azure,0
+This is a sample text9,Another sample text here9,Azure,Google Cloud,0
+This is a sample text10,Another sample text here10,Google Cloud,Google Cloud,0
+This is a sample text11,Another sample text here11,AWS,Azure,0
+This is a sample text12,Another sample text here12,IBM Cloud,IBM Cloud,0
+This is a sample text13,Another sample text here13,Google Cloud,AWS,0
+This is a sample text14,Another sample text here14,IBM Cloud,IBM Cloud,0
+This is a sample text15,Another sample text here15,Google Cloud,Google Cloud,0
+This is a sample text16,Another sample text here16,IBM Cloud,Azure,0
+This is a sample text17,Another sample text here17,AWS,Google Cloud,1
+This is a sample text18,Another sample text here18,Azure,AWS,1
+This is a sample text19,Another sample text here19,AWS,Google Cloud,0
+This is a sample text20,Another sample text here20,Azure,IBM Cloud,0
+This is a sample text21,Another sample text here21,AWS,Google Cloud,0
+This is a sample text22,Another sample text here22,AWS,Azure,0
+This is a sample text23,Another sample text here23,Azure,Google Cloud,1
+This is a sample text24,Another sample text here24,Google Cloud,Google Cloud,0
+This is a sample text25,Another sample text here25,IBM Cloud,AWS,0
+This is a sample text26,Another sample text here26,Google Cloud,Google Cloud,0
+This is a sample text27,Another sample text here27,Azure,Azure,0
+This is a sample text28,Another sample text here28,AWS,IBM Cloud,1
+This is a sample text29,Another sample text here29,Google Cloud,Google Cloud,0
+This is a sample text30,Another sample text here30,AWS,Google Cloud,1
+This is a sample text31,Another sample text here31,Azure,IBM Cloud,1
+This is a sample text32,Another sample text here32,AWS,Azure,1
+This is a sample text33,Another sample text here33,Google Cloud,AWS,0
+This is a sample text34,Another sample text here34,Azure,AWS,1
+This is a sample text35,Another sample text here35,AWS,Azure,0
+This is a sample text36,Another sample text here36,Azure,Azure,1
+This is a sample text37,Another sample text here37,AWS,AWS,0
+This is a sample text38,Another sample text here38,AWS,AWS,0
+This is a sample text39,Another sample text here39,IBM Cloud,IBM Cloud,0
+This is a sample text40,Another sample text here40,IBM Cloud,Azure,1
+This is a sample text41,Another sample text here41,Azure,AWS,0
+This is a sample text42,Another sample text here42,Azure,Google Cloud,1
+This is a sample text43,Another sample text here43,AWS,Azure,1
+This is a sample text44,Another sample text here44,AWS,Azure,1
+This is a sample text45,Another sample text here45,Google Cloud,Azure,1
+This is a sample text46,Another sample text here46,IBM Cloud,Azure,0
+This is a sample text47,Another sample text here47,Azure,IBM Cloud,0
+This is a sample text48,Another sample text here48,Azure,Google Cloud,0
+This is a sample text49,Another sample text here49,IBM Cloud,Azure,0
+This is a sample text50,Another sample text here50,Azure,IBM Cloud,0
+This is a sample text51,Another sample text here51,AWS,AWS,1
+This is a sample text52,Another sample text here52,AWS,Google Cloud,0
+This is a sample text53,Another sample text here53,Azure,IBM Cloud,1
+This is a sample text54,Another sample text here54,Google Cloud,IBM Cloud,1
+This is a sample text55,Another sample text here55,Azure,Google Cloud,0
+This is a sample text56,Another sample text here56,AWS,IBM Cloud,1
+This is a sample text57,Another sample text here57,IBM Cloud,IBM Cloud,0
+This is a sample text58,Another sample text here58,IBM Cloud,AWS,1
+This is a sample text59,Another sample text here59,Azure,AWS,1
+This is a sample text60,Another sample text here60,AWS,IBM Cloud,1
+This is a sample text61,Another sample text here61,AWS,Azure,0
+This is a sample text62,Another sample text here62,AWS,Azure,0
+This is a sample text63,Another sample text here63,Google Cloud,AWS,1
+This is a sample text64,Another sample text here64,IBM Cloud,Azure,0
+This is a sample text65,Another sample text here65,IBM Cloud,Azure,1
+This is a sample text66,Another sample text here66,IBM Cloud,Azure,0
+This is a sample text67,Another sample text here67,IBM Cloud,IBM Cloud,0
+This is a sample text68,Another sample text here68,IBM Cloud,Azure,1
+This is a sample text69,Another sample text here69,IBM Cloud,IBM Cloud,0
+This is a sample text70,Another sample text here70,Azure,AWS,1
+This is a sample text71,Another sample text here71,IBM Cloud,IBM Cloud,0
+This is a sample text72,Another sample text here72,IBM Cloud,Azure,1
+This is a sample text73,Another sample text here73,IBM Cloud,Azure,0
+This is a sample text74,Another sample text here74,Azure,IBM Cloud,1
+This is a sample text75,Another sample text here75,IBM Cloud,Azure,0
+This is a sample text76,Another sample text here76,AWS,Azure,1
+This is a sample text77,Another sample text here77,Azure,IBM Cloud,1
+This is a sample text78,Another sample text here78,Azure,Google Cloud,0
+This is a sample text79,Another sample text here79,IBM Cloud,AWS,1
+This is a sample text80,Another sample text here80,IBM Cloud,Azure,1
+This is a sample text81,Another sample text here81,IBM Cloud,IBM Cloud,0
+This is a sample text82,Another sample text here82,IBM Cloud,AWS,0
+This is a sample text83,Another sample text here83,AWS,AWS,0
+This is a sample text84,Another sample text here84,IBM Cloud,Azure,1
+This is a sample text85,Another sample text here85,Google Cloud,AWS,1
+This is a sample text86,Another sample text here86,IBM Cloud,Azure,1
+This is a sample text87,Another sample text here87,Google Cloud,AWS,1
+This is a sample text88,Another sample text here88,IBM Cloud,Azure,0
+This is a sample text89,Another sample text here89,AWS,Google Cloud,0
+This is a sample text90,Another sample text here90,Azure,Google Cloud,0
+This is a sample text91,Another sample text here91,AWS,Azure,1
+This is a sample text92,Another sample text here92,AWS,IBM Cloud,1
+This is a sample text93,Another sample text here93,Azure,Google Cloud,0
+This is a sample text94,Another sample text here94,AWS,Azure,0
+This is a sample text95,Another sample text here95,AWS,Google Cloud,0
+This is a sample text96,Another sample text here96,IBM Cloud,IBM Cloud,1
+This is a sample text97,Another sample text here97,Google Cloud,Google Cloud,1
+This is a sample text98,Another sample text here98,AWS,Azure,1
+This is a sample text99,Another sample text here99,Google Cloud,Google Cloud,0

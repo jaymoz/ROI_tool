@@ -19,18 +19,25 @@ const LearningDropdown = ({ onSelect }) => {
       <center>
         <div className="griddropdown">
 
-          <button
-              className={`grid-option ${selectedOption === 'supervised' ? 'selected' : ''}`}
-              onClick={() => handleButtonClick('supervised')}
-          >
-            Supervised Models
-          </button>
-          <button
-              className={`grid-option ${selectedOption === 'activeLearning' ? 'selected' : ''}`}
-              onClick={() => handleButtonClick('activeLearning')}
-          >
-            Active Learning
-          </button>
+        <button
+    className={`grid-option ${selectedOption === 'supervised' ? 'selected' : ''}`}
+    onClick={() => {
+        alert('Supervised Models button clicked!');
+        handleButtonClick('supervised');
+    }}
+>
+    Supervised Models
+</button>
+<button
+    className={`grid-option ${selectedOption === 'activeLearning' ? 'selected' : ''}`}
+    onClick={() => {
+        alert('Active Learning button clicked!');
+        handleButtonClick('activeLearning');
+    }}
+>
+    Active Learning
+</button>
+
 
         </div>
       </center>

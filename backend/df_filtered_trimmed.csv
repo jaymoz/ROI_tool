@@ -1,5 +1,5 @@
 Label,req1,req1Product,req2,req2Product
-0,Feature request implement add bookmark here option in firefox quantum,AWS,only upper half of button can be clicked in onboarding tour,AWS
+0,feature request implement add bookmark here option in firefox quantum,AWS,only upper half of button can be clicked in onboarding tour,AWS
 2,cross platform funnel experimentation,AWS,experimentation early desktop onboarding funnel design,AWS
 1,implement preference experiment action a internal action,AWS,add support for local action and implement console log a local action,AWS
 0,add infrastructure to move activity stream into it own content process,AWS,decide on what process unprivileged paymentrequest ui should live in,AWS
@@ -21,9 +21,3 @@ Label,req1,req1Product,req2,req2Product
 2,top site search shortcut,Chrome,uplift top search feature to firefox,AWS
 2,top site search shortcut,Chrome,uplift top search feature to firefox,Firefox
 1,top site search shortcut,Chrome,uplift top search feature to firefox,Azure
-1,top site search shortcut,Chrome,uplift top search feature to firefox,Azure
-2,top site search shortcut,Chrome,uplift top search feature to firefox,Azure
-0,top site search shortcut,Firefox,uplift top search feature to firefox,Firefox
-1,top site search shortcut,Firefox,uplift top search feature to firefox,Chrome
-0,top site search shortcut,Azure,uplift top search feature to firefox,Chrome
-1,top site search shortcut,Azure,uplift top search feature to firefox,Azure
