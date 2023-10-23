@@ -1941,6 +1941,11 @@ def my_tokenizer(arr):
     '''
     return (arr[0]+" "+arr[1]).split()
 
+@application.route("/")
+def hello():
+    return "<h1 style='color:blue'>ROI Backend Is Up!!</h1>"
+
+
 if __name__ == '__main__':
     application.run(host='0.0.0.0', port=5000, debug=True)
 CORS(application)
