@@ -29,7 +29,7 @@ const Results = () => {
 
   const fetchGraphData = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:5000/f1score', {
+      const response = await fetch('http://44.201.124.234:5000/f1score', {
         method: 'POST',
       });
       const data = await response.json();
