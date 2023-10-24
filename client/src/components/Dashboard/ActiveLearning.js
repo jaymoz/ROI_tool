@@ -19,20 +19,35 @@ const ActiveLearning = () => {
 
 
   const handleSubmit = async () => {
-    const response = await axios.post('https://roibackend.shaktilab.org/activeLearning1', {
-      threshold: threshold,
-      max_iterations: maxIterations,
-      resampling: resampling,
-      classifier: classifier,
-      sampling_type: samplingType,
-      test_size: testSize,
-      manual_annotations_count: manualAnnotationsCount,
-      comments: comments
-    });
-    setFileContent(response.data.fileContent)
-    setIterationIndex(0);
+    try {
+        const response = await axios.post(
+            "http://cors-anywhere.herokuapp.com/https://roibackend.shaktilab.org/activeLearning1", 
+            {
+                threshold: threshold,
+                max_iterations: maxIterations,
+                resampling: resampling,
+                classifier: classifier,
+                sampling_type: samplingType,
+                test_size: testSize,
+                manual_annotations_count: manualAnnotationsCount,
+                comments: comments
+            },
+            {
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+                }
+            }
+        );
 
-  };
+        setFileContent(response.data.fileContent)
+        setIterationIndex(0);
+    } catch (error) {
+        console.error("Error posting data:", error);
+        // Handle the error, e.g., show an error message to the user
+    }
+};
+
   const handleIterationChange = async (direction) => {
     let newIndex = iterationIndex;
 
@@ -45,13 +60,28 @@ const ActiveLearning = () => {
     const delimiterExists = fileContent.includes(`Iteration : ${newIndex}`);
 
     let newFileContent = fileContent;
-
     if (direction === 'next' && !delimiterExists) {
       // If "Next" is pressed and delimiter for the new iteration doesn't exist, update the file content.
-      const response = await axios.post('https://roibackend.shaktilab.org/next');
-      newFileContent = response.data.fileContent;
-      setFileContent(newFileContent);
-    }
+      try {
+          const response = await axios.post(
+              "http://cors-anywhere.herokuapp.com/https://roibackend.shaktilab.org/next",
+              {},  // No data to send with the POST request, keep it an empty object
+              {
+                  headers: {
+                      "Access-Control-Allow-Origin": "*",
+                      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+                      "X-Requested-With": "XMLHttpRequest"  // Required by some versions of cors-anywhere
+                  }
+              }
+          );
+          newFileContent = response.data.fileContent;
+          setFileContent(newFileContent);
+      } catch (error) {
+          console.error("Error posting data:", error);
+          // Handle the error, e.g., show an error message to the user
+      }
+  }
+  
     // Extract iteration content from either the existing file content or the new one fetched from the backend.
     const newIterationContent = extractIteration(newFileContent, newIndex);
     setDisplayContent(newIterationContent);

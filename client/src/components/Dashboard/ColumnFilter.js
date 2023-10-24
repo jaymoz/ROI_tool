@@ -143,12 +143,14 @@ export default class Filter extends Component {
         const frozenColumns = optionSelected
             .filter((option) => option.value !== "select-all")
             .map((option) => option.value);
-
-
-        fetch('https://roibackend.shaktilab.org/filter_columns', {
+    
+        fetch('http://cors-anywhere.herokuapp.com/https://roibackend.shaktilab.org/filter_columns', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+                "X-Requested-With": "XMLHttpRequest"  // Required by some versions of cors-anywhere
             },
             body: JSON.stringify({ columns: frozenColumns }),
         })
@@ -159,11 +161,12 @@ export default class Filter extends Component {
             .catch(error => {
                 console.error('Error sending column values:', error);
             });
-
+    
         this.setState({
             frozenColumns,
         });
     };
+    
 
 
     render() {

@@ -40,21 +40,28 @@ function ImportCSV() {
     formData.append('training_size', trainingSize);
 
     axios
-        .post('https://roibackend.shaktilab.org/upload/train_data', formData)
+        .post('http://cors-anywhere.herokuapp.com/https://roibackend.shaktilab.org/upload/train_data', formData, {
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+                "X-Requested-With": "XMLHttpRequest"  // Required by some versions of cors-anywhere
+            }
+        })
         .then((response) => {
-          console.log(response.data);
-          if (response.data.success) {
-            settrain_data_RowCount(response.data.rows);
-            settrain_data_ColCount(response.data.columns);
-            setTrainData(response.data.csv_data);
-            setTrainDataUploaded(true);
-            setShowColumnSelection(true);
-          }
+            console.log(response.data);
+            if (response.data.success) {
+                settrain_data_RowCount(response.data.rows);
+                settrain_data_ColCount(response.data.columns);
+                setTrainData(response.data.csv_data);
+                setTrainDataUploaded(true);
+                setShowColumnSelection(true);
+            }
         })
         .catch((error) => {
-          console.error(error);
+            console.error(error);
         });
-  };
+};
+
 
   const handleTestData = () => {
     const formData = new FormData();
