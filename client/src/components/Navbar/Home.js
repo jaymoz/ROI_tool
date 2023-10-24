@@ -11,9 +11,13 @@ const Home = ({}) => {
         </div>
 
 
-        <div class="rounded-corner" style={{justifyContent: 'center', alignContent:'center', marginLeft:'100px'}}>
-          <iframe src="https://drive.google.com/file/d/12n8RsGXgeDG5ZXGwWdjzRhigtvvmtLBD/preview" width="1000" height="600" ></iframe>
-        </div>
+        <div className="rounded-corner" style={{justifyContent: 'center', alignContent: 'center', marginLeft: '300px'}}>
+          <video width="1000" height="600" controls>
+              <source src="/demoROI.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+          </video>
+      </div>
+
         <div className='headings' style={{marginTop:'50px'}}>Tool Architecture</div>
         <div style={{display: 'flex', justifyContent: 'center'}}>
           <img src="./roi.jpg" width="1100" height="600" alt="ROI Image"/>
