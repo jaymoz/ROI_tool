@@ -20,7 +20,7 @@ function Home() {
   const [showDoubleBarGraph, setShowDoubleBarGraph] = useState(true);
 
   useEffect(() => {
-    Papa.parse('/static/data.csv', {
+    Papa.parse('https://roibackend.shaktilab.org/static/data.csv', {
       download: true,
       header: true,
       dynamicTyping: true,
@@ -98,7 +98,7 @@ function Home() {
 
         const predictionLabelCounts = {};
         await new Promise((resolve, reject) => {
-          Papa.parse('/static/data.csv', {
+          Papa.parse('https://roibackend.shaktilab.org/static/data.csv', {
             download: true,
             header: true,
             dynamicTyping: true,
@@ -181,7 +181,7 @@ function Home() {
 
         const req2ProductCounts = {};
         await new Promise((resolve, reject) => {
-          Papa.parse('/static/data.csv', {
+          Papa.parse('https://roibackend.shaktilab.org/static/data.csv', {
             download: true,
             header: true,
             dynamicTyping: true,
