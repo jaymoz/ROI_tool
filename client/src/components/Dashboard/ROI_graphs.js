@@ -23,7 +23,7 @@ const ROI_graphs = () => {
 
   const fetchGraphData = async () => {
     try {
-      const response = await fetch('http://44.201.124.234:5000/roi-graphs', {
+      const response = await fetch('https://roibackend.shaktilab.org/roi-graphs', {
         method: 'POST',
       });
       const data = await response.json();

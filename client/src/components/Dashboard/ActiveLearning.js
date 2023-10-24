@@ -19,7 +19,7 @@ const ActiveLearning = () => {
 
 
   const handleSubmit = async () => {
-    const response = await axios.post('http://44.201.124.234:5000/activeLearning1', {
+    const response = await axios.post('https://roibackend.shaktilab.org/activeLearning1', {
       threshold: threshold,
       max_iterations: maxIterations,
       resampling: resampling,
@@ -48,7 +48,7 @@ const ActiveLearning = () => {
 
     if (direction === 'next' && !delimiterExists) {
       // If "Next" is pressed and delimiter for the new iteration doesn't exist, update the file content.
-      const response = await axios.post('http://44.201.124.234:5000/next');
+      const response = await axios.post('https://roibackend.shaktilab.org/next');
       newFileContent = response.data.fileContent;
       setFileContent(newFileContent);
     }

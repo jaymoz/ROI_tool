@@ -36,7 +36,7 @@ const MLdropdown = ({ onModelSelect, onLearningSelect, trainData, testData }) =>
 
     if (selectedValue === 'supervised') {
       try {
-        const response = await axios.post('http://44.201.124.234:5000/weekly-supervised');
+        const response = await axios.post('https://roibackend.shaktilab.org/weekly-supervised');
         console.log(response.data);
 
         if (response.data.success) {
@@ -47,7 +47,7 @@ const MLdropdown = ({ onModelSelect, onLearningSelect, trainData, testData }) =>
       }
     } else if (selectedValue === 'activeLearning') {
       try {
-        const response = await axios.post('http://44.201.124.234:5000/active-learning');
+        const response = await axios.post('https://roibackend.shaktilab.org/active-learning');
         console.log(response.data);
         if (response.data.success) {
           setLearning('activeLearning');
@@ -64,7 +64,7 @@ const MLdropdown = ({ onModelSelect, onLearningSelect, trainData, testData }) =>
 
     if (selectedValue === 'logistic_regression') {
       try {
-        const response = await axios.post('http://44.201.124.234:5000/logistic-regression');
+        const response = await axios.post('https://roibackend.shaktilab.org/logistic-regression');
         console.log(response.data);
         if (response.data.success) {
           setReport(response.data.report);
@@ -82,7 +82,7 @@ const MLdropdown = ({ onModelSelect, onLearningSelect, trainData, testData }) =>
       }
     } else if (selectedValue === 'naive_bayes') {
       try {
-        const response = await axios.post('http://44.201.124.234:5000/naive-bayes');
+        const response = await axios.post('https://roibackend.shaktilab.org/naive-bayes');
         console.log(response.data);
         if (response.data.success) {
           setReport(response.data.report);
@@ -100,7 +100,7 @@ const MLdropdown = ({ onModelSelect, onLearningSelect, trainData, testData }) =>
       }
     } else if (selectedValue === 'random_forest') {
       try {
-        const response = await axios.post('http://44.201.124.234:5000/random-forest');
+        const response = await axios.post('https://roibackend.shaktilab.org/random-forest');
         console.log(response.data);
         if (response.data.success) {
           setReport(response.data.report);
@@ -118,7 +118,7 @@ const MLdropdown = ({ onModelSelect, onLearningSelect, trainData, testData }) =>
       }
     } else if (selectedValue === 'support_vector_machine') {
       try {
-        const response = await axios.post('http://44.201.124.234:5000/support-vector-machine');
+        const response = await axios.post('https://roibackend.shaktilab.org/support-vector-machine');
         console.log(response.data);
         if (response.data.success) {
           setReport(response.data.report);
@@ -136,7 +136,7 @@ const MLdropdown = ({ onModelSelect, onLearningSelect, trainData, testData }) =>
       }
     } else if (selectedValue === 'decision_tree') {
       try {
-        const response = await axios.post('http://44.201.124.234:5000/decision-tree');
+        const response = await axios.post('https://roibackend.shaktilab.org/decision-tree');
         console.log(response.data);
         if (response.data.success) {
           setReport(response.data.report);
