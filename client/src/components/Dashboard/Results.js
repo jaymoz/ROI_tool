@@ -29,9 +29,15 @@ const Results = () => {
 
   const fetchGraphData = async () => {
     try {
-      const response = await fetch('https://roibackend.shaktilab.org/f1score', {
-        method: 'POST',
+      const response = await fetch('http://cors-anywhere.herokuapp.com/https://roibackend.shaktilab.org/f1score', {
+          method: 'POST',
+          headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+              "X-Requested-With": "XMLHttpRequest" // Required by some versions of cors-anywhere
+          }
       });
+      
       const data = await response.json();
       setGraph(data.f1_score_lg);
       setGraph3(data.f1_score_nb);
@@ -52,7 +58,7 @@ const Results = () => {
 
     } catch (error) {
       console.error('Error fetching graph data:', error);
-    }
+  }
   };
 
   const renderGraphs = (graphData1, graphData2, graphData3, graphData4, graphData5, lg, nb, rf, svc, dt, sizeArray) => {

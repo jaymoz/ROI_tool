@@ -18,7 +18,6 @@ const ROI = () => {
     const [productValue, setProductValue] = useState(5);
     const [showGraphs, setShowGraphs] = useState(false);
 
-
     const handleApply = () => {
         setShowGraphs(false);
         const formData = new FormData();
@@ -28,17 +27,23 @@ const ROI = () => {
         formData.append('resources_cost', resourcesCost);
         formData.append('preprocessing_cost', preprocessingCost);
         formData.append('product_value', productValue);
-
-        axios.post('https://roibackend.shaktilab.org/roi-parameters', formData)
-            .then(response => {
-                console.log(response.data);
-                setShowGraphs(true);
-            })
-            .catch(error => {
-                console.error(error);
-            });
+    
+        axios.post('http://cors-anywhere.herokuapp.com/https://roibackend.shaktilab.org/roi-parameters', formData, {
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+                "X-Requested-With": "XMLHttpRequest" // This header is sometimes required by cors-anywhere
+            }
+        })
+        .then(response => {
+            console.log(response.data);
+            setShowGraphs(true);
+        })
+        .catch(error => {
+            console.error(error);
+        });
     };
-
+    
     return (
         <div className="roi-container">
             <div className="slidercontainer">

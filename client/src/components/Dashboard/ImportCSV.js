@@ -63,36 +63,50 @@ function ImportCSV() {
 };
 
 
-  const handleTestData = () => {
-    const formData = new FormData();
-    formData.append('file', testData);
+const handleTestData = () => {
+  const formData = new FormData();
+  formData.append('file', testData);
 
-    axios
-        .post('https://roibackend.shaktilab.org/upload/test_data', formData)
-        .then((response) => {
+  axios
+      .post('http://cors-anywhere.herokuapp.com/https://roibackend.shaktilab.org/upload/test_data', formData, {
+          headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+              "X-Requested-With": "XMLHttpRequest"  // Required by some versions of cors-anywhere
+          }
+      })
+      .then((response) => {
           console.log(response.data);
           if (response.data.success) {
-            settest_data_RowCount(response.data.rows);
-            settest_data_ColCount(response.data.columns);
-            setTestDataUploaded(true);
+              settest_data_RowCount(response.data.rows);
+              settest_data_ColCount(response.data.columns);
+              setTestDataUploaded(true);
           }
-        })
-        .catch((error) => {
+      })
+      .catch((error) => {
           console.error(error);
-        });
-  };
+      });
+};
 
-  const handlePreprocessData = () => {
-    axios
-        .post('https://roibackend.shaktilab.org/trim_data', { trainingSize })
-        .then((response) => {
+const handlePreprocessData = () => {
+  axios
+      .post('http://cors-anywhere.herokuapp.com/https://roibackend.shaktilab.org/trim_data', { trainingSize }, {
+          headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+              "X-Requested-With": "XMLHttpRequest"  // Required by some versions of cors-anywhere
+          }
+      })
+      .then((response) => {
           console.log(response.data);
           window.alert('Trimmed Data Saved at Backend!');
-        })
-        .catch((error) => {
+      })
+      .catch((error) => {
           console.error(error);
-        });
-  };
+      });
+};
+
+  
   const handleCredentialsChange = (event) => {
     const { name, value } = event.target;
     if (name === 'username') {

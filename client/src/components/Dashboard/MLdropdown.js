@@ -34,9 +34,15 @@ const MLdropdown = ({ onModelSelect, onLearningSelect, trainData, testData }) =>
     console.log('Selected option:', selectedValue);
     onLearningSelect(selectedValue);
 
+    const headers = {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        "X-Requested-With": "XMLHttpRequest"  // Required by some versions of cors-anywhere
+    };
+
     if (selectedValue === 'supervised') {
       try {
-        const response = await axios.post('https://roibackend.shaktilab.org/weekly-supervised');
+        const response = await axios.post('http://cors-anywhere.herokuapp.com/https://roibackend.shaktilab.org/weekly-supervised', {}, { headers: headers });
         console.log(response.data);
 
         if (response.data.success) {
@@ -47,7 +53,7 @@ const MLdropdown = ({ onModelSelect, onLearningSelect, trainData, testData }) =>
       }
     } else if (selectedValue === 'activeLearning') {
       try {
-        const response = await axios.post('https://roibackend.shaktilab.org/active-learning');
+        const response = await axios.post('http://cors-anywhere.herokuapp.com/https://roibackend.shaktilab.org/active-learning', {}, { headers: headers });
         console.log(response.data);
         if (response.data.success) {
           setLearning('activeLearning');
@@ -56,17 +62,44 @@ const MLdropdown = ({ onModelSelect, onLearningSelect, trainData, testData }) =>
         console.error(error);
       }
     }
+};
+
+
+const handleOptionSelect = async (selectedValue) => {
+  console.log('Selected option:', selectedValue);
+  onModelSelect(selectedValue);
+
+  const headers = {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      "X-Requested-With": "XMLHttpRequest"
   };
 
-  const handleOptionSelect = async (selectedValue) => {
-    console.log('Selected option:', selectedValue);
-    onModelSelect(selectedValue);
+  let endpoint = "";
+  switch (selectedValue) {
+      case 'logistic_regression':
+          endpoint = 'logistic-regression';
+          break;
+      case 'naive_bayes':
+          endpoint = 'naive-bayes';
+          break;
+      case 'random_forest':
+          endpoint = 'random-forest';
+          break;
+      case 'support_vector_machine':
+          endpoint = 'support-vector-machine';
+          break;
+      case 'decision_tree':
+          endpoint = 'decision-tree';
+          break;
+      default:
+          return;
+  }
 
-    if (selectedValue === 'logistic_regression') {
-      try {
-        const response = await axios.post('https://roibackend.shaktilab.org/logistic-regression');
-        console.log(response.data);
-        if (response.data.success) {
+  try {
+      const response = await axios.post(`http://cors-anywhere.herokuapp.com/https://roibackend.shaktilab.org/${endpoint}`, {}, { headers: headers });
+      console.log(response.data);
+      if (response.data.success) {
           setReport(response.data.report);
           setAccuracy(response.data.accuracy);
           setStopTime(response.data.stop);
@@ -76,84 +109,11 @@ const MLdropdown = ({ onModelSelect, onLearningSelect, trainData, testData }) =>
           setFP(response.data.fp);
           setFN(response.data.fn);
           setTP(response.data.tp);
-        }
-      } catch (error) {
-        console.error(error);
       }
-    } else if (selectedValue === 'naive_bayes') {
-      try {
-        const response = await axios.post('https://roibackend.shaktilab.org/naive-bayes');
-        console.log(response.data);
-        if (response.data.success) {
-          setReport(response.data.report);
-          setAccuracy(response.data.accuracy);
-          setStopTime(response.data.stop);
-          setGraph(response.data.graph);
-          setConfusionMatrix(response.data.cm);
-          setF1Score(response.data.f1);
-          setFP(response.data.fp);
-          setFN(response.data.fn);
-          setTP(response.data.tp);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    } else if (selectedValue === 'random_forest') {
-      try {
-        const response = await axios.post('https://roibackend.shaktilab.org/random-forest');
-        console.log(response.data);
-        if (response.data.success) {
-          setReport(response.data.report);
-          setAccuracy(response.data.accuracy);
-          setStopTime(response.data.stop);
-          setGraph(response.data.graph);
-          setConfusionMatrix(response.data.cm);
-          setF1Score(response.data.f1);
-          setFP(response.data.fp);
-          setFN(response.data.fn);
-          setTP(response.data.tp);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    } else if (selectedValue === 'support_vector_machine') {
-      try {
-        const response = await axios.post('https://roibackend.shaktilab.org/support-vector-machine');
-        console.log(response.data);
-        if (response.data.success) {
-          setReport(response.data.report);
-          setAccuracy(response.data.accuracy);
-          setStopTime(response.data.stop);
-          setGraph(response.data.graph);
-          setConfusionMatrix(response.data.cm);
-          setF1Score(response.data.f1);
-          setFP(response.data.fp);
-          setFN(response.data.fn);
-          setTP(response.data.tp);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    } else if (selectedValue === 'decision_tree') {
-      try {
-        const response = await axios.post('https://roibackend.shaktilab.org/decision-tree');
-        console.log(response.data);
-        if (response.data.success) {
-          setReport(response.data.report);
-          setAccuracy(response.data.accuracy);
-          setStopTime(response.data.stop);
-          setGraph(response.data.graph);
-          setConfusionMatrix(response.data.cm);
-          setF1Score(response.data.f1);
-          setFP(response.data.fp);
-          setFN(response.data.fn);
-          setTP(response.data.tp);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  };
+  } catch (error) {
+      console.error(error);
+  }
+};
 
   return (
       <>
