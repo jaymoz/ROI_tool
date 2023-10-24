@@ -90,7 +90,7 @@ export default class Filter extends Component {
 
     componentDidMount() {
 
-        const csvFilePath = process.env.PUBLIC_URL + "/static/data.csv"
+        const csvFilePath = "https://roibackend.shaktilab.org/static/data.csv"
 
         fetch(csvFilePath)
             .then((response) => response.text())
