@@ -1946,7 +1946,7 @@ def hello():
     return "<h1 style='color:blue'>ROI Backend Is Up!!</h1>"
 
 
+CORS(application)
 if __name__ == '__main__':
     application.run(host='0.0.0.0', port=5000, debug=True)
-    CORS(application)
 CORS(application)
