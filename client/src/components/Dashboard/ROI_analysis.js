@@ -28,7 +28,7 @@ const ROI = () => {
         formData.append('preprocessing_cost', preprocessingCost);
         formData.append('product_value', productValue);
     
-        axios.post('http://cors-anywhere.herokuapp.com/https://roibackend.shaktilab.org/roi-parameters', formData, {
+        axios.post('https://roibackend.shaktilab.org/roi-parameters', formData, {
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",

@@ -40,7 +40,7 @@ function ImportCSV() {
     formData.append('training_size', trainingSize);
 
     axios
-        .post('http://cors-anywhere.herokuapp.com/https://roibackend.shaktilab.org/upload/train_data', formData, {
+        .post('https://roibackend.shaktilab.org/upload/train_data', formData, {
             headers: {
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -68,7 +68,7 @@ const handleTestData = () => {
   formData.append('file', testData);
 
   axios
-      .post('http://cors-anywhere.herokuapp.com/https://roibackend.shaktilab.org/upload/test_data', formData, {
+      .post('https://roibackend.shaktilab.org/upload/test_data', formData, {
           headers: {
               "Access-Control-Allow-Origin": "*",
               "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
@@ -90,7 +90,7 @@ const handleTestData = () => {
 
 const handlePreprocessData = () => {
   axios
-      .post('http://cors-anywhere.herokuapp.com/https://roibackend.shaktilab.org/trim_data', { trainingSize }, {
+      .post('https://roibackend.shaktilab.org/trim_data', { trainingSize }, {
           headers: {
               "Access-Control-Allow-Origin": "*",
               "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",

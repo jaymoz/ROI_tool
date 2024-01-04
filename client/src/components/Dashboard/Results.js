@@ -29,7 +29,7 @@ const Results = () => {
 
   const fetchGraphData = async () => {
     try {
-      const response = await fetch('http://cors-anywhere.herokuapp.com/https://roibackend.shaktilab.org/f1score', {
+      const response = await fetch('https://roibackend.shaktilab.org/f1score', {
           method: 'POST',
           headers: {
               "Access-Control-Allow-Origin": "*",

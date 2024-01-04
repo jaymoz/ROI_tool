@@ -144,7 +144,7 @@ export default class Filter extends Component {
             .filter((option) => option.value !== "select-all")
             .map((option) => option.value);
     
-        fetch('http://cors-anywhere.herokuapp.com/https://roibackend.shaktilab.org/filter_columns', {
+        fetch('https://roibackend.shaktilab.org/filter_columns', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

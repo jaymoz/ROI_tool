@@ -42,7 +42,7 @@ const MLdropdown = ({ onModelSelect, onLearningSelect, trainData, testData }) =>
 
     if (selectedValue === 'supervised') {
       try {
-        const response = await axios.post('http://cors-anywhere.herokuapp.com/https://roibackend.shaktilab.org/weekly-supervised', {}, { headers: headers });
+        const response = await axios.post('https://roibackend.shaktilab.org/weekly-supervised', {}, { headers: headers });
         console.log(response.data);
 
         if (response.data.success) {
@@ -53,7 +53,7 @@ const MLdropdown = ({ onModelSelect, onLearningSelect, trainData, testData }) =>
       }
     } else if (selectedValue === 'activeLearning') {
       try {
-        const response = await axios.post('http://cors-anywhere.herokuapp.com/https://roibackend.shaktilab.org/active-learning', {}, { headers: headers });
+        const response = await axios.post('https://roibackend.shaktilab.org/active-learning', {}, { headers: headers });
         console.log(response.data);
         if (response.data.success) {
           setLearning('activeLearning');
@@ -97,7 +97,7 @@ const handleOptionSelect = async (selectedValue) => {
   }
 
   try {
-      const response = await axios.post(`http://cors-anywhere.herokuapp.com/https://roibackend.shaktilab.org/${endpoint}`, {}, { headers: headers });
+      const response = await axios.post(`http://127.0.0.1:5000/${endpoint}`, {}, { headers: headers });
       console.log(response.data);
       if (response.data.success) {
           setReport(response.data.report);
