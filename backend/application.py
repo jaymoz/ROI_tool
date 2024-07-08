@@ -455,23 +455,23 @@ def perform_logistic_regression():
         tp_lg_list = [int(tp) for tp in tp_lg_list]
         fp_lg_list = [int(fp) for fp in fp_lg_list]
         fn_lg_list = [int(fn) for fn in fn_lg_list]
-
-        # Modify the jsonify call
+        base_url = "https://roibackend.shaktilab.org"
+            # Modify the jsonify call
         return jsonify({
-            'success': True, 
-            'report': report, 
-            'accuracy': accuracy, 
-            'stop': stop, 
-            'graph': '/static/lg_f1_score.png', 
-            'cm': '/static/lg_cm.png', 
-            'f1': float(f1),  # Ensure f1 is a native Python float
-            'f1score': f1_score_lg, 
-            'recallscore': recall_score_lg, 
-            'precisionscore': precision_score_lg, 
-            'tp': tp_lg_list, 
-            'fp': fp_lg_list, 
-            'fn': fn_lg_list
-        })
+                'success': True, 
+                'report': report, 
+                'accuracy': accuracy, 
+                'stop': stop, 
+                'graph': f'{base_url}/static/lg_f1_score.png', 
+                'cm': f'{base_url}/static/lg_cm.png', 
+                'f1': float(f1),  # Ensure f1 is a native Python float
+                'f1score': f1_score_lg, 
+                'recallscore': recall_score_lg, 
+                'precisionscore': precision_score_lg, 
+                'tp': tp_lg_list, 
+                'fp': fp_lg_list, 
+                'fn': fn_lg_list
+            })
 
     except Exception as e:
         exc_type, exc_value, exc_traceback = sys.exc_info()
