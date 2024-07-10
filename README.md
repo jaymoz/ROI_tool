@@ -3,7 +3,7 @@
 
 * To run React App @ localhost:3000
   - npm start - to start the React App
-  - npm install - install all dependencies
+  - npm install - install all the dependencies
 * To run Flask App @ localhost:5000
 * 
   - run python3 app.py
