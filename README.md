@@ -5,6 +5,7 @@
   - npm start - to start the React App
   - npm install - install all dependencies
 * To run Flask App @ localhost:5000
+* 
   - run python3 app.py
 * Make sure no other application runs on any of these two hosts. The website has been programmed to automatically run on localhost:3000 and localhost:5000.
 
