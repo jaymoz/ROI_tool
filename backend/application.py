@@ -1172,7 +1172,7 @@ def set_roi_graphs():
     sizes = [20, 30, 40, 50, 60, 70, 80, 90]
 	
     for k in range(8):
-  	cost = sizes[i] * (fp_cost + preprocessing_cost ) * product_value * resources_cost / 6000
+        cost = sizes[i] * (fp_cost + preprocessing_cost ) * product_value * resources_cost / 6000
         if len(tp_lg_list)>0:
             benefit_lg = tp_lg_list[k]*tp_cost - fn_lg_list[k]*fn_cost
             roi_lg.append((benefit_lg - cost)/cost)
@@ -1188,7 +1188,6 @@ def set_roi_graphs():
         if len(tp_dt_list)>0:
             benefit_dt = tp_dt_list[k]*tp_cost - fn_dt_list[k]*fn_cost
             roi_dt.append((benefit_dt - cost)/cost)
-
     return jsonify({'success':True, 
                     'roi_lg':roi_lg,
                     'roi_nb':roi_nb,
