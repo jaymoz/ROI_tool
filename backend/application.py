@@ -1169,23 +1169,24 @@ def set_roi_graphs():
     global f1_score_rf
     global f1_score_svc
     global f1_score_dt
-
+    sizes = [20, 30, 40, 50, 60, 70, 80, 90]
+	
     for k in range(8):
-        cost = (int(resources_cost) + int(preprocessing_cost) + int(product_value))
+  	cost = sizes[i] * (fp_cost + preprocessing_cost ) * product_value * resources_cost / 6000
         if len(tp_lg_list)>0:
-            benefit_lg = tp_lg_list[k]*tp_cost - fn_lg_list[k]*fn_cost - fp_lg_list[k]*fp_cost
+            benefit_lg = tp_lg_list[k]*tp_cost - fn_lg_list[k]*fn_cost
             roi_lg.append((benefit_lg - cost)/cost)
         if len(tp_nb_list)>0:
-            benefit_nb = tp_nb_list[k]*tp_cost - fn_nb_list[k]*fn_cost - fp_nb_list[k]*fp_cost
+            benefit_nb = tp_nb_list[k]*tp_cost - fn_nb_list[k]*fn_cost
             roi_nb.append((benefit_nb - cost)/cost)
         if len(tp_rf_list)>0:
-            benefit_rf = tp_rf_list[k]*tp_cost - fn_rf_list[k]*fn_cost - fp_rf_list[k]*fp_cost
+            benefit_rf = tp_rf_list[k]*tp_cost - fn_rf_list[k]*fn_cost
             roi_rf.append((benefit_rf - cost)/cost)
         if len(tp_svc_list)>0:
-            benefit_svc = tp_svc_list[k]*tp_cost - fn_svc_list[k]*fn_cost - fp_svc_list[k]*fp_cost
+            benefit_svc = tp_svc_list[k]*tp_cost - fn_svc_list[k]*fn_cost
             roi_svc.append((benefit_svc - cost)/cost)
         if len(tp_dt_list)>0:
-            benefit_dt = tp_dt_list[k]*tp_cost - fn_dt_list[k]*fn_cost - fp_dt_list[k]*fp_cost
+            benefit_dt = tp_dt_list[k]*tp_cost - fn_dt_list[k]*fn_cost
             roi_dt.append((benefit_dt - cost)/cost)
 
     return jsonify({'success':True, 
