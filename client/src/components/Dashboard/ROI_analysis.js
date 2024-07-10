@@ -48,11 +48,11 @@ const ROI = () => {
         <div className="roi-container">
             <div className="slidercontainer">
                 <div className="slider-wrapper-left">
-                    <div className="row" style={{marginBottom: '10px'}}><span className="slider-value">Fp Cost : {fpCost}</span></div>
+                    <div className="row" style={{marginBottom: '10px'}}><span className="slider-value">Fixed Cost : {fpCost}</span></div>
                     <div className="row">
                         <Slider
-                            min={5}
-                            max={100}
+                            min={0.1}
+                            max={2}
                             value={fpCost}
                             onChange={value => setFpCost(parseFloat(value))}
                             trackStyle={{ backgroundColor: '#28a9e2', height: '8px' }}
@@ -67,11 +67,11 @@ const ROI = () => {
                             className="slider"
                         />
                     </div>
-                    <div className="row" style={{marginBottom: '10px'}}><span className="slider-value">Fn Cost : {fnCost}</span></div>
+                    <div className="row" style={{marginBottom: '10px'}}><span className="slider-value">B_panelty : {fnCost}</span></div>
                     <div className="row">
                         <Slider
-                            min={5}
-                            max={100}
+                            min={100}
+                            max={600}
                             value={fnCost}
                             onChange={value => setFnCost(parseFloat(value))}
                             trackStyle={{ backgroundColor: '#28a9e2', height: '8px' }}
@@ -86,11 +86,11 @@ const ROI = () => {
                             className="slider"
                         />
                     </div>
-                    <div className="row" style={{marginBottom: '10px'}}><span className="slider-value">Tp Cost : {tpCost}</span></div>
+                    <div className="row" style={{marginBottom: '10px'}}><span className="slider-value">B_reward : {tpCost}</span></div>
                     <div className="row">
                         <Slider
-                            min={5}
-                            max={100}
+                            min={100}
+                            max={600}
                             value={tpCost}
                             onChange={value => setTpCost(parseFloat(value))}
                             trackStyle={{ backgroundColor: '#28a9e2', height: '8px' }}
@@ -110,8 +110,8 @@ const ROI = () => {
                     <div className="row" style={{marginBottom: '10px'}}><span className="slider-value">Resources Cost : {resourcesCost}</span></div>
                     <div className="row">
                         <Slider
-                            min={5}
-                            max={100}
+                            min={100}
+                            max={600}
                             value={resourcesCost}
                             onChange={value => setResourcesCost(parseFloat(value))}
                             trackStyle={{ backgroundColor: '#28a9e2', height: '8px' }}
@@ -126,11 +126,11 @@ const ROI = () => {
                             className="slider"
                         />
                     </div>
-                    <div className="row" style={{marginBottom: '10px'}}><span className="slider-value">Preprocessing Cost : {preprocessingCost}</span></div>
+                    <div className="row" style={{marginBottom: '10px'}}><span className="slider-value">Labelling Cost : {preprocessingCost}</span></div>
                     <div className="row">
                         <Slider
-                            min={5}
-                            max={100}
+                            min={0.1}
+                            max={3}
                             value={preprocessingCost}
                             onChange={value => setPreprocessingCost(parseFloat(value))}
                             trackStyle={{ backgroundColor: '#28a9e2', height: '8px' }}
@@ -145,10 +145,10 @@ const ROI = () => {
                             className="slider"
                         />
                     </div>
-                    <div className="row" style={{marginBottom: '10px'}}><span className="slider-value">Product Value : {productValue}</span></div>
+                    <div className="row" style={{marginBottom: '10px'}}><span className="slider-value">Human Resource : {productValue}</span></div>
                     <div className="row">
                         <Slider
-                            min={5}
+                            min={1}
                             max={100}
                             value={productValue}
                             onChange={value => setProductValue(parseFloat(value))}
