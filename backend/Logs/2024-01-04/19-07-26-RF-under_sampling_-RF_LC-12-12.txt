@@ -1,0 +1,19 @@
+
+----------------------------------------------------------------------------------------------------
+Arguments :- 
+comments : -RF_LC-12-12
+threshold : 0.6
+max_iterations : 3
+resampling : under_sampling
+classifier : RF
+sampling_type : leastConfidence
+test_size : 0.2
+manual_annotations_count : 12
+
+----------------------------------------------------------------------------------------------------
+Fetching data from the input directory.
+----------------------------------------------------------------------------------------------------
+
+Iteration : 1
+
+Creating Classifier...
