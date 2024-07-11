@@ -32,6 +32,17 @@ const ROI_graphs = () => {
         }
       });
       const data = await response.json();
+      console.log("F1 Score - Logistic Regression:", data.f1_score_lg);
+console.log("F1 Score - Naive Bayes:", data.f1_score_nb);
+console.log("F1 Score - Random Forest:", data.f1_score_rf);
+console.log("F1 Score - Support Vector Machine:", data.f1_score_svc);
+console.log("F1 Score - Decision Tree:", data.f1_score_dt);
+console.log("ROI - Logistic Regression:", data.roi_lg);
+console.log("ROI - Naive Bayes:", data.roi_nb);
+console.log("ROI - Random Forest:", data.roi_rf);
+console.log("ROI - Support Vector Machine:", data.roi_svc);
+console.log("ROI - Decision Tree:", data.roi_dt);
+
       setGraph(data.f1_score_lg);
       setGraph1(data.f1_score_nb);
       setGraph2(data.f1_score_rf);
