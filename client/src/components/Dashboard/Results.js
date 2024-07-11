@@ -39,6 +39,22 @@ const Results = () => {
       });
       
       const data = await response.json();
+      console.log("F1 Score - Logistic Regression:", data.f1_score_lg);
+      console.log("F1 Score - Naive Bayes:", data.f1_score_nb);
+      console.log("F1 Score - Random Forest:", data.f1_score_rf);
+      console.log("F1 Score - Support Vector Machine:", data.f1_score_svc);
+      console.log("F1 Score - Decision Tree:", data.f1_score_dt);
+      console.log("Recall Score - Logistic Regression:", data.recall_score_lg);
+      console.log("Recall Score - Naive Bayes:", data.recall_score_nb);
+      console.log("Recall Score - Random Forest:", data.recall_score_rf);
+      console.log("Recall Score - Support Vector Machine:", data.recall_score_svc);
+      console.log("Recall Score - Decision Tree:", data.recall_score_dt);
+      console.log("Precision Score - Logistic Regression:", data.precision_score_lg);
+      console.log("Precision Score - Naive Bayes:", data.precision_score_nb);
+      console.log("Precision Score - Random Forest:", data.precision_score_rf);
+      console.log("Precision Score - Support Vector Machine:", data.precision_score_svc);
+      console.log("Precision Score - Decision Tree:", data.precision_score_dt);
+
       setGraph(data.f1_score_lg);
       setGraph3(data.f1_score_nb);
       setGraph6(data.f1_score_rf);
@@ -54,6 +70,7 @@ const Results = () => {
       setGraph12(data.precision_score_rf);
       setGraph13(data.precision_score_svc);
       setGraph14(data.precision_score_dt);
+
 
 
     } catch (error) {
