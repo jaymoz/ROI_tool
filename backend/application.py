@@ -1074,6 +1074,23 @@ def perform_support_vector_machine():
                         'line_number': line_number, 'traceback': traceback_details})
    
 
+@application.route('/weekly-supervised', methods=['POST'])
+def weekly_supervised():
+    global df_test
+    global df_filtered_trimmed
+        # Load df_filtered_trimmed from the saved CSV file
+    df_filtered_trimmed = pd.read_csv('df_filtered_trimmed.csv')
+
+
+
+    try:
+        X = df_filtered_trimmed.drop(columns=['Label'])
+        y = df_filtered_trimmed['Label']
+        testChcek = "testing active-learning working"
+        return jsonify({'success': True, 'testChcek' : testChcek})
+    except Exception as e:
+        return jsonify({'error': str(e)})
+
 @application.route('/active-learning', methods=['POST'])
 def active_learning():
     global df_test
