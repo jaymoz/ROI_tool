@@ -485,6 +485,8 @@ def perform_logistic_regression():
 @application.route('/naive-bayes', methods=['POST'])
 def perform_naive_bayes():
     print("Received Naive Bayes request")
+    import traceback
+    import sys
 
     # Global variables declaration
     global df_test, df_filtered_trimmed
@@ -501,148 +503,121 @@ def perform_naive_bayes():
     fp_nb_list.clear()
 
     try:
-        # Check if df_filtered_trimmed is initialized
-        if df_filtered_trimmed is None:
-            raise ValueError("DataFrame df_filtered_trimmed is not initialized")
-
+        print("Loading data and model")
+        df_filtered_trimmed = pd.read_csv('df_filtered_trimmed.csv') 
         start = time.time()
-        print("Starting processing")
 
-        # Preparing the data    
-        text_columns = df_filtered_trimmed.select_dtypes(include=['object']).columns.tolist()
+        # Data preparation
         X = df_filtered_trimmed.drop(columns=['Label'])
         y = df_filtered_trimmed['Label']
-        X_text = X[text_columns].apply(lambda x: ' '.join(x.dropna().astype(str)), axis=1)
-        print("Data prepared")
-
-        # Loading model and vectorizer
+        text_columns = df_filtered_trimmed.select_dtypes(include=['object']).columns.tolist()
+        X_text = X[text_columns].apply(lambda x: ' '.join(x.fillna('').astype(str)), axis=1)
+        
         with open('naive_bayes.pkl', 'rb') as file:
             model = pickle.load(file)
-        print("Naive Bayes model loaded")
-
+        
         with open('vectorizer_fn.pkl', 'rb') as file:
             vectorizer = pickle.load(file)
-        print("Vectorizer loaded")
-
-        # Transforming the test data
+        
         X_test_vectorized = vectorizer.transform(X_text)
-        print("Test data vectorized")
+        print("Data vectorization completed")
 
-        # Splitting the dataset
+        # Splitting data into training and test sets
         X_train, X_test, y_train, y_test = train_test_split(X_test_vectorized, y, train_size=0.8, random_state=42)
-        print("Dataset split into train and test sets")
+        print("Data split into training and test sets")
 
         # Model prediction
         y_pred = model.predict(X_test)
-        print("Prediction completed")
-
-        # Calculating metrics
+        
         stop = round(time.time() - start, 4)
-        accuracy = round(accuracy_score(y_test, y_pred), 4) * 100
+        accuracy = round(accuracy_score(y_test, y_pred), 4) * 100 
         accuracy = str(accuracy) + "%"
-        print("Accuracy:", accuracy)
         report = classification_report(y_test, y_pred, zero_division=1)
         cm = confusion_matrix(y_pred, y_test, labels=[0, 1])
         f1 = round(f1_score(y_test, y_pred, average='macro'), 3)
-        print("Metrics calculated")
-
-            # More processing
+      
         acc = []
         size = []
+        
+        # Iterative training with various sizes
+        print("Starting iterative training with different sizes")
         for k in range(2, 10):
             k = k / 10
-            print(f"Processing for train size = {k}")
-            X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=k, random_state=42)
-            X_train_text = X_train[text_columns].apply(lambda x: ' '.join(x.dropna().astype(str)), axis=1)
-            X_test_text = X_test[text_columns].apply(lambda x: ' '.join(x.dropna().astype(str)), axis=1)
-
-            try:
-                X_train_vectorized = vectorizer.fit_transform(X_train_text)
-                X_test_vectorized = vectorizer.transform(X_test_text)
-            except ValueError as e:
-                print(f"Skipping iteration due to error: {e}")
-                continue
-
-            model.fit(X_train_vectorized, y_train)
-            y_pred = model.predict(X_test_vectorized)
-
-            cm = confusion_matrix(y_test, y_pred)
-            # Handling the confusion matrix based on its size
-            if cm.shape == (2, 2):  # Binary classification
-                tn, fp_nb, fn_nb, tp_nb = cm.ravel()
-            else:  # Multi-class classification
-                # Handling for multi-class classification can be done here
-                # For simplicity, just print the confusion matrix
-                print(cm)
-                continue  # Skip the current iteration
-
+            X_train, X_test, y_train, y_test = train_test_split(X_test_vectorized, y, train_size=k, random_state=42)
+            
+            model.fit(X_train, y_train)
+            y_pred = model.predict(X_test)
+            cm = confusion_matrix(y_pred, y_test, labels=[0, 1])
+            tn, fp_nb, fn_nb, tp_nb = cm.ravel()
             fp_nb_list.append(fp_nb)
             fn_nb_list.append(fn_nb)
             tp_nb_list.append(tp_nb)
             size.append(k)
             acc.append(accuracy_score(y_test, y_pred))
-
             f1_score_nb.append(f1_score(y_test, y_pred, average='macro'))
             recall_score_nb.append(recall_score(y_test, y_pred, average='macro'))
-            precision_score_nb.append(precision_score(y_test, y_pred, average='macro'))
-
+            precision_score_nb.append(precision_score(y_test, y_pred, average='macro')) # Updated
+        
         print("Loop processing completed")
 
         # Plotting and saving figures
-        plt.figure(figsize=(8, 6))
-        plt.plot(size, acc, label='Accuracy', marker='o')
-        plt.xlabel('Training Size')
-        plt.ylabel('Accuracy (%)')
-        plt.title('Naive Bayes Accuracy by Training Size')
-        plt.legend()
-        plt.grid(True)
-
-        # Save the plot before calling plt.show()
-        nb_f1_score = os.path.join(application.static_folder, 'nb_f1_score.png')
-        plt.savefig(nb_f1_score)
-
-        plt.show()
-        plt.close()
-                # After calculating the confusion matrix, plot and save it
-        plt.figure(figsize=(6, 6))
-        sns.heatmap(cm, annot=True, fmt='d')
-        plt.title('Confusion Matrix')
-        plt.ylabel('Actual Label')
-        plt.xlabel('Predicted Label')
-
-        # Save the confusion matrix plot
+        print("Plotting and saving figures")
+        fig, ax = plt.subplots(figsize=(4.5, 3.8))
+        pastel_blue_palette = sns.color_palette(["#D4FAFA", "#AFD5F0", "#AFD5F0"])
+        sns.heatmap(cm, annot=True, fmt='d', cmap=pastel_blue_palette, cbar=False)
+        ax.set_xlabel('Predicted Labels')
+        ax.set_ylabel('True Labels')
+        ax.set_title('Confusion Matrix')
         nb_cm = os.path.join(application.static_folder, 'nb_cm.png')
         plt.savefig(nb_cm)
         plt.close()
-
-
-        # Save the plot
-        # nb_f1_score = os.path.join(application.static_folder, 'nb_f1_score.png')
-        # plt.savefig(nb_f1_score)
+        
+        fig = plt.figure(figsize=(4.5, 4))
+        fig.patch.set_facecolor('white')
+        plt.plot(size, acc, label='Accuracy', marker='o')
+        plt.xlabel("Training Size", color='black')
+        plt.ylabel("Validation Accuracy (%)", color='black')
+        plt.title('Logistic Regression Accuracy by Training Size')
+        plt.legend()
+        plt.grid(True)
+        nb_f1_score = os.path.join(application.static_folder, 'nb_f1_score.png')
+        plt.savefig(nb_f1_score)
         plt.close()
 
-        # Deleting temporary image files should be implemented here
-        # ...
-
+        # Convert non-serializable types to native Python types
+        f1_score_nb = [float(score) for score in f1_score_nb]
+        recall_score_nb = [float(score) for score in recall_score_nb]
+        precision_score_nb = [float(score) for score in precision_score_nb]
+        tp_nb_list = [int(tp) for tp in tp_nb_list]
+        fp_nb_list = [int(fp) for fp in fp_nb_list]
+        fn_nb_list = [int(fn) for fn in fn_nb_list]
+        base_url = "https://roibackend.shaktilab.org"
+            # Modify the jsonify call
         return jsonify({
-            'success': True, 
-            'report': report, 
-            'accuracy': accuracy, 
-            'stop': stop, 
-            'graph': '/static/nb_f1_score.png',
-            'cm': '/static/nb_cm.png',
-            'f1': f1, 
-            'f1score': f1_score_nb, 
-            'recallscore': recall_score_nb, 
-            'precisionscore': precision_score_nb, 
-            'tp': tp_nb_list, 
-            'fp': fp_nb_list, 
-            'fn': fn_nb_list
-        })
+                'success': True, 
+                'report': report, 
+                'accuracy': accuracy, 
+                'stop': stop, 
+                'graph': f'{base_url}/static/nb_f1_score.png', 
+                'cm': f'{base_url}/static/nb_cm.png', 
+                'f1': float(f1),  # Ensure f1 is a native Python float
+                'f1score': f1_score_nb, 
+                'recallscore': recall_score_nb, 
+                'precisionscore': precision_score_nb, 
+                'tp': tp_nb_list, 
+                'fp': fp_nb_list, 
+                'fn': fn_nb_list
+            })
 
     except Exception as e:
-        print(f"Error: {str(e)}")
-        return jsonify({'error': str(e)})
+        exc_type, exc_value, exc_traceback = sys.exc_info()
+        line_number = exc_traceback.tb_lineno
+        traceback_details = traceback.format_exc()
+        print("An error occurred:", traceback_details)
+        return jsonify({'error': str(e), 
+                        'line_number': line_number, 'traceback': traceback_details})
+
+
 
 
     
@@ -660,240 +635,147 @@ import seaborn as sns
 
 @application.route('/random-forest', methods=['POST'])
 def perform_random_forest():
-    pastel_blue_palette = sns.color_palette("Pastel1")
+    # Import statements
+    import traceback
+    import sys
+    import pandas as pd
+    import pickle
+    from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, f1_score, recall_score, precision_score
+    from sklearn.model_selection import train_test_split
+    import time
+    import os
+    from matplotlib import pyplot as plt
+    import seaborn as sns
+
+    # Global variables declaration
     global df_test, df_filtered_trimmed
     global f1_score_rf, recall_score_rf, precision_score_rf
     global tp_rf, fn_rf, fp_rf
     global tp_rf_list, fn_rf_list, fp_rf_list
     
-    # Initialize or clear the lists if already exists
-    recall_score_rf = []
-    precision_score_rf = []
-    f1_score_rf = []
-    tp_rf_list = []
-    fn_rf_list = []
-    fp_rf_list = []
-    acc=[]
-    size=[]
-
-    print("Loading data and model")
-    df_filtered_trimmed = pd.read_csv('df_filtered_trimmed.csv') 
+    # Clearing existing data in global lists
+    recall_score_rf.clear()
+    precision_score_rf.clear()
+    f1_score_rf.clear()
+    tp_rf_list.clear()
+    fn_rf_list.clear()
+    fp_rf_list.clear()
 
     try:
-        start = time.time()
-        if 'df_filtered_trimmed' not in globals():
-            print("DataFrame df_filtered_trimmed is not available.")
-            raise ValueError("DataFrame df_filtered_trimmed is not initialized")
-        print("DataFrame df_filtered_trimmed is loaded.")
-
-        # Ensure text_columns is defined here, as it was previously undefined
-        text_columns = df_filtered_trimmed.select_dtypes(include=['object']).columns.tolist()
-
-        X = df_filtered_trimmed.drop(columns=['Label'])
-        y = df_filtered_trimmed['Label']
-        X_text = X[text_columns].apply(lambda x: ' '.join(x.dropna()), axis=1)
-
-        print("Loading the Random Forest model and vectorizer.")
-        with open('random_forest.pkl', 'rb') as file:
-            model = pickle.load(file)
-        with open('vectorizer_fn.pkl', 'rb') as file:
-            vectorizer = pickle.load(file)
-
-        print("Transforming test data.")
-        X_test_vectorized = vectorizer.transform(X_text)
-
-        print("Splitting dataset.")
-        X_train, X_test, y_train, y_test = train_test_split(X_test_vectorized, y, train_size=0.8, random_state=42)
-        y_pred = model.predict(X_test)
-        f1 = round(f1_score(y_test, y_pred, average='macro'), 3)
-        stop = round(time.time() - start, 4)
-        accuracy = round(accuracy_score(y_test, y_pred), 4) * 100
-        report = classification_report(y_test, y_pred, zero_division=1)
-        cm = confusion_matrix(y_pred, y_test, labels=model.classes_)
-
-        print("Accuracy calculated: ", accuracy)
-        print("Generating plots.")
-        
-        # Plotting confusion matrix
-        fig, ax = plt.subplots(figsize=(4.5, 3.8))
-        sns.heatmap(cm, annot=True, fmt='d', cmap=pastel_blue_palette, cbar=False)
-        ax.set_xlabel('Predicted Labels')
-        ax.set_ylabel('True Labels')
-        ax.set_title('Confusion Matrix')
-        cm_file_path = os.path.join(application.static_folder, 'rf_cm.png')
-        plt.savefig(cm_file_path)
-        plt.close(fig)
-
-        # Generating accuracy plot
-        fig, ax = plt.subplots(figsize=(4.5, 4))
-        ax.plot(size, acc, color='#AFD5F0', marker='o')
-        ax.set_xlabel("Training Size", color='black')
-        ax.set_ylabel("Validation Accuracy (%)", color='black')
-        ax.set_title("Random Forest Accuracy by Training Size")
-        rf_f1_score = os.path.join(application.static_folder, 'rf.png')
-        plt.savefig(rf_f1_score)
-        plt.close(fig)
-
-        # Deleting temporary image files should be handled here
-        # ...
-
-        print("Plots generated and saved.")
-        
-        return jsonify({
-            'success': True,
-            'report': report,
-            'accuracy': accuracy,
-            'stop': stop,
-            'graph': '/static/rf.png',
-            'cm': '/static/rf_cm.png',
-            'f1': f1,
-            'f1score': f1_score_rf,
-            'recallscore': recall_score_rf,
-            'precisionscore': precision_score_rf,
-            'tp': tp_rf_list,
-            'fp': fp_rf_list,
-            'fn': fn_rf_list
-        })
-
-    except Exception as e:
-        print(f"An error occurred in /random-forest route: {e}")
-        return jsonify({'error random forest': str(e)})
-
-
-from flask import jsonify
-import time
-import pickle
-import os
-import matplotlib.pyplot as plt
-import seaborn as sns
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, f1_score, recall_score, precision_score
-from sklearn.model_selection import train_test_split
-
-@application.route('/support-vector-machine', methods=['POST'])
-def perform_support_vector_machine():
-    global df_test, df_filtered_trimmed
-    global f1_score_svc, recall_score_svc, precision_score_svc
-    global tp_svc, fn_svc, fp_svc
-    global tp_svc_list, fn_svc_list, fp_svc_list
-
-    recall_score_svc.clear()
-    precision_score_svc.clear()
-    f1_score_svc.clear()
-    tp_svc_list.clear()
-    fn_svc_list.clear()
-    fp_svc_list.clear()
-
-    try:
-        start = time.time()
         print("Loading data and model")
         df_filtered_trimmed = pd.read_csv('df_filtered_trimmed.csv') 
+        start = time.time()
+
+        # Data preparation
         X = df_filtered_trimmed.drop(columns=['Label'])
         y = df_filtered_trimmed['Label']
-        X_text = X[text_columns].apply(lambda x: ' '.join(x.dropna()), axis=1)
-
-        print("Data prepared for model")
-
-        # Load the model and vectorizer from pickle files
-        with open('svc.pkl', 'rb') as file:
+        text_columns = df_filtered_trimmed.select_dtypes(include=['object']).columns.tolist()
+        X_text = X[text_columns].apply(lambda x: ' '.join(x.fillna('').astype(str)), axis=1)
+        
+        with open('logistic_regression.pkl', 'rb') as file:
             model = pickle.load(file)
+        
         with open('vectorizer_fn.pkl', 'rb') as file:
             vectorizer = pickle.load(file)
-
-        print("Model and vectorizer loaded")
-
-        # Transform the test data using the vectorizer
+        
         X_test_vectorized = vectorizer.transform(X_text)
-        print("Test data vectorized")
+        print("Data vectorization completed")
 
-        # Split the dataset into training and test sets
+        # Splitting data into training and test sets
         X_train, X_test, y_train, y_test = train_test_split(X_test_vectorized, y, train_size=0.8, random_state=42)
-        y_pred = model.predict(X_test)
-        print("Model prediction completed")
+        print("Data split into training and test sets")
 
+        # Model prediction
+        y_pred = model.predict(X_test)
+        
         stop = round(time.time() - start, 4)
-        accuracy = round(accuracy_score(y_test, y_pred), 4) * 100
+        accuracy = round(accuracy_score(y_test, y_pred), 4) * 100 
         accuracy = str(accuracy) + "%"
         report = classification_report(y_test, y_pred, zero_division=1)
         cm = confusion_matrix(y_pred, y_test, labels=[0, 1])
         f1 = round(f1_score(y_test, y_pred, average='macro'), 3)
-
-        print("Performance metrics calculated")
-
+      
         acc = []
         size = []
         
-
+        # Iterative training with various sizes
+        print("Starting iterative training with different sizes")
         for k in range(2, 10):
             k = k / 10
-            print(f"Starting iteration with training size: {k}")
+            X_train, X_test, y_train, y_test = train_test_split(X_test_vectorized, y, train_size=k, random_state=42)
+            
+            model.fit(X_train, y_train)
+            y_pred = model.predict(X_test)
+            cm = confusion_matrix(y_pred, y_test, labels=[0, 1])
+            tn, fp_rf, fn_rf, tp_rf = cm.ravel()
+            fp_rf_list.append(fp_rf)
+            fn_rf_list.append(fn_rf)
+            tp_rf_list.append(tp_rf)
+            size.append(k)
+            acc.append(accuracy_score(y_test, y_pred))
+            f1_score_rf.append(f1_score(y_test, y_pred, average='macro'))
+            recall_score_rf.append(recall_score(y_test, y_pred, average='macro'))
+            precision_score_rf.append(precision_score(y_test, y_pred, average='macro', zero_division=1)) # Updated
+        
+        print("Loop processing completed")
 
-            try:
-                X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=k, random_state=42)
-                X_train_text = X_train[text_columns].apply(lambda x: ' '.join(x.dropna()), axis=1)
-                X_test_text = X_test[text_columns].apply(lambda x: ' '.join(x.dropna()), axis=1)
-                X_train_vectorized = vectorizer.fit_transform(X_train_text)
-                X_test_vectorized = vectorizer.transform(X_test_text)
-                model.fit(X_train_vectorized, y_train)
-                y_pred = model.predict(X_test_vectorized)
-
-                print(f"Model re-trained and prediction made for training size: {k}")
-
-                cm = confusion_matrix(y_pred, y_test, labels=[0, 1])
-                tn, fp_svc, fn_svc, tp_svc = cm.ravel()
-                fp_svc_list.append(int(fp_svc))
-                fn_svc_list.append(int(fn_svc))
-                tp_svc_list.append(int(tp_svc))
-                size.append(k)
-                acc.append(round(accuracy_score(y_test, y_pred), 2))
-                f1_score_svc.append(round(f1_score(y_test, y_pred, average='macro'), 2))
-                recall_score_svc.append(round(recall_score(y_test, y_pred, average='macro'), 2))
-                precision_score_svc.append(round(precision_score(y_test, y_pred, average='macro'), 2))
-
-                print(f"Metrics calculated for training size: {k}")
-
-            except Exception as e:
-                print(f"Error during iteration with training size {k}: {e}")
-                continue
-
-        print("Accumulated metrics over different training sizes")
-
-        # Plotting confusion matrix
+        # Plotting and saving figures
+        print("Plotting and saving figures")
         fig, ax = plt.subplots(figsize=(4.5, 3.8))
         pastel_blue_palette = sns.color_palette(["#D4FAFA", "#AFD5F0", "#AFD5F0"])
         sns.heatmap(cm, annot=True, fmt='d', cmap=pastel_blue_palette, cbar=False)
         ax.set_xlabel('Predicted Labels')
         ax.set_ylabel('True Labels')
         ax.set_title('Confusion Matrix')
-        cm_path = os.path.join(application.static_folder, 'svc_cm.png')
-        plt.savefig(cm_path)
+        rf_cm = os.path.join(application.static_folder, 'rf_cm.png')
+        plt.savefig(rf_cm)
         plt.close()
-
-        print("Confusion Matrix plotted and saved")
-
-        # Plotting accuracy graph
+        
         fig = plt.figure(figsize=(4.5, 4))
         fig.patch.set_facecolor('white')
-        plt.plot(size, acc, color='#AFD5F0')
+        plt.plot(size, acc, label='Accuracy', marker='o')
         plt.xlabel("Training Size", color='black')
-        plt.ylabel("Validation Accuracy", color='black')
-        svc_f1_score = os.path.join(application.static_folder, 'svc.png')
-        plt.savefig(svc_f1_score)
+        plt.ylabel("Validation Accuracy (%)", color='black')
+        plt.title('Logistic Regression Accuracy by Training Size')
+        plt.legend()
+        plt.grid(True)
+        rf_f1_score = os.path.join(application.static_folder, 'rf_f1_score.png')
+        plt.savefig(rf_f1_score)
         plt.close()
 
-        print("Accuracy graph plotted and saved")
-
-        # Delete temporary image files after a delay
-        image_files_to_delete = [cm_path, svc_f1_score]
-        delete(image_files_to_delete, delay=7)
-        print("Scheduled deletion of temporary files")
-
-        return jsonify({'success': True, 'report': report, 'accuracy': accuracy, 'stop': stop, 'graph': '/static/svc.png', 'cm': '/static/svc_cm.png', 'f1': f1, 'f1score': f1_score_svc, 'recallscore': recall_score_svc, 'precisionscore': precision_score_svc, 'tp': tp_svc_list, 'fp': fp_svc_list, 'fn': fn_svc_list})
+        # Convert non-serializable types to native Python types
+        f1_score_rf = [float(score) for score in f1_score_rf]
+        recall_score_rf = [float(score) for score in recall_score_rf]
+        precision_score_rf = [float(score) for score in precision_score_rf]
+        tp_rf_list = [int(tp) for tp in tp_rf_list]
+        fp_rf_list = [int(fp) for fp in fp_rf_list]
+        fn_rf_list = [int(fn) for fn in fn_rf_list]
+        base_url = "https://roibackend.shaktilab.org"
+            # Modify the jsonify call
+        return jsonify({
+                'success': True, 
+                'report': report, 
+                'accuracy': accuracy, 
+                'stop': stop, 
+                'graph': f'{base_url}/static/rf_f1_score.png', 
+                'cm': f'{base_url}/static/rf_cm.png', 
+                'f1': float(f1),  # Ensure f1 is a native Python float
+                'f1score': f1_score_rf, 
+                'recallscore': recall_score_rf, 
+                'precisionscore': precision_score_rf, 
+                'tp': tp_rf_list, 
+                'fp': fp_rf_list, 
+                'fn': fn_rf_list
+            })
 
     except Exception as e:
-        print(f"Error in perform_support_vector_machine function: {e}")
-        return jsonify({'error': str(e)})
+        exc_type, exc_value, exc_traceback = sys.exc_info()
+        line_number = exc_traceback.tb_lineno
+        traceback_details = traceback.format_exc()
+        print("An error occurred:", traceback_details)
+        return jsonify({'error': str(e), 
+                        'line_number': line_number, 'traceback': traceback_details})
 
-   
 
 from flask import jsonify
 import time
@@ -908,11 +790,25 @@ from sklearn.model_selection import train_test_split
 @application.route('/decision-tree', methods=['POST'])
 def perform_decision_tree():
 
+    # Import statements
+    import traceback
+    import sys
+    import pandas as pd
+    import pickle
+    from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, f1_score, recall_score, precision_score
+    from sklearn.model_selection import train_test_split
+    import time
+    import os
+    from matplotlib import pyplot as plt
+    import seaborn as sns
+
+    # Global variables declaration
     global df_test, df_filtered_trimmed
     global f1_score_dt, recall_score_dt, precision_score_dt
     global tp_dt, fn_dt, fp_dt
     global tp_dt_list, fn_dt_list, fp_dt_list
-
+    
+    # Clearing existing data in global lists
     recall_score_dt.clear()
     precision_score_dt.clear()
     f1_score_dt.clear()
@@ -921,136 +817,262 @@ def perform_decision_tree():
     fp_dt_list.clear()
 
     try:
-        # Load the dataset
-        df_filtered_trimmed = pd.read_csv('df_filtered_trimmed.csv')
-        print("Dataset loaded")
-        text_columns = df_filtered_trimmed.select_dtypes(include=['object']).columns.tolist()
-
+        print("Loading data and model")
+        df_filtered_trimmed = pd.read_csv('df_filtered_trimmed.csv') 
         start = time.time()
+
+        # Data preparation
         X = df_filtered_trimmed.drop(columns=['Label'])
         y = df_filtered_trimmed['Label']
-        X_text = X[text_columns].apply(lambda x: ' '.join(x.dropna()), axis=1)
-
-        print("Data prepared for model")
-
-        # Load the decision tree model and vectorizer from pickle files
-        with open('decision_tree.pkl', 'rb') as file:
+        text_columns = df_filtered_trimmed.select_dtypes(include=['object']).columns.tolist()
+        X_text = X[text_columns].apply(lambda x: ' '.join(x.fillna('').astype(str)), axis=1)
+        
+        with open('logistic_regression.pkl', 'rb') as file:
             model = pickle.load(file)
+        
         with open('vectorizer_fn.pkl', 'rb') as file:
             vectorizer = pickle.load(file)
-
-        print("Model and vectorizer loaded")
-
-        # Transform the test data using the vectorizer
+        
         X_test_vectorized = vectorizer.transform(X_text)
-        print("Test data vectorized")
+        print("Data vectorization completed")
 
-        # Split the dataset into training and test sets
+        # Splitting data into training and test sets
         X_train, X_test, y_train, y_test = train_test_split(X_test_vectorized, y, train_size=0.8, random_state=42)
-        y_pred = model.predict(X_test)
-        print("Model prediction completed")
+        print("Data split into training and test sets")
 
+        # Model prediction
+        y_pred = model.predict(X_test)
+        
         stop = round(time.time() - start, 4)
-        accuracy = round(accuracy_score(y_test, y_pred), 4) * 100
+        accuracy = round(accuracy_score(y_test, y_pred), 4) * 100 
         accuracy = str(accuracy) + "%"
         report = classification_report(y_test, y_pred, zero_division=1)
         cm = confusion_matrix(y_pred, y_test, labels=[0, 1])
         f1 = round(f1_score(y_test, y_pred, average='macro'), 3)
-
-        print("Performance metrics calculated")
-
+      
         acc = []
         size = []
-
+        
+        # Iterative training with various sizes
+        print("Starting iterative training with different sizes")
         for k in range(2, 10):
             k = k / 10
-            print(f"Starting iteration with training size: {k}")
-            X_train, X_test, y_train, y_test = train_test_split(X, y, train_size=k, random_state=42)
-            X_train_text = X_train[text_columns].apply(lambda x: ' '.join(x.dropna()), axis=1)
-            X_test_text = X_test[text_columns].apply(lambda x: ' '.join(x.dropna()), axis=1)
+            X_train, X_test, y_train, y_test = train_test_split(X_test_vectorized, y, train_size=k, random_state=42)
             
-            
-            X_train_vectorized = vectorizer.fit_transform(X_train_text)
-            X_test_vectorized = vectorizer.transform(X_test_text)
-            model.fit(X_train_vectorized, y_train)
+            model.fit(X_train, y_train)
+            y_pred = model.predict(X_test)
+            cm = confusion_matrix(y_pred, y_test, labels=[0, 1])
+            tn, fp_dt, fn_dt, tp_dt = cm.ravel()
+            fp_dt_list.append(fp_dt)
+            fn_dt_list.append(fn_dt)
+            tp_dt_list.append(tp_dt)
+            size.append(k)
+            acc.append(accuracy_score(y_test, y_pred))
+            f1_score_dt.append(f1_score(y_test, y_pred, average='macro'))
+            recall_score_dt.append(recall_score(y_test, y_pred, average='macro'))
+            precision_score_dt.append(precision_score(y_test, y_pred, average='macro', zero_division=1)) # Updated
+        
+        print("Loop processing completed")
 
-            try:
-                y_pred = model.predict(X_test_vectorized)
-                cm = confusion_matrix(y_pred, y_test, labels=[0, 1])
-                tn, fp_dt, fn_dt, tp_dt = cm.ravel()
-                fp_dt_list.append(int(fp_dt))
-                fn_dt_list.append(int(fn_dt))
-                tp_dt_list.append(int(tp_dt))
-                size.append(k)
-
-                # Using zero_division parameter to handle undefined metrics
-                acc.append(round(accuracy_score(y_test, y_pred), 2))
-                f1_score_dt.append(round(f1_score(y_test, y_pred, average='macro', zero_division=0), 2))
-                recall_score_dt.append(round(recall_score(y_test, y_pred, average='macro', zero_division=0), 2))
-                precision_score_dt.append(round(precision_score(y_test, y_pred, average='macro', zero_division=0), 2))
-
-                print(f"Metrics calculated for training size: {k}")
-
-            except ValueError as e:
-                print(f"Error during metrics calculation for training size {k}: {e}")
-                continue
-
-        print("Accumulated metrics over different training sizes")
-
-        # Plotting confusion matrix
+        # Plotting and saving figures
+        print("Plotting and saving figures")
         fig, ax = plt.subplots(figsize=(4.5, 3.8))
         pastel_blue_palette = sns.color_palette(["#D4FAFA", "#AFD5F0", "#AFD5F0"])
         sns.heatmap(cm, annot=True, fmt='d', cmap=pastel_blue_palette, cbar=False)
         ax.set_xlabel('Predicted Labels')
         ax.set_ylabel('True Labels')
         ax.set_title('Confusion Matrix')
-        cm_path = os.path.join(application.static_folder, 'dt_cm.png')
-        plt.savefig(cm_path)
+        dt_cm = os.path.join(application.static_folder, 'dt_cm.png')
+        plt.savefig(dt_cm)
         plt.close()
-
-        print("Confusion Matrix plotted and saved")
-
-        # Plotting accuracy graph
+        
         fig = plt.figure(figsize=(4.5, 4))
         fig.patch.set_facecolor('white')
-        plt.plot(size, acc, color='#AFD5F0')
+        plt.plot(size, acc, label='Accuracy', marker='o')
         plt.xlabel("Training Size", color='black')
-        plt.ylabel("Validation Accuracy", color='black')
-        dt_f1_score = os.path.join(application.static_folder, 'dt.png')
+        plt.ylabel("Validation Accuracy (%)", color='black')
+        plt.title('Logistic Regression Accuracy by Training Size')
+        plt.legend()
+        plt.grid(True)
+        dt_f1_score = os.path.join(application.static_folder, 'dt_f1_score.png')
         plt.savefig(dt_f1_score)
         plt.close()
 
-        print("Accuracy graph plotted and saved")
-
-        # Delete temporary image files after a delay
-        image_files_to_delete = [cm_path, dt_f1_score]
-        delete(image_files_to_delete, delay=7)
-        print("Scheduled deletion of temporary files")
-
-        return jsonify({'success': True, 'report': report, 'accuracy': accuracy, 'stop': stop, 'graph': '/static/dt.png', 'cm': '/static/dt_cm.png', 'f1': f1, 'f1score': f1_score_dt, 'recallscore': recall_score_dt, 'precisionscore': precision_score_dt, 'tp': tp_dt_list, 'fp': fp_dt_list, 'fn': fn_dt_list})
+        # Convert non-serializable types to native Python types
+        f1_score_dt = [float(score) for score in f1_score_dt]
+        recall_score_dt = [float(score) for score in recall_score_dt]
+        precision_score_dt = [float(score) for score in precision_score_dt]
+        tp_dt_list = [int(tp) for tp in tp_dt_list]
+        fp_dt_list = [int(fp) for fp in fp_dt_list]
+        fn_dt_list = [int(fn) for fn in fn_dt_list]
+        base_url = "https://roibackend.shaktilab.org"
+            # Modify the jsonify call
+        return jsonify({
+                'success': True, 
+                'report': report, 
+                'accuracy': accuracy, 
+                'stop': stop, 
+                'graph': f'{base_url}/static/dt_f1_score.png', 
+                'cm': f'{base_url}/static/dt_cm.png', 
+                'f1': float(f1),  # Ensure f1 is a native Python float
+                'f1score': f1_score_dt, 
+                'recallscore': recall_score_dt, 
+                'precisionscore': precision_score_dt, 
+                'tp': tp_dt_list, 
+                'fp': fp_dt_list, 
+                'fn': fn_dt_list
+            })
 
     except Exception as e:
-        print(f"Error in perform_decision_tree function: {e}")
-        return jsonify({'error': str(e)})
+        exc_type, exc_value, exc_traceback = sys.exc_info()
+        line_number = exc_traceback.tb_lineno
+        traceback_details = traceback.format_exc()
+        print("An error occurred:", traceback_details)
+        return jsonify({'error': str(e), 
+                        'line_number': line_number, 'traceback': traceback_details})
+@application.route('/support-vector-machine', methods=['POST'])
+def perform_support_vector_machine():
+    # Import statements
+    import traceback
+    import sys
+    import pandas as pd
+    import pickle
+    from sklearn.metrics import accuracy_score, classification_report, confusion_matrix, f1_score, recall_score, precision_score
+    from sklearn.model_selection import train_test_split
+    import time
+    import os
+    from matplotlib import pyplot as plt
+    import seaborn as sns
 
-
-@application.route('/weekly-supervised', methods=['POST'])
-def weekly_supervised():
-    global df_test
-    global df_filtered_trimmed
-        # Load df_filtered_trimmed from the saved CSV file
-    df_filtered_trimmed = pd.read_csv('df_filtered_trimmed.csv')
-
-
+    # Global variables declaration
+    global df_test, df_filtered_trimmed
+    global f1_score_svc, recall_score_svc, precision_score_svc
+    global tp_svc, fn_svc, fp_svc
+    global tp_svc_list, fn_svc_list, fp_svc_list
+    
+    # Clearing existing data in global lists
+    recall_score_svc.clear()
+    precision_score_svc.clear()
+    f1_score_svc.clear()
+    tp_svc_list.clear()
+    fn_svc_list.clear()
+    fp_svc_list.clear()
 
     try:
+        print("Loading data and model")
+        df_filtered_trimmed = pd.read_csv('df_filtered_trimmed.csv') 
+        start = time.time()
+
+        # Data preparation
         X = df_filtered_trimmed.drop(columns=['Label'])
         y = df_filtered_trimmed['Label']
-        testChcek = "testing active-learning working"
-        return jsonify({'success': True, 'testChcek' : testChcek})
+        text_columns = df_filtered_trimmed.select_dtypes(include=['object']).columns.tolist()
+        X_text = X[text_columns].apply(lambda x: ' '.join(x.fillna('').astype(str)), axis=1)
+        
+        with open('logistic_regression.pkl', 'rb') as file:
+            model = pickle.load(file)
+        
+        with open('vectorizer_fn.pkl', 'rb') as file:
+            vectorizer = pickle.load(file)
+        
+        X_test_vectorized = vectorizer.transform(X_text)
+        print("Data vectorization completed")
+
+        # Splitting data into training and test sets
+        X_train, X_test, y_train, y_test = train_test_split(X_test_vectorized, y, train_size=0.8, random_state=42)
+        print("Data split into training and test sets")
+
+        # Model prediction
+        y_pred = model.predict(X_test)
+        
+        stop = round(time.time() - start, 4)
+        accuracy = round(accuracy_score(y_test, y_pred), 4) * 100 
+        accuracy = str(accuracy) + "%"
+        report = classification_report(y_test, y_pred, zero_division=1)
+        cm = confusion_matrix(y_pred, y_test, labels=[0, 1])
+        f1 = round(f1_score(y_test, y_pred, average='macro'), 3)
+      
+        acc = []
+        size = []
+        
+        # Iterative training with various sizes
+        print("Starting iterative training with different sizes")
+        for k in range(2, 10):
+            k = k / 10
+            X_train, X_test, y_train, y_test = train_test_split(X_test_vectorized, y, train_size=k, random_state=42)
+            
+            model.fit(X_train, y_train)
+            y_pred = model.predict(X_test)
+            cm = confusion_matrix(y_pred, y_test, labels=[0, 1])
+            tn, fp_svc, fn_svc, tp_svc = cm.ravel()
+            fp_svc_list.append(fp_svc)
+            fn_svc_list.append(fn_svc)
+            tp_svc_list.append(tp_svc)
+            size.append(k)
+            acc.append(accuracy_score(y_test, y_pred))
+            f1_score_svc.append(f1_score(y_test, y_pred, average='macro'))
+            recall_score_svc.append(recall_score(y_test, y_pred, average='macro'))
+            precision_score_svc.append(precision_score(y_test, y_pred, average='macro', zero_division=1)) # Updated
+        
+        print("Loop processing completed")
+
+        # Plotting and saving figures
+        print("Plotting and saving figures")
+        fig, ax = plt.subplots(figsize=(4.5, 3.8))
+        pastel_blue_palette = sns.color_palette(["#D4FAFA", "#AFD5F0", "#AFD5F0"])
+        sns.heatmap(cm, annot=True, fmt='d', cmap=pastel_blue_palette, cbar=False)
+        ax.set_xlabel('Predicted Labels')
+        ax.set_ylabel('True Labels')
+        ax.set_title('Confusion Matrix')
+        svc_cm = os.path.join(application.static_folder, 'svc_cm.png')
+        plt.savefig(svc_cm)
+        plt.close()
+        
+        fig = plt.figure(figsize=(4.5, 4))
+        fig.patch.set_facecolor('white')
+        plt.plot(size, acc, label='Accuracy', marker='o')
+        plt.xlabel("Training Size", color='black')
+        plt.ylabel("Validation Accuracy (%)", color='black')
+        plt.title('Logistic Regression Accuracy by Training Size')
+        plt.legend()
+        plt.grid(True)
+        svc_f1_score = os.path.join(application.static_folder, 'svc_f1_score.png')
+        plt.savefig(svc_f1_score)
+        plt.close()
+
+        # Convert non-serializable types to native Python types
+        f1_score_svc = [float(score) for score in f1_score_svc]
+        recall_score_svc = [float(score) for score in recall_score_svc]
+        precision_score_svc = [float(score) for score in precision_score_svc]
+        tp_svc_list = [int(tp) for tp in tp_svc_list]
+        fp_svc_list = [int(fp) for fp in fp_svc_list]
+        fn_svc_list = [int(fn) for fn in fn_svc_list]
+        base_url = "https://roibackend.shaktilab.org"
+            # Modify the jsonify call
+        return jsonify({
+                'success': True, 
+                'report': report, 
+                'accuracy': accuracy, 
+                'stop': stop, 
+                'graph': f'{base_url}/static/svc_f1_score.png', 
+                'cm': f'{base_url}/static/svc_cm.png', 
+                'f1': float(f1),  # Ensure f1 is a native Python float
+                'f1score': f1_score_svc, 
+                'recallscore': recall_score_svc, 
+                'precisionscore': precision_score_svc, 
+                'tp': tp_svc_list, 
+                'fp': fp_svc_list, 
+                'fn': fn_svc_list
+            })
+
     except Exception as e:
-        return jsonify({'error': str(e)})
-    
+        exc_type, exc_value, exc_traceback = sys.exc_info()
+        line_number = exc_traceback.tb_lineno
+        traceback_details = traceback.format_exc()
+        print("An error occurred:", traceback_details)
+        return jsonify({'error': str(e), 
+                        'line_number': line_number, 'traceback': traceback_details})
+   
 
 @application.route('/active-learning', methods=['POST'])
 def active_learning():
