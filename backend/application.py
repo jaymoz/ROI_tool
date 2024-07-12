@@ -1286,25 +1286,7 @@ def active_learning1():
     #Creates Logs folder structure
     logFilePath,OFilePath = createLogs(currentFileDir+"/Logs",args1)
     
-    print("DataFrame after creating logs:\n", args1)
-
-    try:
-        print("Columns in args1:", args1.columns)
-
-        # If 'AnnotationStatus' is not in args1, add a placeholder column for debugging
-        if 'AnnotationStatus' not in args1.columns:
-            print("Adding 'AnnotationStatus' column to args1 for debugging purposes.")
-            args1['AnnotationStatus'] = ['comments'] * len(args1)  # Dummy data
-
-        learnTargetLabel(args1)
-        return jsonify({"status": "success"}), 200
-    except KeyError as e:
-        print(f"KeyError: {e}")
-        return jsonify({"error": str(e)}), 500
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        return jsonify({"error": str(e)}), 500
-    # learnTargetLabel(args1)
+    learnTargetLabel(args1)
 
     # Check if the file exists
     if os.path.isfile(logFilePath):
