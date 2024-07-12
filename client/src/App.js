@@ -17,7 +17,7 @@ function App() {
   const [showContactPage, setShowContactPage] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [theme, setTheme] = useState('day'); // 'day' or 'night' theme
-  const steps = ['Import CSV', 'Select Model', 'View Results',  'ROI Analysis', 'Graphs'];
+  const steps = ['Import CSV', 'Select Model', 'View Results',  'ROI Analysis', 'Graphs - Work in progress'];
   const pages = [ImportCSV, MLdropdown, Results, ROI, DependencyGraphs];
 
   const handleNextStep = () => {
