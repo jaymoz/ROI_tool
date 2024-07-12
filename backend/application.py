@@ -672,7 +672,7 @@ def perform_random_forest():
         text_columns = df_filtered_trimmed.select_dtypes(include=['object']).columns.tolist()
         X_text = X[text_columns].apply(lambda x: ' '.join(x.fillna('').astype(str)), axis=1)
         
-        with open('logistic_regression.pkl', 'rb') as file:
+        with open('random_forest.pkl', 'rb') as file:
             model = pickle.load(file)
         
         with open('vectorizer_fn.pkl', 'rb') as file:
