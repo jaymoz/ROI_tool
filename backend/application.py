@@ -1343,6 +1343,7 @@ def learnTargetLabel(args):
     #Read To be Annotated, Training, Test and Validation Sets generated after executing splitData.py
     try:
         df_rqmts = pd.read_csv(fullFile) #this has training data with Annotated = 'M' and rest with Nothing ''
+        df_rqmts['AnnotationStatus'] = 'M'
         print(df_rqmts[annStatus].value_counts())
 
     except FileNotFoundError as err:
