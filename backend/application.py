@@ -1346,6 +1346,24 @@ def learnTargetLabel(args):
         df_rqmts['AnnotationStatus'] = 'M'
         print(df_rqmts[annStatus].value_counts())
 
+        # Calculate number of 'U' needed (30% of total)
+        n_u = int(0.3 * len(df_rqmts))
+
+        # Create an index array
+        indices = df_rqmts.index.to_numpy()
+
+        # Shuffle the indices
+        np.random.shuffle(indices)
+
+        # Select 30% of the indices to be 'U'
+        u_indices = indices[:n_u]
+
+        # Set 'U' to the selected indices
+        df_rqmts.loc[u_indices, 'AnnotationStatus'] = 'U'
+
+        # Check the count of each category
+        print(df_rqmts['AnnotationStatus'].value_counts())
+
     except FileNotFoundError as err:
         writeLog ("File Not Found! Please provide correct path of the directory containing Training, Test, Validation, ToBeAnnotated and Manually Annotated DataSet.")
         print (err)
@@ -1358,6 +1376,7 @@ def learnTargetLabel(args):
     df_rqmts[label] = df_rqmts[label].astype('int')
   
     df_training = df_rqmts[df_rqmts[annStatus]=='M']
+
     df_testing = df_rqmts[df_rqmts[annStatus]!='M']
     
     #these are two df's for local model(LM) training for first iteration
