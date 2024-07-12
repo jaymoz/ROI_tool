@@ -1346,24 +1346,6 @@ def learnTargetLabel(args):
         df_rqmts['AnnotationStatus'] = 'M'
         print(df_rqmts[annStatus].value_counts())
 
-        # Calculate number of 'U' needed (30% of total)
-        n_u = int(0.3 * len(df_rqmts))
-
-        # Create an index array
-        indices = df_rqmts.index.to_numpy()
-
-        # Shuffle the indices
-        np.random.shuffle(indices)
-
-        # Select 30% of the indices to be 'U'
-        u_indices = indices[:n_u]
-
-        # Set 'U' to the selected indices
-        df_rqmts.loc[u_indices, 'AnnotationStatus'] = 'U'
-
-        # Check the count of each category
-        print(df_rqmts['AnnotationStatus'].value_counts())
-
     except FileNotFoundError as err:
         writeLog ("File Not Found! Please provide correct path of the directory containing Training, Test, Validation, ToBeAnnotated and Manually Annotated DataSet.")
         print (err)
@@ -1376,8 +1358,7 @@ def learnTargetLabel(args):
     df_rqmts[label] = df_rqmts[label].astype('int')
   
     df_training = df_rqmts[df_rqmts[annStatus]=='M']
-
-    df_testing = df_rqmts[df_rqmts[annStatus]=='M'][:5]
+    df_testing = df_rqmts[df_rqmts[annStatus]!='M']
     
     #these are two df's for local model(LM) training for first iteration
     df_LM_training = df_training
@@ -1398,40 +1379,6 @@ def next():
     global df_LM_testing
     global args1
     global logFilePath
-        #Create a dataframe to track the results
-    df_rqmts = pd.read_csv(fullFile) #this has training data with Annotated = 'M' and rest with Nothing ''
-    df_rqmts['AnnotationStatus'] = 'M'
-    print(df_rqmts[annStatus].value_counts())
-
-    # Calculate number of 'U' needed (30% of total)
-    n_u = int(0.3 * len(df_rqmts))
-
-    # Create an index array
-    indices = df_rqmts.index.to_numpy()
-
-    # Shuffle the indices
-    np.random.shuffle(indices)
-
-    # Select 30% of the indices to be 'U'
-    u_indices = indices[:n_u]
-
-    # Set 'U' to the selected indices
-    df_rqmts.loc[u_indices, 'AnnotationStatus'] = 'U'
-
-    # Check the count of each category
-    print(df_rqmts['AnnotationStatus'].value_counts())
-    df_resultTracker = pd.DataFrame()
-    df_rqmts=df_rqmts.sample(frac=1) #shuffulles
-    df_rqmts[label] = df_rqmts[label].astype('int')
-  
-    df_training = df_rqmts[df_rqmts[annStatus]=='M']
-
-    df_testing = df_rqmts[df_rqmts[annStatus]=='M'][:5]
-    
-    #these are two df's for local model(LM) training for first iteration
-    df_LM_training = df_training
-    df_LM_testing = df_testing
-
     f1_score_nb.clear()
     f1_score_rf.clear()
     f1_score_svc.clear()
@@ -1491,7 +1438,7 @@ def next():
     LM_SimF1=[]
     LM_confusionMatrix = []
 
-    print("df_LM_testing.columns",df_LM_testing.columns)
+    print(df_LM_testing.columns)
 
     for i in range(9):
         #-----------------------------------------AL model -------------------------------------#
@@ -1537,9 +1484,9 @@ def next():
         V_ReqPre.append(v_precisionArr[1])
         V_ReqRcl.append(v_recallArr[1])
         V_ReqF1.append(v_fscoreArr[1])
-        # V_SimPrec.append(v_precisionArr[2])
-        # V_SimRcl.append(v_recallArr[2])
-        # V_SimF1.append(v_fscoreArr[2])
+        V_SimPrec.append(v_precisionArr[2])
+        V_SimRcl.append(v_recallArr[2])
+        V_SimF1.append(v_fscoreArr[2])
         V_confusioMatrix.append(v_confusionMatrix)
 
         LM_f1.append(LM_f1Score)
@@ -1551,9 +1498,9 @@ def next():
         LM_ReqPre.append(LM_precisionArr[1])
         LM_ReqRcl.append(LM_recallArr[1])
         LM_ReqF1.append(LM_fscoreArr[1])
-        # LM_SimPrec.append(LM_precisionArr[2])
-        # LM_SimRcl.append(LM_recallArr[2])
-        # LM_SimF1.append(LM_fscoreArr[2])
+        LM_SimPrec.append(LM_precisionArr[2])
+        LM_SimRcl.append(LM_recallArr[2])
+        LM_SimF1.append(LM_fscoreArr[2])
         #
 
     tempList = (lm_confusionMatrix.tolist())
@@ -2068,9 +2015,6 @@ def predictLabels(cv,tfidf,clf,df_toBePredictedData):
     return df_toBePredictedData    
 
 def validateClassifier(cv,tfidf,clf_model,df_validationSet):
-    if df_validationSet.empty:
-        raise ValueError("The input DataFrame is empty. No data available for TF-IDF transformation.")
-
     '''
     Passes the validation dataset (Unseen data) via NLP Pipeline (Count Vectorizer , TFIDF Transformer)
     Calculate the accuracy and other metrics to evaluate the performance of the model on validation set (unseen data)
@@ -2113,7 +2057,6 @@ def validateClassifier(cv,tfidf,clf_model,df_validationSet):
 
     predictData = np.array(df_validationSet.loc[:,[req1,req2]])
     actualLabels = np.array(df_validationSet.loc[:,label]).astype('int')
-
     predict_counts = cv.transform(predictData)
     predict_tfidf = tfidf.transform(predict_counts)
     
