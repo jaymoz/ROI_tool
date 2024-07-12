@@ -1377,7 +1377,7 @@ def learnTargetLabel(args):
   
     df_training = df_rqmts[df_rqmts[annStatus]=='M']
 
-    df_testing = df_rqmts[df_rqmts[annStatus]!='M']
+    df_testing = df_rqmts[df_rqmts[annStatus]=='M'][:5]
     
     #these are two df's for local model(LM) training for first iteration
     df_LM_training = df_training
@@ -1457,7 +1457,7 @@ def next():
     LM_SimF1=[]
     LM_confusionMatrix = []
 
-    print(df_LM_testing.columns)
+    print("df_LM_testing.columns",df_LM_testing.columns)
 
     for i in range(9):
         #-----------------------------------------AL model -------------------------------------#
