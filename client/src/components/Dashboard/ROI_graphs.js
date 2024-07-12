@@ -59,71 +59,66 @@ console.log("ROI - Decision Tree:", data.roi_dt);
 };
 
 
-  const renderGraph = (graphData1, graphData2, f1_score, roi, sizeArray) => {
-    const chartData = {
-      labels: sizeArray,
-      datasets: [
-        {
-          label: f1_score,
-          data: graphData1,
-          backgroundColor: '#ff7f78',
-          borderColor: '#ff7f78',
-          borderWidth: 1,
-          pointRadius: 0,
-        },
-        {
-          label: roi,
-          data: graphData2,
-          backgroundColor: '#AFD88D',
-          borderColor: '#AFD88D',
-          borderWidth: 1,
-          pointRadius: 0,
-        },
-      ],
-    };
-
-    const chartOptions = {
-      scales: {
-        x: {
-          title: {
-            display: true,
-            text: 'Relative Training Size %',
-          },
-        },
-        y: {
-          title: {
-            display: true,
-            text: 'F1 Score',
-          },
-          position: 'left',
-          suggestedMin: 0,
-          suggestedMax: 1,
-          id: 'left-axis',
-        },
-        y1: {
-          title: {
-            display: true,
-            text: 'ROI',
-          },
-          position: 'right',
-          suggestedMin: 0,
-          suggestedMax: 100,
-          id: 'right-axis',
-        },
+const renderGraph = (graphData1, graphData2, f1_score, roi, sizeArray) => {
+  const chartData = {
+    labels: sizeArray,
+    datasets: [
+      {
+        label: f1_score,
+        data: graphData1,
+        backgroundColor: '#ff7f78',
+        borderColor: '#ff7f78',
+        borderWidth: 1,
+        yAxisID: 'y',
       },
-      elements: {
-        point: {
-          radius: 0,
-        },
+      {
+        label: roi,
+        data: graphData2,
+        backgroundColor: '#AFD88D',
+        borderColor: '#AFD88D',
+        borderWidth: 1,
+        yAxisID: 'y1', 
       },
-    };
-
-    return (
-        <div>
-          <Line data={chartData} options={chartOptions} />
-        </div>
-    );
+    ],
   };
+  
+  const chartOptions = {
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: 'Relative Training Size %',
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: 'F1 Score',
+        },
+        position: 'left', 
+        suggestedMin: 0.5, 
+        suggestedMax: 0.7, 
+        id: 'y',
+      },
+      y1: {
+        title: {
+          display: true,
+          text: 'ROI',
+        },
+        position: 'right', 
+        suggestedMin: 0,  
+        suggestedMax: 18, 
+        id: 'y1',
+      },
+    },
+  };
+  
+  return (
+      <div>
+        <Line data={chartData} options={chartOptions} />
+      </div>
+  );
+};
 
   const sizeArray = [20, 30, 40, 50, 60, 70, 80, 90];
 
