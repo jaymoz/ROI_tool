@@ -1196,12 +1196,18 @@ def set_roi_graphs():
     global fp_dt_list 
     global fn_dt_list 
     global tp_dt_list 
+	
 
     global roi_lg 
     global roi_nb 
     global roi_rf 
     global roi_svc
     global roi_dt
+    roi_lg.clear()
+    roi_nb.clear()
+    roi_rf.clear()
+    roi_svc.clear()
+    roi_dt.clear()
 
     global f1_score_lg
     global f1_score_nb
