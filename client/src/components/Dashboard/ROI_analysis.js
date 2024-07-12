@@ -48,7 +48,7 @@ const ROI = () => {
         <div className="roi-container">
             <div className="slidercontainer">
                 <div className="slider-wrapper-left">
-                    <div className="row" style={{marginBottom: '10px'}}><span className="slider-value">Fixed Cost : {fpCost}</span></div>
+                    <div className="row" style={{marginBottom: '10px'}}><span className="slider-value">Fixed Cost  : {fpCost} (min/sample)</span></div>
                     <div className="row">
                         <Slider
                             min={0.1}
@@ -67,7 +67,7 @@ const ROI = () => {
                             className="slider"
                         />
                     </div>
-                    <div className="row" style={{marginBottom: '10px'}}><span className="slider-value">B_panelty : {fnCost}</span></div>
+                    <div className="row" style={{marginBottom: '10px'}}><span className="slider-value">B_panelty : {fnCost} ($/FN)</span></div>
                     <div className="row">
                         <Slider
                             min={100}
@@ -86,7 +86,7 @@ const ROI = () => {
                             className="slider"
                         />
                     </div>
-                    <div className="row" style={{marginBottom: '10px'}}><span className="slider-value">B_reward : {tpCost}</span></div>
+                    <div className="row" style={{marginBottom: '10px'}}><span className="slider-value">B_reward : {tpCost} ($/TP)</span></div>
                     <div className="row">
                         <Slider
                             min={100}
@@ -107,7 +107,7 @@ const ROI = () => {
                     </div>
                 </div>
                 <div className="slider-wrapper-right">
-                    <div className="row" style={{marginBottom: '10px'}}><span className="slider-value">Resources Cost : {resourcesCost}</span></div>
+                    <div className="row" style={{marginBottom: '10px'}}><span className="slider-value">Resources Cost : {resourcesCost} ($/hour)</span></div>
                     <div className="row">
                         <Slider
                             min={100}
@@ -126,7 +126,7 @@ const ROI = () => {
                             className="slider"
                         />
                     </div>
-                    <div className="row" style={{marginBottom: '10px'}}><span className="slider-value">Labelling Cost : {preprocessingCost}</span></div>
+                    <div className="row" style={{marginBottom: '10px'}}><span className="slider-value">Labelling Cost : {preprocessingCost} (min/sample)</span></div>
                     <div className="row">
                         <Slider
                             min={0.1}
@@ -145,7 +145,7 @@ const ROI = () => {
                             className="slider"
                         />
                     </div>
-                    <div className="row" style={{marginBottom: '10px'}}><span className="slider-value">Human Resource : {productValue}</span></div>
+                    <div className="row" style={{marginBottom: '10px'}}><span className="slider-value">Human Resource : {productValue} (Number)</span></div>
                     <div className="row">
                         <Slider
                             min={1}
