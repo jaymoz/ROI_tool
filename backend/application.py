@@ -2015,6 +2015,9 @@ def predictLabels(cv,tfidf,clf,df_toBePredictedData):
     return df_toBePredictedData    
 
 def validateClassifier(cv,tfidf,clf_model,df_validationSet):
+    if df_validationSet.empty:
+        raise ValueError("The input DataFrame is empty. No data available for TF-IDF transformation.")
+
     '''
     Passes the validation dataset (Unseen data) via NLP Pipeline (Count Vectorizer , TFIDF Transformer)
     Calculate the accuracy and other metrics to evaluate the performance of the model on validation set (unseen data)
@@ -2057,6 +2060,7 @@ def validateClassifier(cv,tfidf,clf_model,df_validationSet):
 
     predictData = np.array(df_validationSet.loc[:,[req1,req2]])
     actualLabels = np.array(df_validationSet.loc[:,label]).astype('int')
+
     predict_counts = cv.transform(predictData)
     predict_tfidf = tfidf.transform(predict_counts)
     
