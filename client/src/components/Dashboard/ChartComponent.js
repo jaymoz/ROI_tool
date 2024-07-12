@@ -47,7 +47,7 @@ function Home() {
               label: "Count",
               data: Object.values(labelCounts),
               borderColor: "white",
-              backgroundColor: "#DAF0F7"
+              backgroundColor: "#ff4040"
             }
           ]
         });
