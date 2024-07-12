@@ -1537,9 +1537,9 @@ def next():
         V_ReqPre.append(v_precisionArr[1])
         V_ReqRcl.append(v_recallArr[1])
         V_ReqF1.append(v_fscoreArr[1])
-        V_SimPrec.append(v_precisionArr[2])
-        V_SimRcl.append(v_recallArr[2])
-        V_SimF1.append(v_fscoreArr[2])
+        # V_SimPrec.append(v_precisionArr[2])
+        # V_SimRcl.append(v_recallArr[2])
+        # V_SimF1.append(v_fscoreArr[2])
         V_confusioMatrix.append(v_confusionMatrix)
 
         LM_f1.append(LM_f1Score)
@@ -1551,9 +1551,9 @@ def next():
         LM_ReqPre.append(LM_precisionArr[1])
         LM_ReqRcl.append(LM_recallArr[1])
         LM_ReqF1.append(LM_fscoreArr[1])
-        LM_SimPrec.append(LM_precisionArr[2])
-        LM_SimRcl.append(LM_recallArr[2])
-        LM_SimF1.append(LM_fscoreArr[2])
+        # LM_SimPrec.append(LM_precisionArr[2])
+        # LM_SimRcl.append(LM_recallArr[2])
+        # LM_SimF1.append(LM_fscoreArr[2])
         #
 
     tempList = (lm_confusionMatrix.tolist())
