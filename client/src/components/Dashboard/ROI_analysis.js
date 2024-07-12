@@ -6,6 +6,7 @@ import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import './ROI_analysis.css';
 import ROI_graphs from './ROI_graphs';
+import { Tooltip } from 'react-tooltip';
 
 Chart.register(PointElement, LineElement);
 
@@ -48,7 +49,9 @@ const ROI = () => {
         <div className="roi-container">
             <div className="slidercontainer">
                 <div className="slider-wrapper-left">
-                    <div className="row" style={{marginBottom: '10px'}}><span className="slider-value">Fixed Cost  : {fpCost} (min/sample)</span></div>
+                    <div className="row" style={{marginBottom: '10px'}}><span data-tooltip-id="tooltip-fpCost" className="slider-value">Fixed Cost : {fpCost}</span>
+    <Tooltip id="tooltip-fpCost" place="top" effect="solid">Cost consisting of Data Gathering cost, Pre-processing Cost & Evaluation Cost</Tooltip>
+    </div>
                     <div className="row">
                         <Slider
                             min={0.1}
@@ -67,7 +70,10 @@ const ROI = () => {
                             className="slider"
                         />
                     </div>
-                    <div className="row" style={{marginBottom: '10px'}}><span className="slider-value">B_panelty : {fnCost} ($/FN)</span></div>
+                    <div className="row" style={{ marginBottom: '10px' }}>
+            <span data-tooltip-id="tooltip-fnCost" className="slider-value">B_penalty : {fnCost}</span>
+            <Tooltip id="tooltip-fnCost" place="top" effect="solid">Penalty per False Negative instance </Tooltip>
+          </div>
                     <div className="row">
                         <Slider
                             min={100}
@@ -86,7 +92,10 @@ const ROI = () => {
                             className="slider"
                         />
                     </div>
-                    <div className="row" style={{marginBottom: '10px'}}><span className="slider-value">B_reward : {tpCost} ($/TP)</span></div>
+                    <div className="row" style={{ marginBottom: '10px' }}>
+            <span data-tooltip-id="tooltip-tpCost" className="slider-value">B_reward : {tpCost}</span>
+            <Tooltip id="tooltip-tpCost" place="top" effect="solid">Reward per True Positive instance</Tooltip>
+          </div>
                     <div className="row">
                         <Slider
                             min={100}
@@ -107,7 +116,10 @@ const ROI = () => {
                     </div>
                 </div>
                 <div className="slider-wrapper-right">
-                    <div className="row" style={{marginBottom: '10px'}}><span className="slider-value">Resources Cost : {resourcesCost} ($/hour)</span></div>
+                    <div className="row" style={{ marginBottom: '10px' }}>
+            <span data-tooltip-id="tooltip-resourcesCost" className="slider-value">Resources Cost : {resourcesCost}</span>
+            <Tooltip id="tooltip-resourcesCost" place="top" effect="solid">Resources Cost</Tooltip>
+          </div>
                     <div className="row">
                         <Slider
                             min={100}
@@ -126,7 +138,10 @@ const ROI = () => {
                             className="slider"
                         />
                     </div>
-                    <div className="row" style={{marginBottom: '10px'}}><span className="slider-value">Labelling Cost : {preprocessingCost} (min/sample)</span></div>
+                    <div className="row" style={{ marginBottom: '10px' }}>
+            <span data-tooltip-id="tooltip-preprocessingCost" className="slider-value">Labelling Cost : {preprocessingCost}</span>
+            <Tooltip id="tooltip-preprocessingCost" place="top" effect="solid">Labelling Cost</Tooltip>
+          </div>
                     <div className="row">
                         <Slider
                             min={0.1}
@@ -145,7 +160,10 @@ const ROI = () => {
                             className="slider"
                         />
                     </div>
-                    <div className="row" style={{marginBottom: '10px'}}><span className="slider-value">Human Resource : {productValue} (Number)</span></div>
+                    <div className="row" style={{ marginBottom: '10px' }}>
+            <span data-tooltip-id="tooltip-productValue" className="slider-value">Human Resource : {productValue}</span>
+            <Tooltip id="tooltip-productValue" place="top" effect="solid">Total Human Resource involved</Tooltip>
+          </div>
                     <div className="row">
                         <Slider
                             min={1}
