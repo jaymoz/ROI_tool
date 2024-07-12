@@ -98,6 +98,8 @@ const handleOptionSelect = async (selectedValue) => {
 
   try {
       const response = await axios.post(`https://roibackend.shaktilab.org/${endpoint}`, {}, { headers: headers });
+      
+      console.log(`https://roibackend.shaktilab.org/${endpoint}`);
       console.log(response.data);
       if (response.data.success) {
           setReport(response.data.report);
