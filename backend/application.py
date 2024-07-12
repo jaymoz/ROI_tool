@@ -1285,7 +1285,18 @@ def active_learning1():
     classifierx = args1.loc[0,'classifier']
     #Creates Logs folder structure
     logFilePath,OFilePath = createLogs(currentFileDir+"/Logs",args1)
+    
+    print("DataFrame after creating logs:\n", args1)
+
     try:
+        # Check if args1 contains 'AnnotationStatus'
+        print("Columns in args1:", args1.columns)
+
+        # If 'AnnotationStatus' is not in args1, add a placeholder column for debugging
+        if 'AnnotationStatus' not in args1.columns:
+            print("Adding 'AnnotationStatus' column to args1 for debugging purposes.")
+            args1['AnnotationStatus'] = ['Status1'] * len(args1)  # Dummy data
+
         learnTargetLabel(args1)
         return jsonify({"status": "success"}), 200
     except KeyError as e:
