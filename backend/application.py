@@ -1207,7 +1207,7 @@ def set_roi_graphs():
     roi_nb.clear()
     roi_nb.clear()
     roi_svc.clear()
-    roi.dt.clear()
+    roi_dt.clear()
 
     global f1_score_lg
     global f1_score_nb
