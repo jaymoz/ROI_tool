@@ -1734,15 +1734,37 @@ def showExpectedArguments():
     for line in file:
         print (line)
 
+# def writeLog(content):
+#     '''
+#     Dumps the content into Log file
+#     '''
+#     file = open(logFilePath,"a", encoding='utf-8')
+#     file.write(content)
+#     file.close()
+#     #print (content)#.encode('utf-8'))
+#     return None
+import os
+
 def writeLog(content):
     '''
-    Dumps the content into Log file
+    Dumps the content into the Log file. If the log file does not exist,
+    it creates a temporary log file in the same directory and writes the content there.
     '''
-    file = open(logFilePath,"a", encoding='utf-8')
-    file.write(content)
-    file.close()
-    #print (content)#.encode('utf-8'))
-    return None
+    # Check if the log file exists
+    if not os.path.isfile(logFilePath):
+        # Extract the directory from the log file path
+        directory = os.path.dirname(logFilePath)
+        # Create a temporary log file if the original does not exist
+        temp_log_file = os.path.join(directory, "temp_log.txt")
+        logFilePath = temp_log_file  # Update logFilePath to the temporary file
+    
+    # Open the log file and append content
+    with open(logFilePath, "a", encoding='utf-8') as file:
+        file.write(content)
+    
+    # Optionally print the content to console (uncomment the next line if needed)
+    # print(content)
+
 
 def createAnnotationsFile(df_rqmts):
     '''
