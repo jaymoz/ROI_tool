@@ -1285,7 +1285,16 @@ def active_learning1():
     classifierx = args1.loc[0,'classifier']
     #Creates Logs folder structure
     logFilePath,OFilePath = createLogs(currentFileDir+"/Logs",args1)
-    learnTargetLabel(args1)
+    try:
+        learnTargetLabel(args1)
+        return jsonify({"status": "success"}), 200
+    except KeyError as e:
+        print(f"KeyError: {e}")
+        return jsonify({"error": str(e)}), 500
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return jsonify({"error": str(e)}), 500
+    # learnTargetLabel(args1)
 
     # Check if the file exists
     if os.path.isfile(logFilePath):
