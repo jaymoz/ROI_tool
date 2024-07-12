@@ -1743,27 +1743,30 @@ def showExpectedArguments():
 #     file.close()
 #     #print (content)#.encode('utf-8'))
 #     return None
+
 import os
 
-def writeLog(content):
+import os
+
+def writeLog(content, baseDirectory="/Logs"):
     '''
-    Dumps the content into the Log file. If the log file does not exist,
-    it creates a temporary log file in the same directory and writes the content there.
+    Dumps the content into a temporary log file named temp_log.txt located in the specified baseDirectory.
+    This function does not use a variable logFilePath but uses a fixed directory to manage the log file.
     '''
-    # Check if the log file exists
-    if not os.path.isfile(logFilePath):
-        # Extract the directory from the log file path
-        directory = os.path.dirname(logFilePath)
-        # Create a temporary log file if the original does not exist
-        temp_log_file = os.path.join(directory, "temp_log.txt")
-        logFilePath = temp_log_file  # Update logFilePath to the temporary file
+    # Define the path for the temporary log file
+    temp_log_file = os.path.join(baseDirectory, "temp_log.txt")
     
-    # Open the log file and append content
-    with open(logFilePath, "a", encoding='utf-8') as file:
+    # Ensure the directory exists
+    os.makedirs(baseDirectory, exist_ok=True)
+    
+    # Open the temporary log file and append content
+    with open(temp_log_file, "a", encoding='utf-8') as file:
         file.write(content)
     
     # Optionally print the content to console (uncomment the next line if needed)
     # print(content)
+
+
 
 
 def createAnnotationsFile(df_rqmts):
