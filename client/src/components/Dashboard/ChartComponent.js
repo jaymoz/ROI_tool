@@ -301,8 +301,8 @@ function Home() {
         )}
         <style>{`
             .graph-container {
-              width: 600px;
-              height: 400px;
+              width: 1000px;
+              height: 600px;
               margin: 0 auto;
             }
           `}</style>
