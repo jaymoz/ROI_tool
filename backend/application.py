@@ -1398,6 +1398,19 @@ def next():
     global df_LM_testing
     global args1
     global logFilePath
+        #Create a dataframe to track the results
+    df_resultTracker = pd.DataFrame()
+    df_rqmts=df_rqmts.sample(frac=1) #shuffulles
+    df_rqmts[label] = df_rqmts[label].astype('int')
+  
+    df_training = df_rqmts[df_rqmts[annStatus]=='M']
+
+    df_testing = df_rqmts[df_rqmts[annStatus]=='M'][:5]
+    
+    #these are two df's for local model(LM) training for first iteration
+    df_LM_training = df_training
+    df_LM_testing = df_testing
+    
     f1_score_nb.clear()
     f1_score_rf.clear()
     f1_score_svc.clear()
