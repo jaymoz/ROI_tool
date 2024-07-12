@@ -1746,26 +1746,16 @@ def showExpectedArguments():
 
 import os
 
-import os
-
-def writeLog(content, baseDirectory="/Logs"):
+def writeLog(content):
     '''
-    Dumps the content into a temporary log file named temp_log.txt located in the specified baseDirectory.
-    This function does not use a variable logFilePath but uses a fixed directory to manage the log file.
+    Dumps the content into a temporary log file named temp_log.txt located in the directory where the Python script is running.
     '''
     # Define the path for the temporary log file
-    temp_log_file = os.path.join(baseDirectory, "temp_log.txt")
-    
-    # Ensure the directory exists
-    os.makedirs(baseDirectory, exist_ok=True)
+    temp_log_file = "temp_log.txt"
     
     # Open the temporary log file and append content
     with open(temp_log_file, "a", encoding='utf-8') as file:
         file.write(content)
-    
-    # Optionally print the content to console (uncomment the next line if needed)
-    # print(content)
-
 
 
 
