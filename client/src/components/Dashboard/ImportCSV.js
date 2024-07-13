@@ -146,19 +146,7 @@ const handlePreprocessData = () => {
                 </div>
             )}
           </div>
-          <div className="box">
-            <h2 className="medium-text">Additonal Data - This is not part of computations but can be used to further test and enhance the models in future work.</h2>
-            <div className="input-section">
-              <input type="file" onChange={handleTestDataUpload} />
-              <button className="small-button" onClick={handleTestData}>Upload</button>
-            </div>
-            {test_data_RowCount !== null && test_data_ColCount !== null && (
-                <div className="result">
-                  <p className="small-text">Data Rows: {test_data_RowCount}</p>
-                  <p className="small-text">Data Columns: {test_data_ColCount}</p>
-                </div>
-            )}
-          </div>
+         
         </div>
 
         {showColumnSelection && (
