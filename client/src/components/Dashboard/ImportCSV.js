@@ -147,7 +147,7 @@ const handlePreprocessData = () => {
             )}
           </div>
           <div className="box">
-            <h2 className="medium-text">Test Data</h2>
+            <h2 className="medium-text">Additonal Data - This is not part of computations but can be used to further test and enhance the models in future work.</h2>
             <div className="input-section">
               <input type="file" onChange={handleTestDataUpload} />
               <button className="small-button" onClick={handleTestData}>Upload</button>
