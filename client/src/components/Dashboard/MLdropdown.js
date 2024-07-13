@@ -29,6 +29,7 @@ const MLdropdown = ({ onModelSelect, onLearningSelect, trainData, testData }) =>
   const [fp, setFP] = useState(false);
   const [fn, setFN] = useState(false);
   const [tp, setTP] = useState(false);
+  const [cv_mean, setCV] = useState(null);
 
   const handleLearningSelect = async (selectedValue) => {
     console.log('Selected option:', selectedValue);
@@ -111,6 +112,7 @@ const handleOptionSelect = async (selectedValue) => {
           setFP(response.data.fp);
           setFN(response.data.fn);
           setTP(response.data.tp);
+          setCV(response.data.cv_mean);
       }
   } catch (error) {
       console.error(error);
@@ -139,6 +141,10 @@ const handleOptionSelect = async (selectedValue) => {
                           <div className="report-tile">
                             <div className="report-tile-title">Accuracy</div>
                             <div className="report-tile-value">{accuracy}</div>
+                          </div>
+                          <div className="report-tile">
+                            <div className="report-tile-title">CV score</div>
+                            <div className="report-tile-value">{cv_mean}</div>
                           </div>
                           <div className="report-tile">
                             <div className="report-tile-title">F1 Score</div>
