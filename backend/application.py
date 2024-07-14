@@ -392,6 +392,8 @@ def perform_logistic_regression():
 
         # Model prediction
         y_pred = model.predict(X_test)
+        cv_results = cross_val_score(model, X_test_vectorized, y, cv=10, scoring='accuracy')
+        cv_mean = str(round(cv_results.mean(),4)*100)+"%"
         
         stop = round(time.time() - start, 4)
         accuracy = round(accuracy_score(y_test, y_pred), 4) * 100 
@@ -470,7 +472,8 @@ def perform_logistic_regression():
                 'precisionscore': precision_score_lg, 
                 'tp': tp_lg_list, 
                 'fp': fp_lg_list, 
-                'fn': fn_lg_list
+                'fn': fn_lg_list,
+                'cv_mean':cv_mean
             })
 
     except Exception as e:
@@ -528,6 +531,8 @@ def perform_naive_bayes():
 
         # Model prediction
         y_pred = model.predict(X_test)
+        cv_results = cross_val_score(model, X_test_vectorized, y, cv=10, scoring='accuracy')
+        cv_mean = str(round(cv_results.mean(),4)*100)+"%"
         
         stop = round(time.time() - start, 4)
         accuracy = round(accuracy_score(y_test, y_pred), 4) * 100 
@@ -606,7 +611,8 @@ def perform_naive_bayes():
                 'precisionscore': precision_score_nb, 
                 'tp': tp_nb_list, 
                 'fp': fp_nb_list, 
-                'fn': fn_nb_list
+                'fn': fn_nb_list,
+                'cv_mean':cv_mean
             })
 
     except Exception as e:
@@ -687,6 +693,8 @@ def perform_random_forest():
 
         # Model prediction
         y_pred = model.predict(X_test)
+        cv_results = cross_val_score(model, X_test_vectorized, y, cv=10, scoring='accuracy')
+        cv_mean = str(round(cv_results.mean(),4)*100)+"%"
         
         stop = round(time.time() - start, 4)
         accuracy = round(accuracy_score(y_test, y_pred), 4) * 100 
@@ -765,7 +773,8 @@ def perform_random_forest():
                 'precisionscore': precision_score_rf, 
                 'tp': tp_rf_list, 
                 'fp': fp_rf_list, 
-                'fn': fn_rf_list
+                'fn': fn_rf_list,
+                'cv_mean':cv_mean
             })
 
     except Exception as e:
@@ -842,6 +851,8 @@ def perform_decision_tree():
 
         # Model prediction
         y_pred = model.predict(X_test)
+        cv_results = cross_val_score(model, X_test_vectorized, y, cv=10, scoring='accuracy')
+        cv_mean = str(round(cv_results.mean(),4)*100)+"%"
         
         stop = round(time.time() - start, 4)
         accuracy = round(accuracy_score(y_test, y_pred), 4) * 100 
@@ -920,7 +931,8 @@ def perform_decision_tree():
                 'precisionscore': precision_score_dt, 
                 'tp': tp_dt_list, 
                 'fp': fp_dt_list, 
-                'fn': fn_dt_list
+                'fn': fn_dt_list,
+                'cv_mean':cv_mean
             })
 
     except Exception as e:
@@ -984,6 +996,8 @@ def perform_support_vector_machine():
 
         # Model prediction
         y_pred = model.predict(X_test)
+        cv_results = cross_val_score(model, X_test_vectorized, y, cv=10, scoring='accuracy')
+        cv_mean = str(round(cv_results.mean(),4)*100)+"%"
         
         stop = round(time.time() - start, 4)
         accuracy = round(accuracy_score(y_test, y_pred), 4) * 100 
@@ -1062,7 +1076,8 @@ def perform_support_vector_machine():
                 'precisionscore': precision_score_svc, 
                 'tp': tp_svc_list, 
                 'fp': fp_svc_list, 
-                'fn': fn_svc_list
+                'fn': fn_svc_list,
+                'cv_mean':cv_mean
             })
 
     except Exception as e:
