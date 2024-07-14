@@ -6,6 +6,14 @@ To run AROhI, we need to install Python 3 environment. The current version has b
 
 ### Environment Setup
 
+1. Clone the repository
+2. Create virtual environment
+   ```python 
+    python3 -m venv venv
+source venv/bin/activate
+    ```
+4. 
+
 * To run React App @ localhost:3000
   - npm start - to start the React App
   - npm install - install all the dependencies
