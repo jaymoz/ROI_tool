@@ -15,10 +15,10 @@ To run AROhI, we need to install Python 3 environment. The current version has b
     python3 -m venv venv
     source venv/bin/activate
     ```
-3. To run React App @ localhost:3000 and install all the dependencies
-   ```js 
-    npm start
+3. Install all the dependencies and run React App @ localhost:3000
+   ```js
     npm install
+    npm start
     ```
    To run Flask App @ localhost:5000
    ```python 
