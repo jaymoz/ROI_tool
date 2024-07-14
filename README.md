@@ -22,11 +22,13 @@ To run AROhI, we need to install Python 3 environment. The current version has b
    
 4. Install all the dependencies and run React App @ localhost:3000
    ```js
+    cd client
     npm install
     npm start
     ```
    To run Flask App @ localhost:5000
-   ```python 
+   ```python
+    cd backend
     python3 application.py
     ```
    Make sure no other application runs on any of these two hosts. The website has been programmed to automatically run on localhost:3000 and localhost:5000.
