@@ -393,7 +393,7 @@ def perform_logistic_regression():
         # Model prediction
         y_pred = model.predict(X_test)
         cv_results = cross_val_score(model, X_test_vectorized, y, cv=10, scoring='accuracy')
-        cv_mean = round(cv_results.mean(),2)*100
+        cv_mean = str(round(cv_results.mean(),4)*100)+"%"
         
         stop = round(time.time() - start, 4)
         accuracy = round(accuracy_score(y_test, y_pred), 4) * 100 
@@ -532,7 +532,7 @@ def perform_naive_bayes():
         # Model prediction
         y_pred = model.predict(X_test)
         cv_results = cross_val_score(model, X_test_vectorized, y, cv=10, scoring='accuracy')
-        cv_mean = round(cv_results.mean(),2)*100
+        cv_mean = str(round(cv_results.mean(),4)*100)+"%"
         
         stop = round(time.time() - start, 4)
         accuracy = round(accuracy_score(y_test, y_pred), 4) * 100 
@@ -694,7 +694,7 @@ def perform_random_forest():
         # Model prediction
         y_pred = model.predict(X_test)
         cv_results = cross_val_score(model, X_test_vectorized, y, cv=10, scoring='accuracy')
-        cv_mean = round(cv_results.mean(),2)*100
+        cv_mean = str(round(cv_results.mean(),4)*100)+"%"
         
         stop = round(time.time() - start, 4)
         accuracy = round(accuracy_score(y_test, y_pred), 4) * 100 
@@ -852,7 +852,7 @@ def perform_decision_tree():
         # Model prediction
         y_pred = model.predict(X_test)
         cv_results = cross_val_score(model, X_test_vectorized, y, cv=10, scoring='accuracy')
-        cv_mean = round(cv_results.mean(),2)*100
+        cv_mean = str(round(cv_results.mean(),4)*100)+"%"
         
         stop = round(time.time() - start, 4)
         accuracy = round(accuracy_score(y_test, y_pred), 4) * 100 
@@ -997,7 +997,7 @@ def perform_support_vector_machine():
         # Model prediction
         y_pred = model.predict(X_test)
         cv_results = cross_val_score(model, X_test_vectorized, y, cv=10, scoring='accuracy')
-        cv_mean = round(cv_results.mean(),2)*100
+        cv_mean = str(round(cv_results.mean(),4)*100)+"%"
         
         stop = round(time.time() - start, 4)
         accuracy = round(accuracy_score(y_test, y_pred), 4) * 100 
