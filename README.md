@@ -10,7 +10,7 @@ To run AROhI, we need to install Python 3 environment. The current version has b
 2. Create virtual environment
    ```python 
     python3 -m venv venv
-source venv/bin/activate
+    source venv/bin/activate
     ```
 4. 
 
