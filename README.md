@@ -6,8 +6,12 @@ To run AROhI, we need to install Python 3 environment. The current version has b
 
 ### Environment Setup
 
-1. Clone the repository
-2. Create virtual environment
+1. Clone this repository and move to the directory:
+   ```python 
+    python3 -m venv venv
+    cd 2023
+    ```
+3. Run this on command line to create and activate a virtual environment
    ```python 
     python3 -m venv venv
     source venv/bin/activate
