@@ -1,4 +1,4 @@
-# Return of Investment Website
+# AROhI
 
 ## Index
 > 1. [Frontend](client/)
