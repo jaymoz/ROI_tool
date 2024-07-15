@@ -13,7 +13,7 @@ const Home = ({}) => {
 
         <div className="rounded-corner" style={{justifyContent: 'center', alignContent: 'center', marginLeft: '200px'}}>
           <video width="1000" height="600" controls>
-              <source src="/demoROI.mp4" type="video/mp4" />
+              <source src="/dummy.mp4" type="video/mp4" />
               Your browser does not support the video tag.
           </video>
       </div>
