@@ -28,6 +28,7 @@ To run AROhI, we need to install Python 3 environment. The current version has b
     ```
    Make sure no other application runs on any of these two hosts. The website has been programmed to automatically run on localhost:3000 and localhost:5000.
 
+## Technology Stack
 #### Frontend
 
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
