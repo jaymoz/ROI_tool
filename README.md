@@ -3,7 +3,7 @@
 ## Index
 
 - [Installation](#installation)
-- [AROhI Demo](#AROhIdemo)
+- [AROhI Demo](#AROhI Demo)
 - [Technology Stack](#technologystack)
 
 ## Installation
