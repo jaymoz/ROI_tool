@@ -144,7 +144,7 @@ const ROI = () => {
           </div>
                     <div className="row">
                         <Slider
-                            min={0.1}
+                            min={0.5}
                             max={3}
                             value={preprocessingCost}
                             onChange={value => setPreprocessingCost(parseFloat(value))}
