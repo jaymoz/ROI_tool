@@ -32,7 +32,9 @@ To run AROhI, we need to install Python 3 environment. The current version has b
     cd backend
     python3 application.py
     ```
-   Make sure no other application runs on any of these two hosts. The website has been programmed to automatically run on localhost:3000 and localhost:5000.
+   Make sure no other application runs on any of these two hosts. The website has been programmed to run on localhost:3000 and localhost:5000 automatically.
+
+5. The dataset for testing the tool is accessible in the dataset folder of the repository.
 
 ## AROhI Demo
 
