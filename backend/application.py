@@ -143,23 +143,15 @@ df_testing = pd.DataFrame()
 df_LM_training = pd.DataFrame()
 df_LM_testing = pd.DataFrame()
 path = os.getcwd()+"/static/"
-fields = ['req1','req2','dependency','id1', 'id2','label']
+fields = ['summary1','summary2','dependency','id1', 'id2','label']
 fullFile = path+"data.csv"
 depType =  {'incorporates':0, 'independent':1, 'relates to':2}
-label = 'label'
-label = 'Label'  # Correct the case
-
-req1 = 'summary1'
-req2 = 'summary2'
-# req1 = 'req1'
-# req2 = 'req2'
-
-summary1 = 'summary1'
-summary2 = 'summary2'
+label = 'Label'
+req1 = 'req1'
+req2 = 'req2'
 req1Id = 'id1'
 req2Id = 'id2'
 annStatus = 'AnnotationStatus'
-AnnotationStatus = 'AnnotationStatus'
 classifierx = ''
 projectName = "Solr"
 
@@ -400,6 +392,8 @@ def perform_logistic_regression():
 
         # Model prediction
         y_pred = model.predict(X_test)
+        cv_results = cross_val_score(model, X_test_vectorized, y, cv=10, scoring='accuracy')
+        cv_mean = str(round(cv_results.mean(),4)*100)+"%"
         
         stop = round(time.time() - start, 4)
         accuracy = round(accuracy_score(y_test, y_pred), 4) * 100 
@@ -478,7 +472,8 @@ def perform_logistic_regression():
                 'precisionscore': precision_score_lg, 
                 'tp': tp_lg_list, 
                 'fp': fp_lg_list, 
-                'fn': fn_lg_list
+                'fn': fn_lg_list,
+                'cv_mean':cv_mean
             })
 
     except Exception as e:
@@ -536,6 +531,8 @@ def perform_naive_bayes():
 
         # Model prediction
         y_pred = model.predict(X_test)
+        cv_results = cross_val_score(model, X_test_vectorized, y, cv=10, scoring='accuracy')
+        cv_mean = str(round(cv_results.mean(),4)*100)+"%"
         
         stop = round(time.time() - start, 4)
         accuracy = round(accuracy_score(y_test, y_pred), 4) * 100 
@@ -614,7 +611,8 @@ def perform_naive_bayes():
                 'precisionscore': precision_score_nb, 
                 'tp': tp_nb_list, 
                 'fp': fp_nb_list, 
-                'fn': fn_nb_list
+                'fn': fn_nb_list,
+                'cv_mean':cv_mean
             })
 
     except Exception as e:
@@ -695,6 +693,8 @@ def perform_random_forest():
 
         # Model prediction
         y_pred = model.predict(X_test)
+        cv_results = cross_val_score(model, X_test_vectorized, y, cv=10, scoring='accuracy')
+        cv_mean = str(round(cv_results.mean(),4)*100)+"%"
         
         stop = round(time.time() - start, 4)
         accuracy = round(accuracy_score(y_test, y_pred), 4) * 100 
@@ -773,7 +773,8 @@ def perform_random_forest():
                 'precisionscore': precision_score_rf, 
                 'tp': tp_rf_list, 
                 'fp': fp_rf_list, 
-                'fn': fn_rf_list
+                'fn': fn_rf_list,
+                'cv_mean':cv_mean
             })
 
     except Exception as e:
@@ -850,6 +851,8 @@ def perform_decision_tree():
 
         # Model prediction
         y_pred = model.predict(X_test)
+        cv_results = cross_val_score(model, X_test_vectorized, y, cv=10, scoring='accuracy')
+        cv_mean = str(round(cv_results.mean(),4)*100)+"%"
         
         stop = round(time.time() - start, 4)
         accuracy = round(accuracy_score(y_test, y_pred), 4) * 100 
@@ -928,7 +931,8 @@ def perform_decision_tree():
                 'precisionscore': precision_score_dt, 
                 'tp': tp_dt_list, 
                 'fp': fp_dt_list, 
-                'fn': fn_dt_list
+                'fn': fn_dt_list,
+                'cv_mean':cv_mean
             })
 
     except Exception as e:
@@ -992,6 +996,8 @@ def perform_support_vector_machine():
 
         # Model prediction
         y_pred = model.predict(X_test)
+        cv_results = cross_val_score(model, X_test_vectorized, y, cv=10, scoring='accuracy')
+        cv_mean = str(round(cv_results.mean(),4)*100)+"%"
         
         stop = round(time.time() - start, 4)
         accuracy = round(accuracy_score(y_test, y_pred), 4) * 100 
@@ -1070,7 +1076,8 @@ def perform_support_vector_machine():
                 'precisionscore': precision_score_svc, 
                 'tp': tp_svc_list, 
                 'fp': fp_svc_list, 
-                'fn': fn_svc_list
+                'fn': fn_svc_list,
+                'cv_mean':cv_mean
             })
 
     except Exception as e:
@@ -1351,11 +1358,7 @@ def learnTargetLabel(args):
     #Read To be Annotated, Training, Test and Validation Sets generated after executing splitData.py
     try:
         df_rqmts = pd.read_csv(fullFile) #this has training data with Annotated = 'M' and rest with Nothing ''
-        print("df_rqmts.columns")
-        print(df_rqmts.columns)
-
-        # df_rqmts['AnnotationStatus'] = 'M'
-        print("df_rqmts[annStatus].value_counts()")
+        df_rqmts['AnnotationStatus'] = 'M'
         print(df_rqmts[annStatus].value_counts())
 
     except FileNotFoundError as err:
@@ -1367,23 +1370,14 @@ def learnTargetLabel(args):
     #Create a dataframe to track the results
     df_resultTracker = pd.DataFrame()
     df_rqmts=df_rqmts.sample(frac=1) #shuffulles
-    print(f"Columns in df_rqmts: {df_rqmts.columns}")
-    print(f"Value of label: {label}")
     df_rqmts[label] = df_rqmts[label].astype('int')
   
     df_training = df_rqmts[df_rqmts[annStatus]=='M']
     df_testing = df_rqmts[df_rqmts[annStatus]!='M']
-    # print(df_training)
-    print("df_training",df_training)
-
+    
     #these are two df's for local model(LM) training for first iteration
     df_LM_training = df_training
     df_LM_testing = df_testing
-
-    print(df_LM_training.columns)
-    print(df_LM_testing.columns)
-
-
 
 @application.route('/next', methods=['POST'])
 def next():
@@ -1465,11 +1459,9 @@ def next():
         #-----------------------------------------AL model -------------------------------------#
         writeLog("\nCreating Classifier...")
         #just pass the ones with AnnotationStatus = 'M'
-        print("df_training",df_training)
         countVectorizer, tfidfTransformer, classifier, classifierTestScore = createClassifier(args1.loc[0,'classifier'],df_training,resamplingTechnique)
         writeLog("\n\n5 fold Cross Validation Score : "+str(classifierTestScore))
         writeLog ("\n\nValidating Classifier...")
-        print ("df_testing line 1467",df_testing)
 
         #pass the rest as testing data annStatus]!='M'
         classifierValidationScore,v_f1Score,v_precisionScore,v_recallScore,v_precisionArr,v_recallArr,v_fscoreArr,v_supportArr,v_confusionMatrix = validateClassifier(countVectorizer,tfidfTransformer,classifier,df_testing)
@@ -1477,7 +1469,6 @@ def next():
 
         #Update Analysis DataFrame (For tracking purpose)
         df_training[label] = df_training[label].astype('int')
-        
         independentCount = len(df_training[df_training[label]==depType['independent']])
         requiresCount = len(df_training[df_training[label]==depType['relates to']])
         similarCount = len(df_training[df_training[label]==depType['incorporates']])
@@ -1492,9 +1483,7 @@ def next():
         writeLog("\n\nClassifier Validation Set Score for LM: "+str(LM_classifierValidationScore))
 
         #Update Analysis DataFrame (For tracking purpose)
-        # df_LM_training[label] = df_LM_training[label].astype('int')
-        df_LM_training.loc[:, label] = df_LM_training[label].astype('int')
-
+        df_LM_training[label] = df_LM_training[label].astype('int')
         LM_independentCount = len(df_LM_training[df_LM_training[label]==depType['independent']])
         LM_requiresCount = len(df_LM_training[df_LM_training[label]==depType['relates to']])
         LM_similarCount = len(df_LM_training[df_LM_training[label]==depType['incorporates']])
@@ -1533,109 +1522,56 @@ def next():
     LM_confusionMatrix.append(tempList)
     #print(tempList[-1],"\n", tempList)
     #input("hit enter")
-    # Create a new DataFrame for the row you want to add
-    new_row = pd.DataFrame({
-        'Iteration': [iteration],
-        'Total data': [len(df_rqmts)],
-        'TraiAKA_ManlyAntd': [len(df_training)],
-        'Testing': [len(df_testing)],
-        'CV': [classifierTestScore],
-        '#Ind': [independentCount],
-        '#Req': [requiresCount],
-        '#Sim': [similarCount],
-        'f1': ["{:.2f}".format(np.average(V_f1))],
-        'prec': ["{:.2f}".format(np.average(V_prec))],
-        'rcl': ["{:.2f}".format(np.average(V_rcl))],
-        'indPrec': ["{:.2f}".format(np.average(V_indPrec))],
-        'indRcl': ["{:.2f}".format(np.average(V_indRcl))],
-        'indF1': ["{:.2f}".format(np.average(V_indF1))],
-        'indSup': [v_supportArr[0]],
-        'ReqPre': ["{:.2f}".format(np.average(V_ReqPre))],
-        'ReqRcl': ["{:.2f}".format(np.average(V_ReqRcl))],
-        'ReqF1': ["{:.2f}".format(np.average(V_ReqF1))],
-        'ReqSup': [v_supportArr[1]],
-        'SimPrec': ["{:.2f}".format(np.average(V_SimPrec))],
-        'SimRcl': ["{:.2f}".format(np.average(V_SimRcl))],
-        'SimF1': ["{:.2f}".format(np.average(V_SimF1))],
-        'SimSup': [v_supportArr[2]],
-        'ConfusionM': [v_confusionMatrix],
-        '#LM Training': [len(df_LM_training)],
-        '#LM Testing': [len(df_LM_testing)],
-        'LM CV': [LM_classifierTestScore],
-        '#LM Ind': [LM_independentCount],
-        '#LM Req': [LM_requiresCount],
-        '#LM Sim': [LM_similarCount],
-        'LM f1': ["{:.2f}".format(np.average(LM_f1))],
-        'LM prec': ["{:.2f}".format(np.average(LM_prec))],
-        'LM rcl': ["{:.2f}".format(np.average(LM_rcl))],
-        'LM indPre': ["{:.2f}".format(np.average(LM_indPrec))],
-        'LM indRcl': ["{:.2f}".format(np.average(LM_indRcl))],
-        'LM indF1': ["{:.2f}".format(np.average(LM_indF1))],
-        'LM indSup': [LM_supportArr[0]],
-        'LM ReqPre': ["{:.2f}".format(np.average(LM_ReqPre))],
-        'LM ReqRcl': ["{:.2f}".format(np.average(LM_ReqRcl))],
-        'LM ReqF1': ["{:.2f}".format(np.average(LM_ReqF1))],
-        'LM ReqSup': [LM_supportArr[1]],
-        'LM SimPrec': ["{:.2f}".format(np.average(LM_SimPrec))],
-        'LM SimRcl': ["{:.2f}".format(np.average(LM_SimRcl))],
-        'LM SimF1': ["{:.2f}".format(np.average(LM_SimF1))],
-        'LM SimSup': [LM_supportArr[2]],
-        'LM ConfusionM': [LM_confusionMatrix[-1]]
-    })
+    df_resultTracker = df_resultTracker.append({'Iteration':iteration,
+                                                'Total data':len(df_rqmts),
+                                                'TraiAKA_ManlyAntd':len(df_training),
+                                                'Testing':len(df_testing),
+                                                'CV':classifierTestScore,
+                                                '#Ind':independentCount,
+                                                '#Req':requiresCount,
+                                                '#Sim':similarCount,
+                                                'f1':"{:.2f}".format(np.average(V_f1)),
+                                                'prec':"{:.2f}".format(np.average(V_prec)),
+                                                'rcl':"{:.2f}".format(np.average(V_rcl)),
+                                                'indPrec': "{:.2f}".format(np.average(V_indPrec)),
+                                                'indRcl':"{:.2f}".format(np.average(V_indRcl)),
+                                                'indF1':"{:.2f}".format(np.average(V_indF1)),
+                                                'indSup':v_supportArr[0],
+                                                'ReqPre': "{:.2f}".format(np.average(V_ReqPre)),
+                                                'ReqRcl':"{:.2f}".format(np.average(V_ReqRcl)),
+                                                'ReqF1':"{:.2f}".format(np.average(V_ReqF1)),
+                                                'ReqSup':v_supportArr[1],
+                                                'SimPrec': "{:.2f}".format(np.average(V_SimPrec)),
+                                                'SimRcl':"{:.2f}".format(np.average(V_SimRcl)),
+                                                'SimF1':"{:.2f}".format(np.average(V_SimF1)),
+                                                'SimSup':v_supportArr[2],
+                                                'ConfusionM':v_confusionMatrix,
 
-    # Concatenate the new DataFrame to the existing DataFrame
-    df_resultTracker = pd.concat([df_resultTracker, new_row], ignore_index=True)
-
-    # df_resultTracker = df_resultTracker.append({'Iteration':iteration,
-    #                                             'Total data':len(df_rqmts),
-    #                                             'TraiAKA_ManlyAntd':len(df_training),
-    #                                             'Testing':len(df_testing),
-    #                                             'CV':classifierTestScore,
-    #                                             '#Ind':independentCount,
-    #                                             '#Req':requiresCount,
-    #                                             '#Sim':similarCount,
-    #                                             'f1':"{:.2f}".format(np.average(V_f1)),
-    #                                             'prec':"{:.2f}".format(np.average(V_prec)),
-    #                                             'rcl':"{:.2f}".format(np.average(V_rcl)),
-    #                                             'indPrec': "{:.2f}".format(np.average(V_indPrec)),
-    #                                             'indRcl':"{:.2f}".format(np.average(V_indRcl)),
-    #                                             'indF1':"{:.2f}".format(np.average(V_indF1)),
-    #                                             'indSup':v_supportArr[0],
-    #                                             'ReqPre': "{:.2f}".format(np.average(V_ReqPre)),
-    #                                             'ReqRcl':"{:.2f}".format(np.average(V_ReqRcl)),
-    #                                             'ReqF1':"{:.2f}".format(np.average(V_ReqF1)),
-    #                                             'ReqSup':v_supportArr[1],
-    #                                             'SimPrec': "{:.2f}".format(np.average(V_SimPrec)),
-    #                                             'SimRcl':"{:.2f}".format(np.average(V_SimRcl)),
-    #                                             'SimF1':"{:.2f}".format(np.average(V_SimF1)),
-    #                                             'SimSup':v_supportArr[2],
-    #                                             'ConfusionM':v_confusionMatrix,
-
-    #                                             '#LM Training':len(df_LM_training),
-    #                                             '#LM Testing':len(df_LM_testing),
-    #                                             'LM CV':LM_classifierTestScore,
-    #                                             '#LM Ind':LM_independentCount,
-    #                                             '#LM Req':LM_requiresCount,
-    #                                             '#LM Sim':LM_similarCount,
-    #                                             'LM f1':"{:.2f}".format(np.average(LM_f1)),
-    #                                             'LM prec':"{:.2f}".format(np.average(LM_prec)),
-    #                                             'LM rcl':"{:.2f}".format(np.average(LM_rcl)),
-    #                                             'LM indPre': "{:.2f}".format(np.average(LM_indPrec)),
-    #                                             'LM indRcl':"{:.2f}".format(np.average(LM_indRcl)),
-    #                                             'LM indF1':"{:.2f}".format(np.average(LM_indF1)),
-    #                                             'LM indSup':LM_supportArr[0],
-    #                                             'LM ReqPre': "{:.2f}".format(np.average(LM_ReqPre)),
-    #                                             'LM ReqRcl':"{:.2f}".format(np.average(LM_ReqRcl)),
-    #                                             'LM ReqF1':"{:.2f}".format(np.average(LM_ReqF1)),
-    #                                             'LM ReqSup':LM_supportArr[1],
-    #                                             'LM SimPrec': "{:.2f}".format(np.average(LM_SimPrec)),
-    #                                             'LM SimRcl':"{:.2f}".format(np.average(LM_SimRcl)),
-    #                                             'LM SimF1':"{:.2f}".format(np.average(LM_SimF1)),
-    #                                             'LM SimSup':LM_supportArr[2],
-    #                                             'LM ConfusionM':LM_confusionMatrix[-1]
+                                                '#LM Training':len(df_LM_training),
+                                                '#LM Testing':len(df_LM_testing),
+                                                'LM CV':LM_classifierTestScore,
+                                                '#LM Ind':LM_independentCount,
+                                                '#LM Req':LM_requiresCount,
+                                                '#LM Sim':LM_similarCount,
+                                                'LM f1':"{:.2f}".format(np.average(LM_f1)),
+                                                'LM prec':"{:.2f}".format(np.average(LM_prec)),
+                                                'LM rcl':"{:.2f}".format(np.average(LM_rcl)),
+                                                'LM indPre': "{:.2f}".format(np.average(LM_indPrec)),
+                                                'LM indRcl':"{:.2f}".format(np.average(LM_indRcl)),
+                                                'LM indF1':"{:.2f}".format(np.average(LM_indF1)),
+                                                'LM indSup':LM_supportArr[0],
+                                                'LM ReqPre': "{:.2f}".format(np.average(LM_ReqPre)),
+                                                'LM ReqRcl':"{:.2f}".format(np.average(LM_ReqRcl)),
+                                                'LM ReqF1':"{:.2f}".format(np.average(LM_ReqF1)),
+                                                'LM ReqSup':LM_supportArr[1],
+                                                'LM SimPrec': "{:.2f}".format(np.average(LM_SimPrec)),
+                                                'LM SimRcl':"{:.2f}".format(np.average(LM_SimRcl)),
+                                                'LM SimF1':"{:.2f}".format(np.average(LM_SimF1)),
+                                                'LM SimSup':LM_supportArr[2],
+                                                'LM ConfusionM':LM_confusionMatrix[-1]
 
 
-    #                                             },ignore_index=True)
+                                                },ignore_index=True)
 
 
     writeLog("\n\nAnalysis DataFrame : \n"+str(df_resultTracker))
@@ -1719,12 +1655,8 @@ def next():
     return jsonify({'error': 'File not found'}), 404
 
 def leastConfidenceSampling(df_uncertain):
-
-    df_uncertain = df_uncertain.copy()
-    df_uncertain['lconf'] = 1 - df_uncertain['maxProb']
-
     
-    # df_uncertain['lconf']=1-df_uncertain['maxProb']
+    df_uncertain['lconf']=1-df_uncertain['maxProb']
     df_uncertain = df_uncertain.sort_values(by=['lconf'],ascending=False)
     #writeLog("\n\nLeast Confidence Calculations..."+str(len(df_uncertain))+" Rows\n"+str(df_uncertain[:10]))
     #writeLog(str(df.index.values[0]))
@@ -1838,13 +1770,14 @@ import os
 
 def writeLog(content):
     '''
-    Dumps the content into Log file
+    Dumps the content into a temporary log file named temp_log.txt located in the directory where the Python script is running.
     '''
-    file = open(logFilePath,"a", encoding='utf-8')
-    file.write(content)
-    file.close()
-    #print (content)#.encode('utf-8'))
-    return None
+    # Define the path for the temporary log file
+    temp_log_file = "temp_log.txt"
+    
+    # Open the temporary log file and append content
+    with open(temp_log_file, "a", encoding='utf-8') as file:
+        file.write(content)
 
 
 
@@ -1935,27 +1868,12 @@ def analyzePredictions(args,df_predictions):
             
                 sample = df_predictions.loc[indexValue,:]
                 writeLog("\n\nMost Uncertain Sample : \n"+str(sample))
-                # Create a new DataFrame for the row you want to append
-                new_sample = pd.DataFrame({
-                    req1: [sample[req1]],
-                    req2: [sample[req2]],
-                    label: [sample[label]],
-                    annStatus: ['M']
-                })
-
-                # Concatenate the new DataFrame to the existing DataFrame
-                df_userAnnot = pd.concat([df_userAnnot, new_sample], ignore_index=True)
-
-                
-                # df_userAnnot = df_userAnnot.append({req1:sample[req1],req2:sample[req2],label:sample[label],annStatus:'M'},ignore_index=True)#df_userAnnot.append({'comboId':sample['comboId'],'req1Id':sample['req1Id'],'req1':sample['req1'],req1:sample[req1],'req2Id':sample['req2Id'],'req2':sample['req2'],req2:sample[req2],label:sample[label],annStatus:'M'},ignore_index=True)  #Added AnnotationStatus as M 
+                df_userAnnot = df_userAnnot.append({req1:sample[req1],req2:sample[req2],label:sample[label],annStatus:'M'},ignore_index=True)#df_userAnnot.append({'comboId':sample['comboId'],'req1Id':sample['req1Id'],'req1':sample['req1'],req1:sample[req1],'req2Id':sample['req2Id'],'req2':sample['req2'],req2:sample[req2],label:sample[label],annStatus:'M'},ignore_index=True)  #Added AnnotationStatus as M 
                 #createAnnotationsFile(df_userAnnot)
                 
                 #Remove the selected sample from the original dataframe
-                # df_predictions.drop(index=indexValue,inplace=True)   
-
-                # df_predictions.reset_index(inplace=True,drop=True)
-                df_predictions = df_predictions.drop(index=indexValue).reset_index(drop=True)
-
+                df_predictions.drop(index=indexValue,inplace=True)   
+                df_predictions.reset_index(inplace=True,drop=True)
             else:
                 print("All of unlabelled data is over")            
                     
@@ -1986,7 +1904,6 @@ def computeGridnget(X,y):
     return
 
 def createClassifier(clf,df_trainSet,resampling_type):
-    print("creating Classfilter")
     df_trainSet= df_trainSet.sample(frac=1)
     '''
     Passes the dataset via NLP Pipeline (Count Vectorizer , TFIDF Transformer)
@@ -2010,20 +1927,8 @@ def createClassifier(clf,df_trainSet,resampling_type):
     #df_testSet = shuffle(df_testSet)
 
     #Convert dataframes to numpy array's
-    print("df_trainSet",df_trainSet.columns)
-    # X_train = df_trainSet.loc[:,[req1,req2]]  #Using req_1,req_2 rather than req1,req2 because req_1,req_2 have been cleaned - lower case+punctuations
-    try:
-        # X_train = df_trainSet.loc[:, ['req1', 'req2']]
-        X_train = df_trainSet[['summary1', 'summary2']]
-
-    except KeyError as e:
-        print("Failed to retrieve columns:", e)
-        print("Available columns are:", df_trainSet.columns)
-        raise
-
-    
+    X_train = df_trainSet.loc[:,[req1,req2]]  #Using req_1,req_2 rather than req1,req2 because req_1,req_2 have been cleaned - lower case+punctuations
     y_train = df_trainSet.loc[:,label].astype("int")
-
 
     writeLog("\nTraining Set Size : "+str(len(X_train)))
     writeLog("\nTrain Set Value Count : \n"+str(df_trainSet[label].value_counts()))
@@ -2164,15 +2069,11 @@ def validateClassifier(cv,tfidf,clf_model,df_validationSet):
     global precision_score_rf
     global precision_score_svc
 
-    print("df_validationSet",df_validationSet)
 
     predictData = np.array(df_validationSet.loc[:,[req1,req2]])
     actualLabels = np.array(df_validationSet.loc[:,label]).astype('int')
     predict_counts = cv.transform(predictData)
-    if predict_counts.shape[0] == 0:
-        raise ValueError("predict_counts is empty. Check the data preparation steps.")
-    else:
-        predict_tfidf = tfidf.transform(predict_counts)
+    predict_tfidf = tfidf.transform(predict_counts)
     
     predict_labels = clf_model.predict(predict_tfidf)
     clf_val_score = clf_model.score(predict_tfidf,actualLabels)
