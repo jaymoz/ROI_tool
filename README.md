@@ -1,11 +1,5 @@
 # AROhI
 
-## Index
-
-- [Installation](#installation)
-- [AROhI Demo](#arohi-demo)
-- [Technology Stack](#technology-stack)
-
 ## Installation
 
 To run AROhI, we need to install Python 3 environment. The current version has been tested on Python 3.10. It is recommended to install a Python virtual environment for the tool. Below are step-by-step instructions to setup the environment and run the tool.
