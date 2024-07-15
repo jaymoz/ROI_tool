@@ -132,7 +132,7 @@ const handlePreprocessData = () => {
           <div className="box">
             <h2 className="medium-text">Upload Data</h2>
             <div className="slider-container">
-              <p className="small-text" style={{ fontFamily: 'inherit' }}>Training Size: {trainingSize}</p>
+              <p className="small-text" style={{ fontFamily: 'inherit' }}>Subset Size: {trainingSize}</p>
               <Slider min={0.1} max={1} step={0.1} value={trainingSize} onChange={handleTrainingSizeChange} />
             </div>
             <div className="input-section">
