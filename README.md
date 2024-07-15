@@ -1,11 +1,5 @@
 # AROhI
 
-## Index
-> 1. [Frontend](client/)
-> 2. [Backend](backend/)
-> 3. [Dataset](dataset/)
-
-
 ## Installation
 
 To run AROhI, we need to install Python 3 environment. The current version has been tested on Python 3.10. It is recommended to install a Python virtual environment for the tool. Below are step-by-step instructions to setup the environment and run the tool.
