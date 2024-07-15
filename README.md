@@ -15,12 +15,7 @@ To run AROhI, we need to install Python 3 environment. The current version has b
     python3 -m venv venv
     source venv/bin/activate
     ```
-3. To install required packages:
-   ```python 
-    pip install -r requirements.txt
-    ```
-   
-4. Install all the dependencies and run React App @ localhost:3000
+3. Install all the dependencies and run React App @ localhost:3000
    ```js
     cd client
     npm install
