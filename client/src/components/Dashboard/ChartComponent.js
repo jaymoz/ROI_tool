@@ -124,7 +124,7 @@ function Home() {
                     label: "Count",
                     data: Object.values(predictionLabelCounts),
                     borderColor: "white",
-                    backgroundColor: ["#DAF0F7", "#A8B5E0","#C8D9F0"]
+                    backgroundColor: ["#63B665", "#0476D0","#C8D9F0"]
                   }
                 ]
               };

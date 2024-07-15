@@ -49,7 +49,7 @@ const ROI = () => {
         <div className="roi-container">
             <div className="slidercontainer">
                 <div className="slider-wrapper-left">
-                    <div className="row" style={{marginBottom: '10px'}}><span data-tooltip-id="tooltip-fpCost" className="slider-value">Fixed Cost : {fpCost}</span>
+                    <div className="row" style={{marginBottom: '10px'}}><span data-tooltip-id="tooltip-fpCost" className="slider-value">Fixed Cost (min/sample) : {fpCost}</span>
     <Tooltip id="tooltip-fpCost" place="top" effect="solid">Cost consisting of Data Gathering cost, Pre-processing Cost & Evaluation Cost</Tooltip>
     </div>
                     <div className="row">
@@ -71,7 +71,7 @@ const ROI = () => {
                         />
                     </div>
                     <div className="row" style={{ marginBottom: '10px' }}>
-            <span data-tooltip-id="tooltip-fnCost" className="slider-value">B_penalty : {fnCost}</span>
+            <span data-tooltip-id="tooltip-fnCost" className="slider-value">B_penalty ($/FN) : {fnCost}</span>
             <Tooltip id="tooltip-fnCost" place="top" effect="solid">Penalty per False Negative instance </Tooltip>
           </div>
                     <div className="row">
@@ -93,7 +93,7 @@ const ROI = () => {
                         />
                     </div>
                     <div className="row" style={{ marginBottom: '10px' }}>
-            <span data-tooltip-id="tooltip-tpCost" className="slider-value">B_reward : {tpCost}</span>
+            <span data-tooltip-id="tooltip-tpCost" className="slider-value">B_reward ($/TP) : {tpCost}</span>
             <Tooltip id="tooltip-tpCost" place="top" effect="solid">Reward per True Positive instance</Tooltip>
           </div>
                     <div className="row">
@@ -117,7 +117,7 @@ const ROI = () => {
                 </div>
                 <div className="slider-wrapper-right">
                     <div className="row" style={{ marginBottom: '10px' }}>
-            <span data-tooltip-id="tooltip-resourcesCost" className="slider-value">Resources Cost : {resourcesCost}</span>
+            <span data-tooltip-id="tooltip-resourcesCost" className="slider-value">Resources Cost ($/hr) : {resourcesCost}</span>
             <Tooltip id="tooltip-resourcesCost" place="top" effect="solid">Resources Cost</Tooltip>
           </div>
                     <div className="row">
@@ -139,12 +139,12 @@ const ROI = () => {
                         />
                     </div>
                     <div className="row" style={{ marginBottom: '10px' }}>
-            <span data-tooltip-id="tooltip-preprocessingCost" className="slider-value">Labelling Cost : {preprocessingCost}</span>
+            <span data-tooltip-id="tooltip-preprocessingCost" className="slider-value">Labelling Cost (min/sample) : {preprocessingCost}</span>
             <Tooltip id="tooltip-preprocessingCost" place="top" effect="solid">Labelling Cost</Tooltip>
           </div>
                     <div className="row">
                         <Slider
-                            min={0.1}
+                            min={0.5}
                             max={3}
                             value={preprocessingCost}
                             onChange={value => setPreprocessingCost(parseFloat(value))}
@@ -161,7 +161,7 @@ const ROI = () => {
                         />
                     </div>
                     <div className="row" style={{ marginBottom: '10px' }}>
-            <span data-tooltip-id="tooltip-productValue" className="slider-value">Human Resource : {productValue}</span>
+            <span data-tooltip-id="tooltip-productValue" className="slider-value">Human Resource (Number) : {productValue}</span>
             <Tooltip id="tooltip-productValue" place="top" effect="solid">Total Human Resource involved</Tooltip>
           </div>
                     <div className="row">

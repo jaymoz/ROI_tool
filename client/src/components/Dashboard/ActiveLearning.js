@@ -21,7 +21,7 @@ const ActiveLearning = () => {
   const handleSubmit = async () => {
     try {
         const response = await axios.post(
-            "https://roibackend.shaktilab.org/activeLearning1", 
+            "http://127.0.0.1:5000/activeLearning1", 
             {
                 threshold: threshold,
                 max_iterations: maxIterations,
@@ -64,7 +64,7 @@ const ActiveLearning = () => {
       // If "Next" is pressed and delimiter for the new iteration doesn't exist, update the file content.
       try {
           const response = await axios.post(
-              "https://roibackend.shaktilab.org/next",
+              "http://127.0.0.1:5000/next",
               {},  // No data to send with the POST request, keep it an empty object
               {
                   headers: {
