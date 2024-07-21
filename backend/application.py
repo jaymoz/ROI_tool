@@ -400,7 +400,8 @@ def perform_logistic_regression():
 
         # Model prediction
         y_pred = model.predict(X_test)
-        cv_results = cross_val_score(model, X_test_vectorized, y, cv=10, scoring='accuracy')
+        n_splits = min(10, min(np.bincount(y)))
+        cv_results = cross_val_score(model, X_test_vectorized, y, cv=n_splits, scoring='accuracy')
         cv_mean = str(round(cv_results.mean(),4)*100)+"%"
         
         stop = round(time.time() - start, 4)
