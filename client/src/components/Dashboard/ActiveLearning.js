@@ -253,7 +253,7 @@ const ActiveLearning = () => {
       </div>
 
       <button type="button" onClick={handleSubmit}>Submit</button>
-        <button type="button" onClick={handleMoreButtonClick}>More</button>
+      <button type="button" onClick={handleMoreButtonClick}>More</button>
 
       </form>
       <div className={`annotated-content ${moreContentVisible ? 'active' : ''}`}>

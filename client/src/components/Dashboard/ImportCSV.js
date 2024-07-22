@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import axios from 'axios';
 import './ImportCSV.css';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import Charts from './ChartComponent';
 import Filter from './ColumnFilter';
+import arrow_key from '../images/left_arrow.png';
 
 function ImportCSV() {
   const [trainData, setTrainData] = useState(null);
@@ -21,6 +22,31 @@ function ImportCSV() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [authenticated, setAuthenticated] = useState(false);
+  const [sideBarOpen, setSideBar] = useState(false);
+
+  const handleSideBarButton = () =>{
+      if (sideBarOpen){
+          setSideBar(false);
+      }
+      else{
+          setSideBar(true);
+      }
+  }
+
+  // useEffect(()=>{
+  //     let sidebar_elem = document.querySelector('.upload-sidebar');
+  //     let sidebar_img = sidebar_elem.lastElementChild;
+  //     let rect = sidebar_elem.getBoundingClientRect();
+
+  //     if (sideBarOpen){
+  //         sidebar_elem.style.transform= `translateX(${-rect.x+20}px)`; 
+  //         sidebar_img.style.transform = 'rotate(0deg)';
+  //     }
+  //     else{
+  //         sidebar_elem.style.transform= `translateX(0%)`;
+  //         sidebar_img.style.transform = 'rotate(180deg)';
+  //     }
+  // },[sideBarOpen]);
 
   const handleTrainDataUpload = (event) => {
     setTrainData(event.target.files[0]);
@@ -106,38 +132,16 @@ const handlePreprocessData = () => {
       });
 };
 
-  
-  const handleCredentialsChange = (event) => {
-    const { name, value } = event.target;
-    if (name === 'username') {
-      setUsername(value);
-    } else if (name === 'password') {
-      setPassword(value);
-    }
-  };
-
-  const handleLogin = () => {
-    // Perform validation against the provided credentials
-    if (username === 'gouri' && password === 'gouri') {
-      setAuthenticated(true);
-    } else {
-      setAuthenticated(false);
-    }
-  };
-
 
   return (
       <div className="container">
         <div className="section">
-          <div className="box">
-            <h2 className="medium-text">Upload Data</h2>
+          <div className='upload-sidebar subsection'>
+              <h2 className="medium-text">Upload Data</h2>
             <div className="slider-container">
               <p className="small-text" style={{ fontFamily: 'inherit' }}>Subset Size: {trainingSize}</p>
               <Slider min={0.1} max={1} step={0.1} value={trainingSize} onChange={handleTrainingSizeChange} />
-            </div>
-            <div className="input-section">
-              <input type="file" onChange={handleTrainDataUpload} />
-              <button className="small-button" onClick={handleGraphUpload}>Upload</button>
+
             </div>
             {trainDataUploaded && (
                 <div className="result">
@@ -145,34 +149,31 @@ const handlePreprocessData = () => {
                   <p className="small-text">Data Columns: {train_data_ColCount}</p>
                 </div>
             )}
+            <input type="file" id="myfile" onChange={handleTrainDataUpload}/>
+            <button className="small-button" onClick={handleGraphUpload}>Upload</button>
           </div>
-         
+          {showColumnSelection && (
+            <div className="box table-section subsection">
+              <h2 className="medium-text">Select the required columns</h2>
+              <Filter trainData={trainData} />
+              <center>
+                <button className="button" onClick={handlePreprocessData} style={{width: '250px',height: '50px', marginLeft: '30px'}}>
+                  Trim & Preprocess Data
+                </button>
+              </center>
+            </div>
+
+        )}
         </div>
+        
 
         {showColumnSelection && (
             <div className="section">
-              <div className="box">
-                <h2 className="medium-text">Select the required columns</h2>
-                <Filter trainData={trainData} />
-                <br />
-                <br />
-                <center>
-                  <button className="button" onClick={handlePreprocessData} style={{width: '250px',height: '50px', marginLeft: '30px'}}>
-                    Trim & Preprocess Data
-                  </button>
-                </center>
+                {trainDataUploaded && (
+                      <Charts />
+                )}
               </div>
-            </div>
-        )}
-
-        <div className="graphs-container">
-          {trainDataUploaded && (
-              <div className="graph-section">
-                <Charts />
-
-              </div>
-          )}
-        </div>
+        )}        
       </div>
 
   );

@@ -1,0 +1,76 @@
+
+
+.ml-sidebar {
+    min-width: 465px;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 20px;
+    background-color: rgba(4, 67, 137, 0.99); /* 0.5 is 50% opacity */
+    padding: 20px;
+    border-radius: 15px;
+    color: black;
+    transition: all 0.4s ease;
+    padding-top: 60px;
+}
+
+.ml-sidebar-item {
+    min-width: 200px;
+    width: 90%;
+}
+
+
+.ml-table-section{
+    flex: 3;
+}
+
+.report-subsection{
+    width: 100%;
+
+}
+
+.report-content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: stretch;
+    gap: 20px;
+}
+
+.report-inside-item{
+    flex: 1;
+}
+
+.classification-table{
+    min-width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.accuracy-report-subsection{
+    min-width: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.report-tile{
+    text-align: center;
+}
+
+.report-tile-title{
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+.inner-classification-table{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

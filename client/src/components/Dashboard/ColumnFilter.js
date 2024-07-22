@@ -174,7 +174,8 @@ export default class Filter extends Component {
         const topRows = csvData.slice(0, 3);
 
         return (
-            <div>
+            <div className="table-cover">
+                <div className="selector-pair">
                 {columnNames.length > 0 && (
                     <ReactSelect
                         styles={customStyles}
@@ -193,11 +194,12 @@ export default class Filter extends Component {
                         value={optionSelected}
                         placeholder="Select columns..."
                         isDisabled={!!frozenColumns.length}
+                        className="selector-class"
                     />
                 )}
 
-                <button className="button" onClick={this.handleApply}>Apply</button>
-                <br/>
+                <button className="button selector-button" onClick={this.handleApply}>Apply</button>
+                </div>
                 {topRows.length > 0 && (
                     <table className="csv-table">
                         <thead>

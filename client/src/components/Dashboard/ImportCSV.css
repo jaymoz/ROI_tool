@@ -1,13 +1,11 @@
 .container {
-  max-width: 800px;
-  margin: 10px auto;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 40px;
-  margin-top: 100px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-width: 1500px;;
+  gap: 20px; /* Space between grid items */
   color: #222222;
+  margin: 30px;
 }
 
 .App.night .container {
@@ -15,10 +13,57 @@
 }
 
 .section {
+  flex: 1;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 20px;
+}
+
+.subsection {
+  padding: 20px; /* Padding for better spacing */
+  border-radius: 20px; /* Rounded corners */
+  min-height: 400px; /* Fixed height */
+  
+  /* Adding a box shadow for a 3D effect */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+  
+  /* Adding a subtle border for definition */
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  
+  /* Optional: Adding a subtle transition effect for hover */
+  transition: all 0.3s ease;
+}
+
+.subsection:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3), 0 12px 24px rgba(0, 0, 0, 0.25);
+  transform: translateY(-1px); /* Slight lift effect */
+}
+
+.graph-subsection{
+  padding: 20px; /* Padding for better spacing */
+  border-radius: 20px; /* Rounded corners */
+  
+  /* Adding a box shadow for a 3D effect */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+  
+  /* Adding a subtle border for definition */
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  
+  /* Optional: Adding a subtle transition effect for hover */
+  transition: all 0.3s ease;
+}
+
+.graph-subsection:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3), 0 12px 24px rgba(0, 0, 0, 0.25);
+  transform: translateY(-1px); /* Slight lift effect */
+}
+
+.table-section{
+  flex: 3;
+  overflow-y: auto;
+  min-width: 350px;
 }
 
 .button {
@@ -43,22 +88,20 @@
 .input-section {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
 }
 
 .input-section input[type="file"] {
   margin-right: 10px;
 }
 
-.input-section button {
-  width: 100px;
-  height: 40px;
-  background-color: #28a9e2;
+.box button {
   color: white;
-  border: none;
-  border-radius: 8px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  margin: 0px 20px;
+  border-radius: 5px;
+  padding: 10px 18px;
+  background-color: #044389;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .App.night .input-section button {
@@ -72,10 +115,22 @@
 }
 
 .box {
-  border: 1px solid #28a9e2;
-  border-radius: 5px;
   padding: 20px;
-  margin-right: 20px;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 10px;
+
+}
+
+.slider-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .App.night .box {
@@ -109,34 +164,63 @@
   font-size: 18px;
 }
 
-/* Media Queries for Responsive Styling */
+.file-input-field{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
 
-@media (max-width: 600px) {
-  .container {
-    margin-top: 50px;
-    margin-bottom: 20px;
-  }
+.graph-main{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
-  .section {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+.graphs-container{
+  width: 100%;
+}
 
-  .button {
-    width: 100%;
-    margin-top: 10px;
-  }
+.graph-container{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
 
-  .input-section {
-    flex-direction: column;
-  }
+.canvas-cover{
+  flex: 1;
+  position: relative;
+  min-width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
-  .input-section button {
-    width: 100%;
-  }
 
-  .box {
-    margin-right: 0;
-    margin-bottom: 20px;
-  }
+
+.selector-pair{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.upload-sidebar {
+  padding-top: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  min-width: 300px;
+  width: 100%;
+  max-height: 900px;
 }
