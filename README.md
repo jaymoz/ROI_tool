@@ -36,7 +36,7 @@ To run AROhI, we need to install Python 3 environment. The current version has b
 
 
 <table>
-  <thead>
+  <head style="background-color: #d3d3d3;">
     <tr style="background-color: #d3d3d3;">
       <th>Step 1 - Login</th>
       <th>Step 2 - Upload Data</th>
