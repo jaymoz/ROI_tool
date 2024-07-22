@@ -36,8 +36,8 @@ To run AROhI, we need to install Python 3 environment. The current version has b
 
 
 <table>
-  <head style="background-color: #d3d3d3;">
-    <tr style="background-color: #d3d3d3;">
+  <head>
+    <tr>
       <th>Step 1 - Login</th>
       <th>Step 2 - Upload Data</th>
     </tr>
@@ -47,7 +47,8 @@ To run AROhI, we need to install Python 3 environment. The current version has b
       <td><img width="500" alt="login" src="https://github.com/user-attachments/assets/c38a4fd6-3113-46bf-a5f3-65e06c929553"></td>
       <td><img width="500" alt="step1" src="https://github.com/user-attachments/assets/9638e6bb-4390-488e-95bc-9b8804a8cfd9"></td>
     </tr>
-    <tr style="background-color: #d3d3d3;">
+     
+    <tr>
       <th>Step 3 - ML Analytics</th>
       <th>Step 4 - ROI Analytics</th>
     </tr>
