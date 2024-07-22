@@ -33,6 +33,18 @@ To run AROhI, we need to install Python 3 environment. The current version has b
 ## AROhI Demo
 
 ## Working
+<style>
+table {
+    width: 100%;
+}
+th {
+    background-color: #d3d3d3;
+    text-align: center;
+}
+td {
+    text-align: center;
+}
+</style>
 
 | Step 1 - Login | Step 2 - Upload Data |
 | -------------- | -------------------- |
