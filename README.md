@@ -36,11 +36,11 @@ To run AROhI, we need to install Python 3 environment. The current version has b
 
 | Step 1 - Login | Step 2 - Upload Data |
 | -------------- | -------------------- |
-| <img width="300" alt="login" src="https://github.com/user-attachments/assets/c38a4fd6-3113-46bf-a5f3-65e06c929553"> | <img width="300" alt="step1" src="https://github.com/user-attachments/assets/9638e6bb-4390-488e-95bc-9b8804a8cfd9"> |
+| <img width="500" alt="login" src="https://github.com/user-attachments/assets/c38a4fd6-3113-46bf-a5f3-65e06c929553"> | <img width="500" alt="step1" src="https://github.com/user-attachments/assets/9638e6bb-4390-488e-95bc-9b8804a8cfd9"> |
 
 | Step 3 - ML Analytics | Step 4 - ROI Analytics |
 | ---------------------- | ---------------------- |
-| <img width="300" alt="step2" src="https://github.com/user-attachments/assets/1f740209-87c6-4773-b98a-4da504ba4b01"> | <img width="300" alt="step3" src="https://github.com/user-attachments/assets/c92bc692-40ee-4295-8a97-d51896e7c90f"> |
+| <img width="500" alt="step2" src="https://github.com/user-attachments/assets/1f740209-87c6-4773-b98a-4da504ba4b01"> | <img width="500" alt="step3" src="https://github.com/user-attachments/assets/c92bc692-40ee-4295-8a97-d51896e7c90f"> |
 
 
 ## Technology Stack
