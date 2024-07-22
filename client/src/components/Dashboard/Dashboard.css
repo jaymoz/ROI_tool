@@ -1,0 +1,20 @@
+
+
+.Dashboard{
+    flex: 1;
+    min-width: 100%;
+    min-height: 100%;
+    gap: 20px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.dashboard-main-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}

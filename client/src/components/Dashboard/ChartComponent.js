@@ -269,43 +269,28 @@ function Home() {
   };
 
   return (
-      <div>
-        <h4>Analysis</h4>
-        <div className="import-boxes"></div>
+      <div className='graph-main'>
         {chartData ? (
             <div className="graph-container">
-              <div>
-                <Bar options={{ onClick: handleColumnClick, ...chartOptions }} data={chartData} />
-                <button onClick={handleCountButtonClick}>
-                  {showDoubleBarGraph ? "Interdependency among other products" : "Individual Feature Count"}
-                </button>
+              <div className='canvas-cover graph-subsection'>
+                <br></br>
+                <Bar options={{ onClick: handleColumnClick, ...chartOptions }}  data={chartData} />
               </div>
-              <div>
-                {labelCountData.length > 0 && labelCountData[clickedLabelIndex] && (
-                    <div>
-                      <h4>
-                        {showDoubleBarGraph
-                            ? `Label Count for ${chartData.labels[clickedLabelIndex]}`
-                            : `Req2Product Count for ${chartData.labels[clickedLabelIndex]}`}
-                      </h4>
-                      <Bar
-                          options={labelCountData[clickedLabelIndex].chartOptions}
-                          data={labelCountData[clickedLabelIndex].chartData}
-                      />
-                    </div>
-                )}
-              </div>
+              {labelCountData.length > 0 && labelCountData[clickedLabelIndex] && (
+                  <div className='canvas-cover graph-subsection'>
+                    <button onClick={handleCountButtonClick}>
+                      {showDoubleBarGraph ? "Interdependency among other products" : "Individual Feature Count"}
+                    </button>
+                    <Bar
+                        options={labelCountData[clickedLabelIndex].chartOptions}
+                        data={labelCountData[clickedLabelIndex].chartData}
+                    />
+                  </div>
+              )}
             </div>
         ) : (
             <div>Loading...</div>
         )}
-        <style>{`
-            .graph-container {
-              width: 1000px;
-              height: 600px;
-              margin: 0 auto;
-            }
-          `}</style>
       </div>
   );
 }

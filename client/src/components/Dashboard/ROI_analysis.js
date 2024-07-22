@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart, PointElement, LineElement } from 'chart.js';
 import axios from 'axios';
@@ -7,10 +7,11 @@ import 'rc-slider/assets/index.css';
 import './ROI_analysis.css';
 import ROI_graphs from './ROI_graphs';
 import { Tooltip } from 'react-tooltip';
+import arrow_key from '../images/left_arrow.png';
 
 Chart.register(PointElement, LineElement);
 
-const ROI = () => {
+const ROI = ({sidebarState,sidebarToggler}) => {
     const [fpCost, setFpCost] = useState(5);
     const [fnCost, setFnCost] = useState(5);
     const [tpCost, setTpCost] = useState(5);
@@ -46,8 +47,8 @@ const ROI = () => {
     };
     
     return (
-        <div className="roi-container">
-            <div className="slidercontainer">
+        <div className="container">
+            <div className="subsection slidercontainer">
                 <div className="slider-wrapper-left">
                     <div className="row" style={{marginBottom: '10px'}}><span data-tooltip-id="tooltip-fpCost" className="slider-value">Fixed Cost (min/sample) : {fpCost}</span>
     <Tooltip id="tooltip-fpCost" place="top" effect="solid">Cost consisting of Data Gathering cost, Pre-processing Cost & Evaluation Cost</Tooltip>
@@ -183,8 +184,9 @@ const ROI = () => {
                         />
                     </div>
                 </div>
+                <button className="button" onClick={handleApply}>Apply</button>
             </div>
-            <button className="button" onClick={handleApply}>Apply</button>
+            
 
             {showGraphs && <ROI_graphs />}
         </div>

@@ -114,48 +114,42 @@ const renderGraph = (graphData1, graphData2, f1_score, roi, sizeArray) => {
   };
   
   return (
-      <div>
-        <Line data={chartData} options={chartOptions} />
-      </div>
+      <Line data={chartData} options={chartOptions} />
   );
 };
 
   const sizeArray = [20, 30, 40, 50, 60, 70, 80, 90];
 
   return (
-      <div className="chart-container">
-        <div className="chart-row">
+      <div className="chart-container section">
+        
+        <div className="chart-row subsection">
           <div className="chart-wrapper">
             {renderGraph(graph, graph5, 'F1 score', 'ROI', sizeArray)}
-            <br />
             F1 score vs ROI vs Relative Training Size - Logistic Regression
           </div>
         </div>
-        <div className="chart-row">
+        <div className="chart-row subsection">
           <div className="chart-wrapper">
             {renderGraph(graph1, graph6, 'F1 score', 'ROI', sizeArray)}
-            <br />
             F1 score vs ROI vs Relative Training Size - Naive Bayes
           </div>
         </div>
-        <div className="chart-row">
+        <div className="chart-row subsection">
           <div className="chart-wrapper">
             {renderGraph(graph2, graph7, 'F1 score', 'ROI', sizeArray)}
-            <br />
             F1 score vs ROI vs Relative Training Size - Random Forest
           </div>
         </div>
-        <div className="chart-row">
+        <div className="chart-row subsection">
           <div className="chart-wrapper">
             {renderGraph(graph3, graph8, 'F1 score', 'ROI', sizeArray)}
-            <br />
             F1 score vs ROI vs Relative Training Size - SVC
           </div>
         </div>
-        <div className="chart-row">
+        <div className="chart-row subsection">
           <div className="chart-wrapper">
             {renderGraph(graph4, graph9, 'F1 score', 'ROI', sizeArray)}
-            <br />
             F1 score vs ROI vs Relative Training Size - Decision Tree
           </div>
         </div>

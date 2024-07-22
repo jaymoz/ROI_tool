@@ -1,47 +1,56 @@
 .navbar {
-  background-color: white;
+  background-color: #044389;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  position: fixed;
-  top: 0px;
-  left: 0;
   width: 100%;
   height: 80px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
-  z-index: 999;
 }
 
 .App.night .navbar {
   background-color: #212121;
 }
 
-.navbar ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+.navbar-button{
+  margin: 0px 20px;
   display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 
-.navbar li {
-  margin-bottom: 10px;
-  padding-top: 10px;
-}
-
-.navbar li a {
-  color: #28a9e2;
+.navbar-button a{
+  color: white;
   text-decoration: none;
   border-radius: 5px;
   padding: 16px 18px;
   transition: background-color 0.3s ease, color 0.3s ease;
+  font-size: 1.5em;
 }
-.App.night .navbar li a {
+
+.navbar-button a:hover{
+  background-color: #245996;
   color: white;
 }
 
-.navbar li a:hover {
-  background-color: lightgray;
+.login-button {
+  color: black;
+  margin: 0px 20px;
+  border-radius: 5px;
+  padding: 10px 18px;
+  background-color: #FCFF4B;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.login-button:hover{
+  background-color: #c5c900;
+}
+
+
+.App.night .navbar li a {
   color: white;
 }
 
@@ -84,7 +93,72 @@
 }
 
 
+/* App.css */
+.modal {
+  position: fixed; /* Changed from absolute to fixed */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #044289d0;
+  padding: 20px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 400px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
 
+.overlay {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.modal-form{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 20px;
+  margin: 20px;
+}
+
+
+.form-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.form-group input{
+  border-radius: 5px;
+}
+
+.modal-form button{
+  color: black;
+  margin: 0px 20px;
+  border-radius: 5px;
+  padding: 10px 18px;
+  background-color: #FCFF4B;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.modal-cross-image{
+  width: 30px;
+  height: auto;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px;
+  background-color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
 
 

@@ -1,9 +1,3 @@
-.graph-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .graph-container > div {
   flex: 1;
   padding: 0 10px;

@@ -1,6 +1,6 @@
 .csv-table {
   border-collapse: collapse;
-  width: 100%;
+  max-width: 80%;
 }
 
 .csv-table th,
@@ -29,7 +29,19 @@
 }
 
 .Select-menu-outer, .Select-option {
-  color: #000000 !important;
   text-align: left;
 }
 
+
+.table-cover{
+  max-width: 80vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+input {
+  width: 200px;
+}

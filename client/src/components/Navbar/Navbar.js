@@ -1,31 +1,36 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Navbar.css';
+import Modal from 'react-modal';
+import { Link,useNavigate  } from 'react-router-dom';
+import crossImage from '../images/cross.png';
 
-const Navbar = ({ onDashboardClick, onHomeClick, onContactClick }) => {
+Modal.setAppElement('#root');
+
+const Navbar = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [authenticated, setAuthenticated] = useState(false);
-  const usernameFromEnv = process.env.REACT_APP_USERNAME;
-  const passwordFromEnv = process.env.REACT_APP_PASSWORD;
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  const handleDashboardClick = (event) => {
-    event.preventDefault();
-    if (authenticated) {
-      onDashboardClick();
-    } else {
-      alert('Authentication failed. Please provide valid credentials.');
-    }
-  };
+  useEffect(
+    ()=>{
+      let login_value = localStorage.getItem('isLoggedIn');
+      if (login_value){
+        console.log('user is logged in');
+      }
+      if (login_value === 'true') {
+        setAuthenticated(true);
+        navigate('/dashboard');
+      }
+    },[]
+  );
 
-  const handleHomeClick = (event) => {
-    event.preventDefault();
-    onHomeClick();
-  };
+  // Open the modal
+  const openModal = () => setModalIsOpen(true);
 
-  const handleContactClick = (event) => {
-    event.preventDefault();
-    onContactClick();
-  };
+  // Close the modal
+  const closeModal = () => setModalIsOpen(false);
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -40,58 +45,84 @@ const Navbar = ({ onDashboardClick, onHomeClick, onContactClick }) => {
     // Perform authentication logic here
     if (username === 'gouri' && password === 'gouri') {
       setAuthenticated(true);
-      alert('Authentication successful. You can now access the dashboard.');
-    } else {
-      alert('Authentication failed. Please provide valid credentials.');
+      setModalIsOpen(false);
+      navigate('/dashboard');
     }
     setUsername('');
     setPassword('');
+    localStorage.setItem('isLoggedIn', 'true');
   };
 
+  const handleLogout = (event)=>{
+    event.preventDefault();
+    setAuthenticated(false);
+    localStorage.removeItem('isLoggedIn');
+    navigate('/');
+  };
+
+  useEffect(()=>{
+    let root_elem = document.querySelector('#root');
+    if (modalIsOpen){
+      root_elem.classList.add('blurred-content');
+    }else{
+      root_elem.classList.remove('blurred-content');
+    }
+  },[modalIsOpen]);
+
   return (
-      <nav className="navbar">
-        <ul>
-          <li>
-            <a href="#" onClick={handleHomeClick}>
-              Home
-            </a>
-          </li>
-          <li>
-            <a href="#contact" onClick={handleContactClick}>
-              Contact
-            </a>
-          </li>
-          {authenticated && (
-              <li>
-                <a href="#" onClick={handleDashboardClick}>
-                  Dashboard
-                </a>
-              </li>
-          )}
-        </ul>
-        {!authenticated && (
-            <div className="login-box">
-              <p style={{ color: '#28a9e2', fontSize: '14px' }}>To access the dashboard:</p>
-              <form onSubmit={handleLogin}>
-                <input
-                    type="text"
-                    placeholder="Username"
-                    value={username}
-                    onChange={handleUsernameChange}
-                    required
-                />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={handlePasswordChange}
-                    required
-                />
-                <button type="submit">Login</button>
-              </form>
+    <div className='navbar'>
+      {!authenticated ? (<nav className="navbar">
+        <div className='navbar-button'> 
+          <Link to={"/"}>HomePage</Link>
+          <Link to={"/contact"}>Contacts</Link>
+        </div>
+        <div className='login-button' onClick={openModal}>Login</div>
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          contentLabel="Example Modal"
+          className="modal"
+          overlayClassName="overlay"
+        >
+          <form className='modal-form' onSubmit={handleLogin}>
+            <div className="form-group">
+              <label htmlFor="username">Username</label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                value={username}
+                onChange={handleUsernameChange}
+                required
+              />
             </div>
-        )}
-      </nav>
+
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={password}
+                onChange={handlePasswordChange}
+                required
+              />
+            </div>
+
+            <button type="submit">Login</button>
+          </form>
+          <img src={crossImage} alt="Cross" className='modal-cross-image' onClick={closeModal} />
+        </Modal>
+      </nav>) : 
+      (<nav className="side-bar navbar">
+        <div className='navbar-button'> 
+          <Link to={"/dashboard"}>File Upload</Link>
+          <Link to={"/dashboard/ml-analysis"}>ML Analytics</Link>
+          <Link to={"/dashboard/roi-analysis"}>ROI Analytics</Link>
+        </div>
+        <div className='login-button' onClick={handleLogout}>Logout</div>
+      </nav>)}
+    </div>
   );
 };
 

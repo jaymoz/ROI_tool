@@ -1,30 +1,33 @@
 .roi-container {
   color: #28a9e2;
-  margin-top: 20px;
   font-size: 16px;
-  margin-left: 150px;
+  width: 100%;
+  text-align: center;
+}
+
+.roi-container h1{
+  color: black;
 }
 
 .slidercontainer {
+  min-width: 300px;
+  min-height: 400px;
+  
+  max-height: 900px;
   display: flex;
-  width: 80%;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: #28a9e2;
-  margin-top: 70px;
-  font-size: 16px;
-  margin-left: 150px;
+  gap: 20px;
+  padding: 20px;
+  border-radius: 15px;
+  color: white;
+  transition: all 0.4s ease;
+  padding-top: 60px;
+  z-index: 999;
+  color: black;
 }
 
-.slider-wrapper-left {
-  margin-right: 100px;
-  margin-left: 100px;
-  width: 40%;
-}
-.slider-wrapper-right {
-  margin-right: 10px;
-  width: 40%;
-}
 
 .chart-wrapper {
   flex: 1;
@@ -54,7 +57,6 @@
   width: 100px;
   height: 50px;
   padding: 10px 20px;
-  margin-left: 450px;
   color: #fff;
   background-color: #28a9e2;
   border: none;

@@ -1,14 +1,13 @@
 .App {
   display: flex;
   flex-direction: column;
-  min-height: 300vh;
-  margin-top: 80px;
-  top: 100px;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 100vh;
 }
 
 .App-header {
   background-color: #f1f1f1;
-  height: 0vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -19,17 +18,12 @@
 }
 
 .App-content {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   font-size: calc(10px + 2vmin);
   color: white;
-  padding-top: 40px;
-  margin-left: 100px;
-  margin-right: 100px;
-  width: calc(100% - 200px);
-
+  width: 100%;
 }
 
 
@@ -149,4 +143,10 @@
 
 .App.night .theme-button:hover {
   background-color: #0056b3;
+}
+
+
+.blurred-content {
+  filter: blur(5px);
+  pointer-events: none;
 }

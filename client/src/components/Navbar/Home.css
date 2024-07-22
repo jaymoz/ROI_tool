@@ -4,14 +4,21 @@
   font-size: 40px;
   font-weight: bolder;
   text-align: center;
-  margin-bottom: 30px;
   align-items: center;
   justify-content: center;
 }
 .home{
-  margin-top: 30px;
+  margin: 20px 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 1000px;
+  gap: 30px;
 }
 .textData{
+  margin: 20px;
   font-size: 18px;
   color: black;
 }
@@ -29,7 +36,10 @@
   margin-top: 0px;
 }
 
-.rounded-corner {
-  overflow: hidden;
+.home-video {
+  width: 90%;
+  height: auto;
+  box-shadow: 0 20px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
 }
 
