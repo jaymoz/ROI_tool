@@ -76,13 +76,13 @@ To run AROhI, we need to install Python 3 environment. The current version has b
 
 ## Languages
 
-<div style="display: flex; align-items: center;">
-  <div style="width: 95%; background-color: #3572A5; height: 20px;"></div>
-  <div style="width: 3.9%; background-color: #EE9E2D; height: 20px;"></div>
-  <div style="width: 0.8%; background-color: #555555; height: 20px;"></div>
-  <div style="width: 0.1%; background-color: #F1E05A; height: 20px;"></div>
-  <div style="width: 0.1%; background-color: #F34B7D; height: 20px;"></div>
-  <div style="width: 0.1%; background-color: #4F6D8E; height: 20px;"></div>
+<div style="width: 100%; background-color: #e1e4e8; border-radius: 4px; overflow: hidden;">
+  <div style="width: 95%; background-color: #3572A5; height: 20px; float: left;"></div>
+  <div style="width: 3.9%; background-color: #EE9E2D; height: 20px; float: left;"></div>
+  <div style="width: 0.8%; background-color: #555555; height: 20px; float: left;"></div>
+  <div style="width: 0.1%; background-color: #F1E05A; height: 20px; float: left;"></div>
+  <div style="width: 0.1%; background-color: #F34B7D; height: 20px; float: left;"></div>
+  <div style="width: 0.1%; background-color: #4F6D8E; height: 20px; float: left;"></div>
 </div>
 
 - **Python**: 95.0%
@@ -91,4 +91,5 @@ To run AROhI, we need to install Python 3 environment. The current version has b
 - **JavaScript**: 0.1%
 - **C++**: 0.1%
 - **Fortran**: 0.1%
+
 
