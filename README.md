@@ -2,7 +2,7 @@
 
 ## Installation
 
-To run AROhI, we need to install Python 3 environment. The current version has been tested on Python 3.10. It is recommended to install a Python virtual environment for the tool. Below are step-by-step instructions to set up the environment and run the tool.
+To run AROhI, we need to install Python 3 environment. The current version has been tested on Python 3.10. It is recommended to install Python virtual environment for the tool. Below are step-by-step instructions to set up the environment and run the tool.
 
 ### Environment Setup
 
@@ -36,19 +36,23 @@ To run AROhI, we need to install Python 3 environment. The current version has b
 
 <b>1. Step 1 - Login
    
-   <img width="600" alt="login" src="https://github.com/user-attachments/assets/c38a4fd6-3113-46bf-a5f3-65e06c929553">
+   <img width="700" alt="login" src="https://github.com/user-attachments/assets/c38a4fd6-3113-46bf-a5f3-65e06c929553">
+   
    
 2. Step 2 - Upload Data
    
-   <img width="600" alt="step1" src="https://github.com/user-attachments/assets/9638e6bb-4390-488e-95bc-9b8804a8cfd9">
+   <img width="700" alt="step1" src="https://github.com/user-attachments/assets/9638e6bb-4390-488e-95bc-9b8804a8cfd9">
+   
 
 3. Step 3 - ML Analytics
  
-   <img width="600" alt="step2" src="https://github.com/user-attachments/assets/fa1b6a48-6a85-46ba-bcff-75d69898a585">
+   <img width="700" alt="step2" src="https://github.com/user-attachments/assets/fa1b6a48-6a85-46ba-bcff-75d69898a585">
+   
    
 4. Step 4 - ROI Analytics</b>
 
-   <img width="600" alt="step3" src="https://github.com/user-attachments/assets/c92bc692-40ee-4295-8a97-d51896e7c90f">
+   <img width="700" alt="step3" src="https://github.com/user-attachments/assets/c92bc692-40ee-4295-8a97-d51896e7c90f">
+   
 
 
 
