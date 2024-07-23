@@ -74,4 +74,21 @@ To run AROhI, we need to install Python 3 environment. The current version has b
 
 ![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
 
+## Languages
+
+<div style="display: flex; align-items: center;">
+  <div style="width: 95%; background-color: #3572A5; height: 20px;"></div>
+  <div style="width: 3.9%; background-color: #EE9E2D; height: 20px;"></div>
+  <div style="width: 0.8%; background-color: #555555; height: 20px;"></div>
+  <div style="width: 0.1%; background-color: #F1E05A; height: 20px;"></div>
+  <div style="width: 0.1%; background-color: #F34B7D; height: 20px;"></div>
+  <div style="width: 0.1%; background-color: #4F6D8E; height: 20px;"></div>
+</div>
+
+- **Python**: 95.0%
+- **Cython**: 3.9%
+- **C**: 0.8%
+- **JavaScript**: 0.1%
+- **C++**: 0.1%
+- **Fortran**: 0.1%
 
