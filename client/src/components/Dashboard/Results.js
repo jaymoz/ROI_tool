@@ -149,7 +149,7 @@ const Results = ({ isLearningSelected }) => {
   return (
     <div className="chartcontainer">
       <button className={`upload-button ${isLearningSelected ? 'selected-button' : 'gray-button'}`} onClick={handleUpdateClick}>
-          Upload
+          Update
         </button>
       <div className='section'>
         <div className='graph-name-group subsection'>
