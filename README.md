@@ -34,7 +34,7 @@ To run AROhI, we need to install Python 3 environment. The current version has b
 
 ## Working
 
-1. <b>Step 1 - Login</b>
+<b>1. Step 1 - Login</b>
    
    <img width="500" alt="login" src="https://github.com/user-attachments/assets/c38a4fd6-3113-46bf-a5f3-65e06c929553">
    
