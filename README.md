@@ -8,7 +8,7 @@ To run AROhI, we need to install Python 3 environment. The current version has b
 
 1. Clone this repository and move to the directory:
    ```python 
-    cd 2023
+    cd ROI_tool
     ```
 2. Run this on the command line to create and activate a virtual environment
    ```python 
