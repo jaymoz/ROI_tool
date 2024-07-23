@@ -57,3 +57,62 @@
   color: white;
 }
 
+.update-button {
+  color: black;
+  border-radius: 5px;
+  padding: 10px 18px;
+  background-color: #FCFF4B;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 1000;
+
+
+}
+
+.update-button:hover {
+  background-color: #c5c900;
+}
+
+.results-container {
+  padding: 20px;
+}
+
+.results-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.results-description {
+  margin-bottom: 10px;
+}
+
+.gray-button {
+  color: black;
+  border-radius: 5px;
+  padding: 10px 18px;
+  background-color:lightgrey;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.selected-button {
+  color: black;
+  border-radius: 5px;
+  padding: 10px 18px;
+  background-color: #FCFF4B;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+}
+
+
+
+
+.results-graph {
+  margin-bottom: 20px;
+}
+
+
+
+
