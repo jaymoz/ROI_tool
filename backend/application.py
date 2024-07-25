@@ -452,7 +452,9 @@ def perform_logistic_regression():
         plt.plot(size, acc, label='Accuracy', marker='o')
         plt.xlabel("Training Size", color='black')
         plt.ylabel("Validation Accuracy (%)", color='black')
-        plt.title('Logistic Regression Accuracy by Training Size')
+        # plt.title('Logistic Regression Accuracy by Training Size')
+        model_name = "Logistic Regression"
+        plt.title(f'{model_name} Accuracy by Training Size')
         plt.legend()
         plt.grid(True)
         lg_f1_score = os.path.join(application.static_folder, 'lg_f1_score.png')
@@ -593,7 +595,11 @@ def perform_naive_bayes():
         plt.plot(size, acc, label='Accuracy', marker='o')
         plt.xlabel("Training Size", color='black')
         plt.ylabel("Validation Accuracy (%)", color='black')
-        plt.title('Logistic Regression Accuracy by Training Size')
+        
+        model_name = "Naive Bayes"
+        plt.title(f'{model_name} Accuracy by Training Size')
+
+        # plt.title('Naive Bayes Accuracy by Training Size')
         plt.legend()
         plt.grid(True)
         nb_f1_score = os.path.join(application.static_folder, 'nb_f1_score.png')
@@ -757,7 +763,10 @@ def perform_random_forest():
         plt.plot(size, acc, label='Accuracy', marker='o')
         plt.xlabel("Training Size", color='black')
         plt.ylabel("Validation Accuracy (%)", color='black')
-        plt.title('Logistic Regression Accuracy by Training Size')
+        # plt.title('Random Forest Accuracy by Training Size')
+        
+        model_name = "Random Forest"
+        plt.title(f'{model_name} Accuracy by Training Size')
         plt.legend()
         plt.grid(True)
         rf_f1_score = os.path.join(application.static_folder, 'rf_f1_score.png')
@@ -911,13 +920,14 @@ def perform_decision_tree():
         dt_cm = os.path.join(application.static_folder, 'dt_cm.png')
         plt.savefig(dt_cm)
         plt.close()
-        
         fig = plt.figure(figsize=(4.5, 4))
         fig.patch.set_facecolor('white')
         plt.plot(size, acc, label='Accuracy', marker='o')
         plt.xlabel("Training Size", color='black')
         plt.ylabel("Validation Accuracy (%)", color='black')
-        plt.title('Logistic Regression Accuracy by Training Size')
+        # plt.title('Decision Trees Accuracy by Training Size')
+        model_name = "Decision Trees"
+        plt.title(f'{model_name} Accuracy by Training Size')
         plt.legend()
         plt.grid(True)
         dt_f1_score = os.path.join(application.static_folder, 'dt_f1_score.png')
@@ -1064,7 +1074,10 @@ def perform_support_vector_machine():
         plt.plot(size, acc, label='Accuracy', marker='o')
         plt.xlabel("Training Size", color='black')
         plt.ylabel("Validation Accuracy (%)", color='black')
-        plt.title('Logistic Regression Accuracy by Training Size')
+        
+        model_name = "SVC"
+        plt.title(f'{model_name} Accuracy by Training Size')
+        # plt.title('SVC Accuracy by Training Size')
         plt.legend()
         plt.grid(True)
         svc_f1_score = os.path.join(application.static_folder, 'svc_f1_score.png')
