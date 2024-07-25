@@ -4,7 +4,6 @@ import axios from 'axios';
 import Select from 'react-select';
 import './MLConfig.css';
 import './Dashboard_sidebar.css';
-import arrow_key from '../images/left_arrow.png';
 import Results from './Results';
 import './ImportCSV.css';
 
@@ -40,101 +39,103 @@ const MLdropdown = () => {
 
     const handleModelChange = (selectedOption) => {
         setBaseModel(selectedOption.value);
-        console.log(baseModel);
-        handleLearningSelect(selectedOption.value);
     };
 
     const handleSupervisedSubModelChange = (selectedOption) => {
         setSupervisedSubOption(selectedOption.value);
-        console.log(supervisedSubOption);
-        handleOptionSelect(supervisedSubOption);
     };
 
-  const handleLearningSelect = async (selectedValue) => {
-    console.log('Selected option:', selectedValue);
+    useEffect( () => {
+        const fetchData = async () => {
+            console.log('Selected option:', baseModel);
+        
+            const headers = {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+                "X-Requested-With": "XMLHttpRequest"  // Required by some versions of cors-anywhere
+            };
+        
+            if (baseModel === 'supervised') {
+            try {
+                const response = await axios.post('https://roibackend.shaktilab.org/weekly-supervised', {}, { headers: headers });
+                console.log(response.data);
+        
+                if (response.data.success) {
+                setLearning('supervised');
+                }
+            } catch (error) {
+                console.error(error);
+            }
+            } else if (baseModel === 'activeLearning') {
+            try {
+                const response = await axios.post('https://roibackend.shaktilab.org/active-learning', {}, { headers: headers });
+                console.log(response.data);
+                if (response.data.success) {
+                setLearning('activeLearning');
+                }
+            } catch (error) {
+                console.error(error);
+            }
+            }
+        }; 
+        fetchData();
+    } , [baseModel] );
 
-    const headers = {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-        "X-Requested-With": "XMLHttpRequest"  // Required by some versions of cors-anywhere
-    };
 
-    if (selectedValue === 'supervised') {
-      try {
-        const response = await axios.post('https://roibackend.shaktilab.org/weekly-supervised', {}, { headers: headers });
-        console.log(response.data);
-
-        if (response.data.success) {
-          setLearning('supervised');
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    } else if (selectedValue === 'activeLearning') {
-      try {
-        const response = await axios.post('https://roibackend.shaktilab.org/active-learning', {}, { headers: headers });
-        console.log(response.data);
-        if (response.data.success) {
-          setLearning('activeLearning');
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }
-};
-
-
-const handleOptionSelect = async (selectedValue) => {
-  console.log('Selected option:', selectedValue);
-
-  const headers = {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-      "X-Requested-With": "XMLHttpRequest"
-  };
-
-  let endpoint = "";
-  switch (selectedValue) {
-      case 'logistic_regression':
-          endpoint = 'logistic-regression';
-          break;
-      case 'naive_bayes':
-          endpoint = 'naive-bayes';
-          break;
-      case 'random_forest':
-          endpoint = 'random-forest';
-          break;
-      case 'support_vector_machine':
-          endpoint = 'support-vector-machine';
-          break;
-      case 'decision_tree':
-          endpoint = 'decision-tree';
-          break;
-      default:
-          return;
-  }
-
-  try {
-      const response = await axios.post(`https://roibackend.shaktilab.org/${endpoint}`, {}, { headers: headers });
-      
-      console.log(`https://roibackend.shaktilab.org/${endpoint}`);
-      console.log(response.data);
-      if (response.data.success) {
-          setReport(response.data.report);
-          setAccuracy(response.data.accuracy);
-          setStopTime(response.data.stop);
-          setGraph(response.data.graph);
-          setConfusionMatrix(response.data.cm);
-          setF1Score(response.data.f1);
-          setFP(response.data.fp);
-          setFN(response.data.fn);
-          setTP(response.data.tp);
-          setCV(response.data.cv_mean);
-      }
-  } catch (error) {
-      console.error(error);
-  }
-};
+    useEffect( () => {
+        const fetchData = async () => {
+            console.log('Selected option:', supervisedSubOption);
+          
+            const headers = {
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+                "X-Requested-With": "XMLHttpRequest"
+            };
+          
+            let endpoint = "";
+            switch (supervisedSubOption) {
+                case 'logistic_regression':
+                    endpoint = 'logistic-regression';
+                    break;
+                case 'naive_bayes':
+                    endpoint = 'naive-bayes';
+                    break;
+                case 'random_forest':
+                    endpoint = 'random-forest';
+                    break;
+                case 'support_vector_machine':
+                    endpoint = 'support-vector-machine';
+                    break;
+                case 'decision_tree':
+                    endpoint = 'decision-tree';
+                    break;
+                default:
+                    return;
+            }
+          
+            try {
+                const response = await axios.post(`https://roibackend.shaktilab.org/${endpoint}`, {}, { headers: headers });
+                
+                console.log(`https://roibackend.shaktilab.org/${endpoint}`);
+                console.log(response.data);
+                if (response.data.success) {
+                    setReport(response.data.report);
+                    setAccuracy(response.data.accuracy);
+                    setStopTime(response.data.stop);
+                    setGraph(response.data.graph);
+                    setConfusionMatrix(response.data.cm);
+                    setF1Score(response.data.f1);
+                    setFP(response.data.fp);
+                    setFN(response.data.fn);
+                    setTP(response.data.tp);
+                    setCV(response.data.cv_mean);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+          };
+        fetchData();
+    } , [supervisedSubOption] );
 
   return (
         <div className="container ">
@@ -201,8 +202,8 @@ const handleOptionSelect = async (selectedValue) => {
                                 </pre>
                                 
 
-                            <img src={graph} />
-                            <img src={confusionMatrix}/>
+                            <img src={graph} alt='Graph' />
+                            <img src={confusionMatrix} alt='Confusion Matrix'/>
                             </div>
                         </div>
                     )}
