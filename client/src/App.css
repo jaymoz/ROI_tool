@@ -205,7 +205,7 @@
   justify-content: space-evenly;
   gap: 10px;
   padding: 10px 18px;
-  background-color: #dbdbdb;
+  /* background-color: #dbdbdb; */
   border-radius: 5px;
 
 
@@ -227,6 +227,6 @@
 }
 
 .toggle--highlight{
-  color: black;
-  background-color: #c5c900;
+  color: white;
+  background-color: #044389;
 }
