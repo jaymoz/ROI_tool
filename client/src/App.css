@@ -197,3 +197,36 @@
 .button--secondary:hover {
   background-color: #044289c5;
 }
+
+
+.toggle--button{
+  width: 90%;
+  display: flex;
+  justify-content: space-evenly;
+  gap: 10px;
+  padding: 10px 18px;
+  background-color: #dbdbdb;
+  border-radius: 5px;
+
+
+}
+
+
+.toggle--btn--option{
+  flex: 1;
+  cursor: pointer;
+  height: 100%;
+  padding: 10px 18px;
+  background-color: #28a9e2;
+  color: white;
+  border-radius: 5px;
+}
+
+.toggle--btn--option:hover{
+  background-color: #abad0f;
+}
+
+.toggle--highlight{
+  color: black;
+  background-color: #c5c900;
+}

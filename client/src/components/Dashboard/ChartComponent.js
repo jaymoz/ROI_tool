@@ -278,9 +278,17 @@ function Home() {
               </div>
               {labelCountData.length > 0 && labelCountData[clickedLabelIndex] && (
                   <div className='canvas-cover graph-subsection'>
-                    <button onClick={handleCountButtonClick} className='button--primary--blue'>
+                    {/* <button onClick={handleCountButtonClick} className='button--primary--blue'>
                       {showDoubleBarGraph ? "Interdependency among other products" : "Individual Feature Count"}
-                    </button>
+                    </button> */}
+                    <div className='toggle--button'>
+                      <button onClick={handleCountButtonClick} className={`toggle--btn--option ${showDoubleBarGraph ? "toggle--highlight" : ""}`}>
+                        Interdependency among other products
+                      </button>
+                      <button onClick={handleCountButtonClick} className={`toggle--btn--option ${!showDoubleBarGraph ? "toggle--highlight" : ""}`}>
+                        Individual Feature Count
+                      </button>
+                    </div>
                     <Bar
                         options={labelCountData[clickedLabelIndex].chartOptions}
                         data={labelCountData[clickedLabelIndex].chartData}
