@@ -129,6 +129,18 @@ const MLdropdown = () => {
         }
     };
 
+    const fetchGraphData = () => {
+        if (resultsRef.current) {
+          resultsRef.current.fetchGraphData();
+        }
+      };
+    
+      const resetGraphData = () => {
+        if (resultsRef.current) {
+          resultsRef.current.resetGraphData();
+        }
+      };
+
     return (
         <div className="container">
             <div className='section'>
@@ -150,10 +162,10 @@ const MLdropdown = () => {
                         />
                     )}
                     {baseModel && baseModel.value === 'activeLearning' && <ActiveLearning />}
-                    <button className={`upload-button ${isLearningSelected ? 'selected-button' : 'gray-button'}`} onClick={resultsRef.current.fetchGraphData}>
+                    <button className={`upload-button ${isLearningSelected ? 'button--primary--yellow' : 'button--primary--blue'}`} onClick={fetchGraphData}>
                         Update
                     </button>
-                    <button className={`upload-button gray-button`} onClick={resultsRef.current.resetGraphData}>
+                    <button className={`upload-button button--primary--blue`} onClick={resetGraphData}>
                         Reset
                     </button>
                 </div>

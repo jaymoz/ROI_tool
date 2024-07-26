@@ -7,14 +7,7 @@ Chart.register(PointElement, LineElement);
 
 const Results = forwardRef((props, ref) => {
 
-  useImperativeHandle(
-    ref, ()=>{
-      return{
-        fetchGraphData: fetchGraphData,
-        resetGraphData: resetGraphData
-      };
-    }
-  )
+  
 
   const [graph, setGraph] = useState(null);
   const [graph1, setGraph1] = useState(null);
@@ -81,6 +74,15 @@ const Results = forwardRef((props, ref) => {
       console.error('Error fetching graph data:', error);
     }
   };
+
+  useImperativeHandle(
+    ref, ()=>{
+      return{
+        fetchGraphData: fetchGraphData,
+        resetGraphData: resetGraphData
+      };
+    }
+  )
 
   useEffect(() => {
     fetchGraphData();
