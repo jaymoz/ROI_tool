@@ -157,7 +157,7 @@ const handlePreprocessData = () => {
               <h2 className="medium-text">Select the required columns</h2>
               <Filter trainData={trainData} />
               <center>
-                <button className="button" onClick={handlePreprocessData} style={{width: '250px',height: '50px', marginLeft: '30px'}}>
+                <button className="button--primary--blue" onClick={handlePreprocessData} style={{width: '250px',height: '50px', marginLeft: '30px'}}>
                   Trim & Preprocess Data
                 </button>
               </center>

@@ -1,6 +1,5 @@
 .csv-table {
   border-collapse: collapse;
-  max-width: 80%;
 }
 
 .csv-table th,
@@ -44,4 +43,9 @@
 
 input {
   width: 200px;
+}
+
+
+.selector-class {
+  flex: 2;
 }

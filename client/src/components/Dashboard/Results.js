@@ -7,8 +7,6 @@ Chart.register(PointElement, LineElement);
 
 const Results = forwardRef((props, ref) => {
 
-  
-
   const [graph, setGraph] = useState(null);
   const [graph1, setGraph1] = useState(null);
   const [graph2, setGraph2] = useState(null);

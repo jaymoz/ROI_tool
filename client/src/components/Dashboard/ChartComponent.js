@@ -269,16 +269,16 @@ function Home() {
   };
 
   return (
-      <div className='graph-main'>
+      <>
         {chartData ? (
-            <div className="graph-container">
+            <>
               <div className='canvas-cover graph-subsection'>
                 <br></br>
                 <Bar options={{ onClick: handleColumnClick, ...chartOptions }}  data={chartData} />
               </div>
               {labelCountData.length > 0 && labelCountData[clickedLabelIndex] && (
                   <div className='canvas-cover graph-subsection'>
-                    <button onClick={handleCountButtonClick}>
+                    <button onClick={handleCountButtonClick} className='button--primary--blue'>
                       {showDoubleBarGraph ? "Interdependency among other products" : "Individual Feature Count"}
                     </button>
                     <Bar
@@ -287,11 +287,11 @@ function Home() {
                     />
                   </div>
               )}
-            </div>
+            </>
         ) : (
             <div>Loading...</div>
         )}
-      </div>
+      </>
   );
 }
 
