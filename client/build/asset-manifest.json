@@ -1,25 +1,13 @@
 {
   "files": {
-<<<<<<< HEAD
-    "main.css": "/static/css/main.3639dfe8.css",
-    "main.js": "/static/js/main.a7094676.js",
+    "main.css": "/static/css/main.9368d7af.css",
+    "main.js": "/static/js/main.dafa3492.js",
     "index.html": "/index.html",
-    "main.3639dfe8.css.map": "/static/css/main.3639dfe8.css.map",
-    "main.a7094676.js.map": "/static/js/main.a7094676.js.map"
+    "main.9368d7af.css.map": "/static/css/main.9368d7af.css.map",
+    "main.dafa3492.js.map": "/static/js/main.dafa3492.js.map"
   },
   "entrypoints": [
-    "static/css/main.3639dfe8.css",
-    "static/js/main.a7094676.js"
-=======
-    "main.css": "/static/css/main.6449881c.css",
-    "main.js": "/static/js/main.ef2e7d99.js",
-    "index.html": "/index.html",
-    "main.6449881c.css.map": "/static/css/main.6449881c.css.map",
-    "main.ef2e7d99.js.map": "/static/js/main.ef2e7d99.js.map"
-  },
-  "entrypoints": [
-    "static/css/main.6449881c.css",
-    "static/js/main.ef2e7d99.js"
->>>>>>> cdb8936632b6816ecd34d5f10d3806c4f9391480
+    "static/css/main.9368d7af.css",
+    "static/js/main.dafa3492.js"
   ]
 }
