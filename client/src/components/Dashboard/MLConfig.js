@@ -165,9 +165,9 @@ const MLdropdown = () => {
                     <button className={`upload-button ${isLearningSelected ? 'button--primary--yellow' : 'button--primary--blue'}`} onClick={fetchGraphData}>
                         Update
                     </button>
-                    <button className={`upload-button button--primary--blue`} onClick={resetGraphData}>
+                    {/* <button className={`upload-button button--primary--blue`} onClick={resetGraphData}>
                         Reset
-                    </button>
+                    </button> */}
                 </div>
             </div>
             
