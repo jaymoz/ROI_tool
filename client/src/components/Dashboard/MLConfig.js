@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useRef} from 'react';
 import ActiveLearning from './ActiveLearning';
 import axios from 'axios';
 import Select from 'react-select';
@@ -22,6 +22,7 @@ const MLdropdown = () => {
     const [baseModel, setBaseModel] = useState(null); 
     const [supervisedSubOption, setSupervisedSubOption] = useState(null);
     const [isLearningSelected, setIsLearningSelected] = useState(false);
+    const resultsRef = useRef();
 
     const baseModelOptions = [
         { value: 'supervised', label: 'Supervised Learning' },
@@ -38,18 +39,15 @@ const MLdropdown = () => {
 
     const handleModelChange = (selectedOption) => {
         setBaseModel(selectedOption);
-        console.log(selectedOption.value);
         handleLearningSelect(selectedOption.value);
     };
 
     const handleSupervisedSubModelChange = (selectedOption) => {
         setSupervisedSubOption(selectedOption);
-        console.log(selectedOption.value);
         handleOptionSelect(selectedOption.value);
     };
 
     const handleLearningSelect = async (selectedValue) => {
-        console.log('Selected option:', selectedValue);
         setIsLearningSelected(true); // Set the variable to true if any learning option is selected
 
         const headers = {
@@ -82,7 +80,6 @@ const MLdropdown = () => {
     };
 
     const handleOptionSelect = async (selectedValue) => {
-        console.log('Selected option:', selectedValue);
 
         const headers = {
             "Access-Control-Allow-Origin": "*",
@@ -132,6 +129,18 @@ const MLdropdown = () => {
         }
     };
 
+    const fetchGraphData = () => {
+        if (resultsRef.current) {
+          resultsRef.current.fetchGraphData();
+        }
+      };
+    
+      const resetGraphData = () => {
+        if (resultsRef.current) {
+          resultsRef.current.resetGraphData();
+        }
+      };
+
     return (
         <div className="container">
             <div className='section'>
@@ -153,6 +162,12 @@ const MLdropdown = () => {
                         />
                     )}
                     {baseModel && baseModel.value === 'activeLearning' && <ActiveLearning />}
+                    <button className={`upload-button ${isLearningSelected ? 'button--primary--yellow' : 'button--primary--blue'}`} onClick={fetchGraphData}>
+                        Update
+                    </button>
+                    {/* <button className={`upload-button button--primary--blue`} onClick={resetGraphData}>
+                        Reset
+                    </button> */}
                 </div>
             </div>
             
@@ -195,7 +210,7 @@ const MLdropdown = () => {
                         </div>
                     </React.Fragment>
                 )}
-                <Results isLearningSelected={isLearningSelected} />
+                <Results ref={resultsRef}/>
             </div>
         </div>
     );

@@ -5,9 +5,8 @@ import axios from 'axios';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import './ROI_analysis.css';
-import ROI_graphs from './ROI_graphs';
+import ROIGraphs from './ROI_graphs';
 import { Tooltip } from 'react-tooltip';
-import arrow_key from '../images/left_arrow.png';
 
 Chart.register(PointElement, LineElement);
 
@@ -184,11 +183,11 @@ const ROI = ({sidebarState,sidebarToggler}) => {
                         />
                     </div>
                 </div>
-                <button className="button" onClick={handleApply}>Apply</button>
+                <button className="button--primary--blue" onClick={handleApply}>Apply</button>
             </div>
             
 
-            {showGraphs && <ROI_graphs />}
+            {showGraphs && <ROIGraphs />}
         </div>
 
     );

@@ -198,7 +198,7 @@ export default class Filter extends Component {
                     />
                 )}
 
-                <button className="button selector-button" onClick={this.handleApply}>Apply</button>
+                <button className="button--primary--blue" onClick={this.handleApply}>Apply</button>
                 </div>
                 {topRows.length > 0 && (
                     <table className="csv-table">

@@ -150,3 +150,83 @@
   filter: blur(5px);
   pointer-events: none;
 }
+
+
+.button--primary--yellow {
+  color: black;
+  border-width: 1px;
+  min-width: 100px;
+  margin: 0px 20px;
+  border-radius: 5px;
+  padding: 10px 18px;
+  background-color: #FCFF4B;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button--primary--yellow:hover{
+  background-color: #c5c900;
+}
+
+.button--primary--blue {
+  color: white;
+  border-width: 1px;
+  min-width: 100px;
+  border-radius: 5px;
+  padding: 10px 18px;
+  background-color: #28a9e2;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button--primary--blue:hover {
+  background-color: #0056b3;
+}
+
+
+.button--secondary {
+  color: white;
+  min-width: 100px;
+  border-radius: 5px;
+  padding: 10px 18px;
+  background-color: #044389;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button--secondary:hover {
+  background-color: #044289c5;
+}
+
+
+.toggle--button{
+  width: 90%;
+  display: flex;
+  justify-content: space-evenly;
+  gap: 10px;
+  padding: 10px 18px;
+  /* background-color: #dbdbdb; */
+  border-radius: 5px;
+
+
+}
+
+
+.toggle--btn--option{
+  flex: 1;
+  cursor: pointer;
+  height: 100%;
+  padding: 10px 18px;
+  background-color: #28a9e2;
+  color: white;
+  border-radius: 5px;
+}
+
+.toggle--btn--option:hover{
+  background-color: #abad0f;
+}
+
+.toggle--highlight{
+  color: white;
+  background-color: #044389;
+}

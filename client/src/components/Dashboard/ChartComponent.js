@@ -269,29 +269,37 @@ function Home() {
   };
 
   return (
-      <div className='graph-main'>
+      <>
         {chartData ? (
-            <div className="graph-container">
+            <>
               <div className='canvas-cover graph-subsection'>
                 <br></br>
                 <Bar options={{ onClick: handleColumnClick, ...chartOptions }}  data={chartData} />
               </div>
               {labelCountData.length > 0 && labelCountData[clickedLabelIndex] && (
                   <div className='canvas-cover graph-subsection'>
-                    <button onClick={handleCountButtonClick}>
+                    {/* <button onClick={handleCountButtonClick} className='button--primary--blue'>
                       {showDoubleBarGraph ? "Interdependency among other products" : "Individual Feature Count"}
-                    </button>
+                    </button> */}
+                    <div className='toggle--button'>
+                      <button onClick={handleCountButtonClick} className={`toggle--btn--option ${showDoubleBarGraph ? "toggle--highlight" : ""}`}>
+                        Interdependency among other products
+                      </button>
+                      <button onClick={handleCountButtonClick} className={`toggle--btn--option ${!showDoubleBarGraph ? "toggle--highlight" : ""}`}>
+                        Individual Feature Count
+                      </button>
+                    </div>
                     <Bar
                         options={labelCountData[clickedLabelIndex].chartOptions}
                         data={labelCountData[clickedLabelIndex].chartData}
                     />
                   </div>
               )}
-            </div>
+            </>
         ) : (
             <div>Loading...</div>
         )}
-      </div>
+      </>
   );
 }
 

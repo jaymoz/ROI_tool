@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, forwardRef, useImperativeHandle } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart, PointElement, LineElement } from 'chart.js';
 import './Results.css';
 
 Chart.register(PointElement, LineElement);
 
-const Results = ({ isLearningSelected }) => {
+const Results = forwardRef((props, ref) => {
+
   const [graph, setGraph] = useState(null);
   const [graph1, setGraph1] = useState(null);
   const [graph2, setGraph2] = useState(null);
@@ -21,6 +22,24 @@ const Results = ({ isLearningSelected }) => {
   const [graph12, setGraph12] = useState(null);
   const [graph13, setGraph13] = useState(null);
   const [graph14, setGraph14] = useState(null);
+
+  const resetGraphData = () => {
+    setGraph(null);
+    setGraph3(null);
+    setGraph6(null);
+    setGraph7(null);
+    setGraph8(null);
+    setGraph1(null);
+    setGraph4(null);
+    setGraph9(null);
+    setGraph10(null);
+    setGraph11(null);
+    setGraph2(null);
+    setGraph5(null);
+    setGraph12(null);
+    setGraph13(null);
+    setGraph14(null);
+  }
 
   const fetchGraphData = async () => {
     try {
@@ -54,13 +73,18 @@ const Results = ({ isLearningSelected }) => {
     }
   };
 
+  useImperativeHandle(
+    ref, ()=>{
+      return{
+        fetchGraphData: fetchGraphData,
+        resetGraphData: resetGraphData
+      };
+    }
+  )
+
   useEffect(() => {
     fetchGraphData();
   }, []);
-
-  const handleUpdateClick = () => {
-    fetchGraphData();
-  };
 
   const renderGraphs = (graphData1, graphData2, graphData3, graphData4, graphData5, sizeArray) => {
     const datasets = [
@@ -148,9 +172,6 @@ const Results = ({ isLearningSelected }) => {
 
   return (
     <div className="chartcontainer">
-      <button className={`upload-button ${isLearningSelected ? 'selected-button' : 'gray-button'}`} onClick={handleUpdateClick}>
-          Update
-        </button>
       <div className='section'>
         <div className='graph-name-group subsection'>
           <div className="chartwrapper">{renderGraphs(graph, graph3, graph6, graph7, graph8, sizeArray)}</div>
@@ -167,6 +188,6 @@ const Results = ({ isLearningSelected }) => {
       </div>
     </div>
   );
-};
+});
 
 export default Results;

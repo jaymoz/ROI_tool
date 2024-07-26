@@ -22,11 +22,9 @@
 }
 
 .subsection {
-  padding: 20px; /* Padding for better spacing */
-  border-radius: 20px; /* Rounded corners */
-  min-height: 400px; /* Fixed height */
-  
-  /* Adding a box shadow for a 3D effect */
+  padding: 20px;
+  border-radius: 20px;
+  min-height: 350px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
   
   /* Adding a subtle border for definition */
@@ -94,15 +92,14 @@
   margin-right: 10px;
 }
 
-.box button {
+/* .box button {
   color: white;
-  margin: 0px 20px;
   border-radius: 5px;
   padding: 10px 18px;
   background-color: #044389;
   cursor: pointer;
   transition: all 0.3s ease;
-}
+} */
 
 .App.night .input-section button {
   color: white;
@@ -210,17 +207,19 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  gap: 20px;
 }
 
 
 .upload-sidebar {
-  padding-top: 50px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   gap: 20px;
   min-width: 300px;
   width: 100%;
   max-height: 900px;
 }
+

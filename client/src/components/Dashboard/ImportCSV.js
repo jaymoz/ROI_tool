@@ -150,14 +150,14 @@ const handlePreprocessData = () => {
                 </div>
             )}
             <input type="file" id="myfile" onChange={handleTrainDataUpload}/>
-            <button className="small-button" onClick={handleGraphUpload}>Upload</button>
+            <button className="button--primary--blue" onClick={handleGraphUpload}>Upload</button>
           </div>
           {showColumnSelection && (
             <div className="box table-section subsection">
               <h2 className="medium-text">Select the required columns</h2>
               <Filter trainData={trainData} />
               <center>
-                <button className="button" onClick={handlePreprocessData} style={{width: '250px',height: '50px', marginLeft: '30px'}}>
+                <button className="button--primary--blue" onClick={handlePreprocessData} style={{width: '250px',height: '50px', marginLeft: '30px'}}>
                   Trim & Preprocess Data
                 </button>
               </center>
