@@ -15,22 +15,25 @@ To run AROhI, we need to install Python 3 environment. The current version has b
     python3 -m venv venv
     source venv/bin/activate
     ```
+   To update pip on Python, use the following command:
+   ```python3 -m pip install --upgrade```
+   
    You can also follow the [Python documentation](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/) to install a virtual environment on your machine.
-   To update pip on Python, use the following command: ```python3 -m pip install --upgrade```
-3. Install all the dependencies and run React App @ localhost:3000
+   
+4. Install all the dependencies and run React App @ localhost:3000
    ```js
     cd client
     npm install
     npm start
     ```
-4. To run Flask App @ localhost:5000
+5. To run Flask App @ localhost:5000
    ```python
     cd backend
     python3 application.py
     ```
    Make sure no other application runs on any of these two hosts. The website has been programmed to run on localhost:3000 and localhost:5000 automatically.
 
-5. The dataset for testing the tool is accessible in the dataset folder of the repository.
+6. The dataset for testing the tool is accessible in the dataset folder of the repository.
    ```python
     cd dataset
     ```
