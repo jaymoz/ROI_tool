@@ -33,7 +33,7 @@ To run AROhI, we need to install Python 3 environment. The current version has b
 
 ## AROhI Demo
 
-[Watch the demo](https://drive.google.com/file/d/1Vquvt954inMW13ykCt55drrXnMUcMZdL/view?usp=drive_link)
+[Watch the demo](https://drive.google.com/file/d/1_EtavBHhdRsPE_TAY7S2EyxqLgtxBK8b/view?usp=sharing)
 
 ## Working
 
