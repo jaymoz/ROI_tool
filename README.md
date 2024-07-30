@@ -16,7 +16,9 @@ To run AROhI, we need to install Python 3 environment. The current version has b
     source venv/bin/activate
     ```
    To update pip on Python, use the following command:
-   ```python3 -m pip install --upgrade```
+   ```python
+   python3 -m pip install --upgrade`
+   ``
    
    You can also follow the [Python documentation](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/) to install a virtual environment on your machine.
    
