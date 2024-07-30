@@ -43,14 +43,17 @@ To run AROhI, we need to install Python 3 environment. The current version has b
 <b>Step 1 - Login
    
    <img width="900" alt="login" src="https://github.com/user-attachments/assets/c38a4fd6-3113-46bf-a5f3-65e06c929553">
+
    
 Step 2 - File Upload
    
    <img width="900" alt="step1" src="https://github.com/user-attachments/assets/9638e6bb-4390-488e-95bc-9b8804a8cfd9">
+
    
 Step 3 - ML Analytics
  
    <img width="900" alt="step2" src="https://github.com/user-attachments/assets/fa1b6a48-6a85-46ba-bcff-75d69898a585">
+
    
 Step 4 - ROI Analytics</b>
 
